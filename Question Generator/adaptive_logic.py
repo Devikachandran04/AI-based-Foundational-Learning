@@ -9,6 +9,12 @@ def adaptive_decision(score):
             "next_action": "SIMPLER_CONTENT",
             "message": "Let’s revise nouns with simpler examples."
         }
+    elif score >= 40:
+        return {
+        "next_action": "REASSESSMENT",
+        "message": "Reattempt quiz focused on weak areas."
+    }
+
     else:
         return {
             "next_action": "VIDEO_SUPPORT",
