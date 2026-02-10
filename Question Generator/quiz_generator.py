@@ -21,8 +21,7 @@ if __name__ == "__main__":
     print("Topic Accuracy:", topic_accuracy)
     print("Decision:", decision)
 
-
-
+//   
 
 
 
