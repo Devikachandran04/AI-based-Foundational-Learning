@@ -1,11 +1,11 @@
 import React from "react";
 
-function ProgressSummary() {
+function ProgressSummary({ data }) {
   return (
-    <div>
+    <div className="card">
       <h3>Student Progress Summary</h3>
-      <p>Total Students: --</p>
-      <p>Average Score: --</p>
+      <p>Total Students: {data?.total_students}</p>
+      <p>Average Score: {data?.average_score}</p>
     </div>
   );
 }

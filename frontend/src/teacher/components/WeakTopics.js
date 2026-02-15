@@ -1,12 +1,13 @@
 import React from "react";
 
-function WeakTopics() {
+function WeakTopics({ data }) {
   return (
-    <div>
+    <div className="card">
       <h3>Weak Topics</h3>
       <ul>
-        <li>Topic 1</li>
-        <li>Topic 2</li>
+        {data?.weak_topics?.map((topic, index) => (
+          <li key={index}>{topic}</li>
+        ))}
       </ul>
     </div>
   );

@@ -1,12 +1,13 @@
 import React from "react";
 
-function LowScoreStudents() {
+function LowScoreStudents({ data }) {
   return (
-    <div>
+    <div className="card">
       <h3>Repeated Low-Score Students</h3>
       <ul>
-        <li>Student A</li>
-        <li>Student B</li>
+        {data?.low_score_students?.map((student, index) => (
+          <li key={index}>{student}</li>
+        ))}
       </ul>
     </div>
   );
