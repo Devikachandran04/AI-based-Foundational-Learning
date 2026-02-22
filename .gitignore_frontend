@@ -1,26 +1,33 @@
-<<<<<<< HEAD
+# =========================
+# Python
+# =========================
+
 # Virtual environment
 .venv/
+venv/
 
 # Environment variables
 .env
-
-# Python cache
-__pycache__/
-*.pyc
-=======
-node_modules/
-.env
->>>>>>> 86226b6b575e84831cd5b6d0cbd77f77eb350c88
-node_modules/
-.next/
 .env.local
-.env
-dist/
-build/
+.env.*.local
 
 # Python cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# =========================
+# Node / Next.js
+# =========================
+
+node_modules/
+.next/
+out/
+
+# Build folders
+dist/
+build/
+
+# Misc
+.DS_Store
