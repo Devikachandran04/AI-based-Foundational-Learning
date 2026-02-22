@@ -19,3 +19,8 @@ node_modules/
 dist/
 build/
 
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
