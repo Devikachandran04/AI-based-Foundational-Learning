@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Modules</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="card">
+    <h2>Select a Module</h2>
+
+    <button class="module">Mathematics</button>
+    <button class="module">Science</button>
+    <button class="module">AI Basics</button>
+    <button class="module">English</button>
+
+    <p id="welcome"></p>
+  </div>
+
+  <script>
+    const user = localStorage.getItem("user");
+    document.getElementById("welcome").innerText =
+      user ? `Welcome, ${user}` : "";
+  </script>
+</body>
+</html>
