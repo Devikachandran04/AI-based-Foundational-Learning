@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Virtual environment
 .venv/
 
@@ -7,3 +8,13 @@
 # Python cache
 __pycache__/
 *.pyc
+=======
+node_modules/
+.env
+>>>>>>> 86226b6b575e84831cd5b6d0cbd77f77eb350c88
+node_modules/
+.next/
+.env.local
+.env
+dist/
+build/
