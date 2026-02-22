@@ -1,9 +1,10 @@
 def evaluate_quiz(questions, student_answers):
-    correct = 0
+
+    correct_count = 0
     topic_accuracy = {}
 
     for q in questions:
-        qid = q["question_id"]
+        qid = q["id"]
         topic = q["topic"]
 
         if topic not in topic_accuracy:
@@ -11,9 +12,11 @@ def evaluate_quiz(questions, student_answers):
 
         topic_accuracy[topic]["total"] += 1
 
-        if student_answers.get(qid) == q["correct_answer"]:
-            correct += 1
+        if student_answers.get(qid) == q["answer"]:
+            correct_count += 1
             topic_accuracy[topic]["correct"] += 1
 
-    score_percentage = (correct / len(questions)) * 100
-    return score_percentage, topic_accuracy
+    total_questions = len(questions)
+    score = (correct_count / total_questions) * 100 if total_questions > 0 else 0
+
+    return score, topic_accuracy
