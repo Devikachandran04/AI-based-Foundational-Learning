@@ -1,7 +1,7 @@
 import os
 import json
-from quiz_evaluator import evaluate_quiz
-from adaptive_logic import adaptive_decision
+from .quiz_evaluator import evaluate_quiz #for backend i changed
+from .adaptive_logic import adaptive_decision
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
