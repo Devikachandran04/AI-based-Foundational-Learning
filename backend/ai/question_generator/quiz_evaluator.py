@@ -19,4 +19,12 @@ def evaluate_quiz(questions, student_answers):
     total_questions = len(questions)
     score = (correct_count / total_questions) * 100 if total_questions > 0 else 0
 
-    return score, topic_accuracy
+    # ✅ Weak topic detection
+    weak_topics = []
+
+    for topic, data in topic_accuracy.items():
+        percentage = (data["correct"] / data["total"]) * 100
+        if percentage < 50:
+            weak_topics.append(topic)
+
+    return score, topic_accuracy, weak_topics
