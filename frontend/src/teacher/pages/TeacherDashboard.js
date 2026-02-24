@@ -7,7 +7,10 @@ function TeacherDashboard() {
       {/* Top Bar */}
       <div className="top-bar">
         <h2>Foundation Learning - Teacher Panel</h2>
-        <button className="btn btn-danger">Logout</button>
+        <button className="logout-btn">
+  ⎋ Logout
+</button>
+
       </div>
 
       <h1 className="page-title">Dashboard Summary</h1>

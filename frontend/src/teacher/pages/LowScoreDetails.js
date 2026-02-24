@@ -15,7 +15,10 @@ function LowScoreDetails() {
 
       <div className="analytics-header">
         <h2>📉 Low Score Students Analytics</h2>
-        <Link to="/" className="back-link">← Back to Dashboard</Link>
+        <Link to="/">
+  <button className="back-btn">Back</button>
+</Link>
+
       </div>
 
       {/* KPI Cards */}

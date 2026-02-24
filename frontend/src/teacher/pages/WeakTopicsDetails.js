@@ -15,7 +15,10 @@ function WeakTopicsDetails() {
       {/* Header */}
       <div className="analytics-header">
         <h2>📚 Weak Topics Analytics</h2>
-        <Link to="/" className="back-link">← Back to Dashboard</Link>
+        <Link to="/">
+  <button className="back-btn">Back</button>
+</Link>
+
       </div>
 
       {/* KPI Cards */}
