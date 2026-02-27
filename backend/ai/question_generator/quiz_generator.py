@@ -37,11 +37,12 @@ if __name__ == "__main__":
         "n2": "is"
     }
 
-    score, topic_accuracy = evaluate_quiz(questions, student_answers)
+    score, topic_accuracy, weak_topics = evaluate_quiz(questions, student_answers)
     decision = adaptive_decision(score)
 
     print("Score:", score)
     print("Decision:", decision)
+    print("Weak Topics:", weak_topics)
 
     if decision["next_action"] in ["SIMPLER_CONTENT", "REASSESSMENT"]:
         print("\nSwitching to simplified questions...\n")
