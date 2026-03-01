@@ -1,6 +1,6 @@
 import os
 import json
-from .quiz_evaluator import evaluate_quiz #for backend i changed
+from .quiz_evaluator import evaluate_quiz
 from .adaptive_logic import adaptive_decision
 
 
@@ -10,14 +10,14 @@ QUESTION_FOLDER = os.path.join(BASE_DIR, "question_bank")
 
 def generate_quiz(lesson_id, level="normal"):
 
-    if level == "normal":
-        filename = "nouns_normal.json"
-    elif level == "easy":
-        filename = "nouns_easy.json"
-    else:
+    if level not in ["normal", "easy"]:
         raise ValueError("Invalid level")
 
+    filename = f"{lesson_id}_{level}.json"
     file_path = os.path.join(QUESTION_FOLDER, filename)
+
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"Question file not found: {filename}")
 
     print("Loading:", filename)
 
@@ -27,26 +27,25 @@ def generate_quiz(lesson_id, level="normal"):
     return questions
 
 
-# 🚨 Always keep this at bottom
-if __name__ == "__main__":
+def process_quiz_request(lesson_id, quiz_type, attempt_count, student_answers):
+    
+    questions = generate_quiz(lesson_id, level=quiz_type)
 
-    questions = generate_quiz("grammar_nouns", level="normal")
+    score, topic_accuracy, weak_topics = evaluate_quiz(
+        questions, student_answers
+    )
 
-    student_answers = {
-        "n1": "Apple",
-        "n2": "is"
+    decision = adaptive_decision(
+        score=score,
+        attempt_count=attempt_count,
+        quiz_type=quiz_type,
+        lesson_id=lesson_id
+    )
+
+    return {
+        "lesson_id": lesson_id,
+        "quiz_type": quiz_type,
+        "score": score,
+        "weak_topics": weak_topics,
+        "decision": decision
     }
-
-    score, topic_accuracy, weak_topics = evaluate_quiz(questions, student_answers)
-    decision = adaptive_decision(score)
-
-    print("Score:", score)
-    print("Decision:", decision)
-    print("Weak Topics:", weak_topics)
-
-    if decision["next_action"] in ["SIMPLER_CONTENT", "REASSESSMENT"]:
-        print("\nSwitching to simplified questions...\n")
-
-        easy_questions = generate_quiz("grammar_nouns", level="easy")
-
-        print(json.dumps(easy_questions, indent=4))

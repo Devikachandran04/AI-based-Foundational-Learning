@@ -1,0 +1,13 @@
+[
+  {"id":"ae1","question":"Choose: ___ apple","options":["a","an","the","none"],"answer":"an","topic":"articles","difficulty":"basic"},
+  {"id":"ae2","question":"Choose: ___ book","options":["a","an","the","none"],"answer":"a","topic":"articles","difficulty":"basic"},
+  {"id":"ae3","question":"Choose: ___ sun","options":["a","an","the","none"],"answer":"the","topic":"articles","difficulty":"basic"},
+  {"id":"ae4","question":"Select: ___ elephant","options":["a","an","the","none"],"answer":"an","topic":"articles","difficulty":"basic"},
+  {"id":"ae5","question":"Choose: ___ pen","options":["a","an","the","none"],"answer":"a","topic":"articles","difficulty":"basic"},
+  {"id":"ae6","question":"Select: ___ moon","options":["a","an","the","none"],"answer":"the","topic":"articles","difficulty":"basic"},
+
+  {"id":"ae7","question":"Fill in: He is ___ honest man.","options":["a","an","the","none"],"answer":"an","topic":"articles","difficulty":"moderate"},
+  {"id":"ae8","question":"Choose: She bought ___ umbrella.","options":["a","an","the","none"],"answer":"an","topic":"articles","difficulty":"moderate"},
+  {"id":"ae9","question":"Select: ___ Taj Mahal is beautiful.","options":["a","an","the","none"],"answer":"the","topic":"articles","difficulty":"moderate"},
+  {"id":"ae10","question":"Choose: I went to ___ school.","options":["a","an","the","none"],"answer":"none","topic":"articles","difficulty":"moderate"}
+]

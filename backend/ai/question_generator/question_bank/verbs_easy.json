@@ -1,0 +1,13 @@
+[
+  {"id":"ve1","question":"Which word is a verb?","options":["run","blue","chair","happy"],"answer":"run","topic":"verbs","difficulty":"basic"},
+  {"id":"ve2","question":"Identify the verb: She eats rice.","options":["She","eats","rice","the"],"answer":"eats","topic":"verbs","difficulty":"basic"},
+  {"id":"ve3","question":"Find the verb: They play daily.","options":["They","play","daily","none"],"answer":"play","topic":"verbs","difficulty":"basic"},
+  {"id":"ve4","question":"Which is an action word?","options":["jump","table","slow","green"],"answer":"jump","topic":"verbs","difficulty":"basic"},
+  {"id":"ve5","question":"Identify the verb: He writes neatly.","options":["He","writes","neatly","none"],"answer":"writes","topic":"verbs","difficulty":"basic"},
+  {"id":"ve6","question":"Choose the verb.","options":["sing","blue","fast","tree"],"answer":"sing","topic":"verbs","difficulty":"basic"},
+
+  {"id":"ve7","question":"Choose correct: She ___ to school.","options":["go","goes","gone","going"],"answer":"goes","topic":"verbs","difficulty":"moderate"},
+  {"id":"ve8","question":"Select the past tense.","options":["played","play","playing","plays"],"answer":"played","topic":"verbs","difficulty":"moderate"},
+  {"id":"ve9","question":"Choose helping verb.","options":["is","run","blue","book"],"answer":"is","topic":"verbs","difficulty":"moderate"},
+  {"id":"ve10","question":"Fill in: They ___ happy.","options":["are","is","was","be"],"answer":"are","topic":"verbs","difficulty":"moderate"}
+]

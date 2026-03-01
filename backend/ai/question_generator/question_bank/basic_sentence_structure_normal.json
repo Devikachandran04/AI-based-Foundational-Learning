@@ -1,0 +1,14 @@
+[
+  {"id":"s1","question":"Identify the subject: The boy kicked the ball.","options":["The boy","kicked","the ball","ball"],"answer":"The boy","topic":"basic_sentence_structure","difficulty":"basic"},
+  {"id":"s2","question":"Identify the verb: She reads a book.","options":["She","reads","a book","book"],"answer":"reads","topic":"basic_sentence_structure","difficulty":"basic"},
+  {"id":"s3","question":"Identify the object: He ate the apple.","options":["He","ate","the apple","apple"],"answer":"the apple","topic":"basic_sentence_structure","difficulty":"basic"},
+
+  {"id":"s4","question":"Choose correct SVO order.","options":["She eats rice","Eats she rice","Rice she eats","She rice eats"],"answer":"She eats rice","topic":"basic_sentence_structure","difficulty":"moderate"},
+  {"id":"s5","question":"Identify subject and verb: They are playing.","options":["They - subject, are playing - verb","They - verb, are - subject","playing - subject","are - object"],"answer":"They - subject, are playing - verb","topic":"basic_sentence_structure","difficulty":"moderate"},
+  {"id":"s6","question":"Choose correct sentence.","options":["She go school","She goes to school","She going school","She gone school"],"answer":"She goes to school","topic":"basic_sentence_structure","difficulty":"moderate"},
+  {"id":"s7","question":"Identify object: She wrote a letter.","options":["She","wrote","a letter","letter"],"answer":"a letter","topic":"basic_sentence_structure","difficulty":"moderate"},
+
+  {"id":"s8","question":"Identify the compound subject.","options":["John and Mary went home","John went home","Mary went home","Went home"],"answer":"John and Mary went home","topic":"basic_sentence_structure","difficulty":"hard"},
+  {"id":"s9","question":"Choose correct sentence structure.","options":["Running fast the boy","The boy is running fast","Fast running boy","Boy running the fast"],"answer":"The boy is running fast","topic":"basic_sentence_structure","difficulty":"hard"},
+  {"id":"s10","question":"Identify the predicate.","options":["is reading a book","She","book","reading"],"answer":"is reading a book","topic":"basic_sentence_structure","difficulty":"hard"}
+]
