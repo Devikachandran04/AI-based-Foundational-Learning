@@ -12,6 +12,7 @@ def dashboard_summary():
     else:
         avg_score_7d = 0
 
+    # low performers = students with last attempt score < 70
     pipeline = [
         {"$sort": {"created_at": -1}},
         {"$group": {"_id": "$user_id", "last_score": {"$first": "$score"}}},
@@ -27,9 +28,9 @@ def dashboard_summary():
     }
 
 def weak_topics():
+    # aggregate learner_profile weak_topics counts
     all_profiles = profiles_col.find({})
     counter = {}
-
     for p in all_profiles:
         wt = p.get("weak_topics", {})
         for topic, c in wt.items():

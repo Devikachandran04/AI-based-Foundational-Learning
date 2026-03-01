@@ -2,6 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function WeakTopics({ data }) {
+
+  if (!data || !data.weak_topics) {
+    return (
+      <div className="card">
+        <h3>Weak Topics</h3>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <Link 
       to="/weak-topics" 
