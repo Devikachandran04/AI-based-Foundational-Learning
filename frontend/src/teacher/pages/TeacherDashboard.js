@@ -8,7 +8,7 @@ function TeacherDashboard() {
       <div className="top-bar">
         <h2>Foundation Learning - Teacher Panel</h2>
         <button className="logout-btn">
-  ⎋ Logout
+   Logout
 </button>
 
       </div>

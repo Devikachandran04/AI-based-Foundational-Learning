@@ -1,5 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  ResponsiveContainer
+} from "recharts";
 
 function WeakTopicsDetails() {
 
@@ -9,6 +18,12 @@ function WeakTopicsDetails() {
     { topic: "Decimals", averageScore: 61, riskLevel: "Low" },
   ];
 
+  // Chart data derived from existing data
+  const chartData = weakTopics.map(item => ({
+    topic: item.topic,
+    score: item.averageScore
+  }));
+
   return (
     <div className="analytics-page">
 
@@ -16,9 +31,8 @@ function WeakTopicsDetails() {
       <div className="analytics-header">
         <h2>📚 Weak Topics Analytics</h2>
         <Link to="/">
-  <button className="back-btn">Back</button>
-</Link>
-
+          <button className="back-btn">Back</button>
+        </Link>
       </div>
 
       {/* KPI Cards */}
@@ -42,6 +56,19 @@ function WeakTopicsDetails() {
             )}%
           </p>
         </div>
+      </div>
+
+      {/* Chart */}
+      <div style={{ width: "100%", height: 300, marginTop: "30px" }}>
+        <ResponsiveContainer>
+          <BarChart data={chartData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="topic" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="score" fill="#4CAF50" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
 
       {/* Table */}

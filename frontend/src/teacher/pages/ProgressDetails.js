@@ -1,5 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  ResponsiveContainer
+} from "recharts";
 
 function ProgressDetails() {
 
@@ -10,15 +19,22 @@ function ProgressDetails() {
     lowestScore: 38,
   };
 
+  // Distribution data for chart
+  const scoreDistribution = [
+    { range: "0-40", students: 5 },
+    { range: "40-60", students: 25 },
+    { range: "60-80", students: 60 },
+    { range: "80-100", students: 30 },
+  ];
+
   return (
     <div className="analytics-page">
 
       <div className="analytics-header">
         <h2>📊 Student Progress Analytics</h2>
         <Link to="/">
-            <button className="back-btn">Back</button>
-          </Link>
-
+          <button className="back-btn">Back</button>
+        </Link>
       </div>
 
       {/* KPI Cards */}
@@ -42,6 +58,19 @@ function ProgressDetails() {
           <h4>Lowest Score</h4>
           <p>{summary.lowestScore}%</p>
         </div>
+      </div>
+
+      {/* Chart */}
+      <div style={{ width: "100%", height: 300, marginTop: "30px" }}>
+        <ResponsiveContainer>
+          <BarChart data={scoreDistribution}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="range" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="students" fill="#4CAF50" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
 
       {/* Insights Section */}

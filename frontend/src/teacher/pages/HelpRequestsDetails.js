@@ -1,5 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  ResponsiveContainer
+} from "recharts";
 
 function HelpRequestsDetails() {
 
@@ -19,6 +26,15 @@ function HelpRequestsDetails() {
   ];
 
   const pendingCount = helpRequests.filter(r => r.status === "Pending").length;
+  const resolvedCount = helpRequests.length - pendingCount;
+
+  // Chart data
+  const chartData = [
+    { name: "Pending", value: pendingCount },
+    { name: "Resolved", value: resolvedCount }
+  ];
+
+  const COLORS = ["#ff6b6b", "#4CAF50"];
 
   return (
     <div className="analytics-page">
@@ -26,9 +42,8 @@ function HelpRequestsDetails() {
       <div className="analytics-header">
         <h2>❓ Help Requests Analytics</h2>
         <Link to="/">
-  <button className="back-btn">Back</button>
-</Link>
-
+          <button className="back-btn">Back</button>
+        </Link>
       </div>
 
       {/* KPI Cards */}
@@ -45,8 +60,29 @@ function HelpRequestsDetails() {
 
         <div className="kpi-card">
           <h4>Resolved</h4>
-          <p>{helpRequests.length - pendingCount}</p>
+          <p>{resolvedCount}</p>
         </div>
+      </div>
+
+      {/* Chart */}
+      <div style={{ width: "100%", height: 300, marginTop: "30px" }}>
+        <ResponsiveContainer>
+          <PieChart>
+            <Pie
+              data={chartData}
+              cx="50%"
+              cy="50%"
+              outerRadius={100}
+              dataKey="value"
+              label
+            >
+              {chartData.map((entry, index) => (
+                <Cell key={index} fill={COLORS[index]} />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
       </div>
 
       {/* Table */}

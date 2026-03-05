@@ -6,26 +6,28 @@ function WeakTopics({ data }) {
   if (!data || !data.weak_topics) {
     return (
       <div className="card">
-        <h3>Weak Topics</h3>
-        <p>Loading...</p>
+        <h3>📚 Weak Topics</h3>
+        <p>No data available</p>
       </div>
     );
   }
 
   return (
-    <Link 
-      to="/weak-topics" 
-      style={{ textDecoration: "none", color: "inherit" }}
-    >
-      <div className="card">
-        <h3>Weak Topics</h3>
-        <ul>
-          {data.weak_topics.map((topic, index) => (
-            <li key={index}>{topic}</li>
-          ))}
-        </ul>
-      </div>
-    </Link>
+    <div className="card">
+      <h3>📚 Weak Topics</h3>
+
+      <ul style={{ marginTop: "10px", paddingLeft: "20px" }}>
+        {data.weak_topics.map((topic, index) => (
+          <li key={index}>{topic}</li>
+        ))}
+      </ul>
+
+      <Link to="/weaktopics">
+        <button className="btn btn-warning" style={{ marginTop: "10px" }}>
+          View Topics
+        </button>
+      </Link>
+    </div>
   );
 }
 
