@@ -1,13 +1,12 @@
 from datetime import datetime
 from bson import ObjectId
-from db import quizzes_col, attempts_col, profiles_col, question_bank_col
+from db import quizzes_col, attempts_col, question_bank_col
 from services.profile_service import update_profile_after_attempt
 from services.adaptive_policy import decide_next_step
 
 WEIGHTS = {
     "basic": 1,
-    "moderate": 2,
-    "hard": 3
+    "moderate": 2
 }
 
 
@@ -22,21 +21,21 @@ def _get_attempt_no(user_id: str, lesson_id: str) -> int:
 def _pick_questions(lesson_id: str, attempt_no: int):
     """
     Attempt 1 -> mixed quiz:
-        2 basic + 2 moderate + 2 hard
+        3 basic + 3 moderate
 
     Attempt 2+ -> simplified quiz:
-        4 basic + 2 moderate + 0 hard
+        4 basic + 2 moderate
     """
 
     if attempt_no == 1:
-        plan = [("basic", 2), ("moderate", 2), ("hard", 2)]
+        plan = [("basic", 3), ("moderate", 3)]
         quiz_type = "mixed"
     else:
         plan = [("basic", 4), ("moderate", 2)]
         quiz_type = "simplified"
 
     picked = []
-    difficulty_breakdown = {"basic": 0, "moderate": 0, "hard": 0}
+    difficulty_breakdown = {"basic": 0, "moderate": 0}
 
     for difficulty, needed_count in plan:
         questions = list(question_bank_col.aggregate([
@@ -118,16 +117,12 @@ def submit_quiz(user_id: str, quiz_id: str, submitted_answers, time_taken_sec: i
     quiz_type = quiz.get("quiz_type", "mixed")
     difficulty_breakdown = quiz.get("difficulty_breakdown", {
         "basic": 0,
-        "moderate": 0,
-        "hard": 0
+        "moderate": 0
     })
 
     question_ids = [ObjectId(qid) for qid in quiz["question_ids"]]
     questions = list(question_bank_col.find({"_id": {"$in": question_ids}}))
 
-    # Accept both:
-    # list format: [{"question_id": "...", "selected_index": 1}]
-    # dict format: {"question_id": 1}
     answers_map = {}
 
     if isinstance(submitted_answers, list):

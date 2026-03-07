@@ -1,74 +1,108 @@
 from datetime import datetime
 from werkzeug.security import generate_password_hash
-from db import users_col, lessons_col, question_bank_col
+from db import users_col, lessons_col
+
 
 def seed_all():
+    # clear only users and lessons
     users_col.delete_many({})
     lessons_col.delete_many({})
-    question_bank_col.delete_many({})
 
-    teacher_id = users_col.insert_one({
+    # -------------------------
+    # Seed users
+    # -------------------------
+    users_col.insert_one({
         "name": "Teacher",
         "email": "teacher@test.com",
         "password_hash": generate_password_hash("teacher123"),
         "role": "teacher",
         "created_at": datetime.utcnow()
-    }).inserted_id
+    })
 
-    student_id = users_col.insert_one({
+    users_col.insert_one({
         "name": "Student",
         "email": "student@test.com",
         "password_hash": generate_password_hash("student123"),
         "role": "student",
         "created_at": datetime.utcnow()
-    }).inserted_id
+    })
 
-    lesson_id = lessons_col.insert_one({
-        "subject": "English",
-        "title": "Nouns Basics",
-        "content": "Full lesson: noun definition, examples, exercises...",
-        "simplified_content": "Simple: Noun = name of person/place/thing.",
-        "images": [],
-        "video_links": ["https://www.youtube.com/watch?v=example"],
-        "topics": ["nouns"],
-        "difficulty": "basic"
-    }).inserted_id
-
-    qs = []
-
-    for i in range(6):
-        qs.append({
-            "lesson_id": str(lesson_id),
-            "topic": "nouns",
+    # -------------------------
+    # Seed lessons
+    # -------------------------
+    lessons = [
+        {
+            "subject": "English",
+            "title": "Nouns Basics",
+            "content": "A noun is the name of a person, place, animal, or thing.",
+            "simplified_content": "Noun means the name of a person, place, animal or thing.",
+            "images": [],
+            "video_links": [],
+            "topics": ["nouns"],
             "difficulty": "basic",
-            "question": f"Basic Q{i+1}: Which is a noun?",
-            "options": ["run", "cat", "quickly", "blue"],
-            "correct_index": 1
-        })
+            "created_at": datetime.utcnow()
+        },
+        {
+            "subject": "English",
+            "title": "Pronouns Basics",
+            "content": "A pronoun is a word used instead of a noun.",
+            "simplified_content": "Pronoun means a word used in place of a noun.",
+            "images": [],
+            "video_links": [],
+            "topics": ["pronouns"],
+            "difficulty": "basic",
+            "created_at": datetime.utcnow()
+        },
+        {
+            "subject": "English",
+            "title": "Verbs Basics",
+            "content": "A verb is an action word or a state of being.",
+            "simplified_content": "Verb means action word.",
+            "images": [],
+            "video_links": [],
+            "topics": ["verbs"],
+            "difficulty": "basic",
+            "created_at": datetime.utcnow()
+        },
+        {
+            "subject": "English",
+            "title": "Adjectives Basics",
+            "content": "An adjective describes a noun or pronoun.",
+            "simplified_content": "Adjective means describing word.",
+            "images": [],
+            "video_links": [],
+            "topics": ["adjectives"],
+            "difficulty": "basic",
+            "created_at": datetime.utcnow()
+        },
+        {
+            "subject": "English",
+            "title": "Articles Basics",
+            "content": "Articles are words like a, an, and the used before nouns.",
+            "simplified_content": "Articles are a, an, and the.",
+            "images": [],
+            "video_links": [],
+            "topics": ["articles"],
+            "difficulty": "basic",
+            "created_at": datetime.utcnow()
+        },
+        {
+            "subject": "English",
+            "title": "Basic Sentence Structure",
+            "content": "A sentence is usually made of subject, verb, and object.",
+            "simplified_content": "Sentence structure means how words are arranged in a sentence.",
+            "images": [],
+            "video_links": [],
+            "topics": ["basic_sentence_structure"],
+            "difficulty": "basic",
+            "created_at": datetime.utcnow()
+        }
+    ]
 
-    for i in range(6):
-        qs.append({
-            "lesson_id": str(lesson_id),
-            "topic": "nouns",
-            "difficulty": "moderate",
-            "question": f"Moderate Q{i+1}: Identify the noun in 'The boy runs fast'.",
-            "options": ["The", "boy", "runs", "fast"],
-            "correct_index": 1
-        })
+    lessons_col.insert_many(lessons)
 
-    for i in range(6):
-        qs.append({
-            "lesson_id": str(lesson_id),
-            "topic": "nouns",
-            "difficulty": "hard",
-            "question": f"Hard Q{i+1}: Choose the abstract noun.",
-            "options": ["table", "happiness", "dog", "car"],
-            "correct_index": 1
-        })
+    print("✅ Seeded users and all lesson records")
 
-    question_bank_col.insert_many(qs)
-
-    print("✅ Seeded teacher, student, lesson, question_bank")
 
 if __name__ == "__main__":
     seed_all()
