@@ -1,124 +1,124 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  ResponsiveContainer
-} from "recharts";
 
 function HelpRequestsDetails() {
 
-  const helpRequests = [
-    {
-      student: "Student C",
-      topic: "Fractions",
-      message: "Need help understanding division of fractions.",
-      status: "Pending",
-    },
-    {
-      student: "Student D",
-      topic: "Grammar",
-      message: "Confused about sentence structure.",
-      status: "Resolved",
-    },
-  ];
+const helpRequests = [
+{
+student: "Student C",
+topic: "Fractions",
+message: "Need help understanding division of fractions.",
+status: "Pending",
+},
+{
+student: "Student D",
+topic: "Grammar",
+message: "Confused about sentence structure.",
+status: "Resolved",
+},
+];
 
-  const pendingCount = helpRequests.filter(r => r.status === "Pending").length;
-  const resolvedCount = helpRequests.length - pendingCount;
+const [selectedRequest, setSelectedRequest] = useState(null);
+const [reply, setReply] = useState("");
 
-  // Chart data
-  const chartData = [
-    { name: "Pending", value: pendingCount },
-    { name: "Resolved", value: resolvedCount }
-  ];
+const handleReplyClick = (request) => {
+setSelectedRequest(request);
+};
 
-  const COLORS = ["#ff6b6b", "#4CAF50"];
+const sendReply = () => {
+console.log("Reply sent:", reply);
+setReply("");
+};
 
-  return (
-    <div className="analytics-page">
+return ( <div className="analytics-page">
 
-      <div className="analytics-header">
-        <h2>❓ Help Requests Analytics</h2>
-        <Link to="/">
-          <button className="back-btn">Back</button>
-        </Link>
-      </div>
+  <div className="analytics-header">
+    <div className="top-bar">
+  <div></div>  {/* empty space for alignment */}
 
-      {/* KPI Cards */}
-      <div className="kpi-grid">
-        <div className="kpi-card">
-          <h4>Total Requests</h4>
-          <p>{helpRequests.length}</p>
-        </div>
+  <h1 className="dashboard-heading">Help Requests</h1>
 
-        <div className="kpi-card">
-          <h4>Pending Requests</h4>
-          <p>{pendingCount}</p>
-        </div>
+  </div>
+    <Link to="/">
+      <button className="back-btn">Back</button>
+    </Link>
+  </div>
 
-        <div className="kpi-card">
-          <h4>Resolved</h4>
-          <p>{resolvedCount}</p>
-        </div>
-      </div>
+  {/* TABLE */}
+  <div className="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Topic</th>
+          <th>Message</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
 
-      {/* Chart */}
-      <div style={{ width: "100%", height: 300, marginTop: "30px" }}>
-        <ResponsiveContainer>
-          <PieChart>
-            <Pie
-              data={chartData}
-              cx="50%"
-              cy="50%"
-              outerRadius={100}
-              dataKey="value"
-              label
-            >
-              {chartData.map((entry, index) => (
-                <Cell key={index} fill={COLORS[index]} />
-              ))}
-            </Pie>
-            <Tooltip />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
+      <tbody>
+        {helpRequests.map((request, index) => (
+          <tr key={index}>
+            <td>{request.student}</td>
+            <td>{request.topic}</td>
+            <td>{request.message}</td>
 
-      {/* Table */}
-      <div className="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Student</th>
-              <th>Topic</th>
-              <th>Message</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {helpRequests.map((request, index) => (
-              <tr key={index}>
-                <td>{request.student}</td>
-                <td>{request.topic}</td>
-                <td>{request.message}</td>
-                <td>
-                  <span className={`risk-badge ${request.status.toLowerCase()}`}>
-                    {request.status}
-                  </span>
-                </td>
-                <td>
-                  <button className="small-btn">Reply</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+            <td>
+              <span className={`risk-badge ${request.status.toLowerCase()}`}>
+                {request.status}
+              </span>
+            </td>
+
+            <td>
+              <button
+                className="small-btn"
+                onClick={() => handleReplyClick(request)}
+              >
+                Reply
+              </button>
+            </td>
+
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  {/* REPLY PANEL */}
+  {selectedRequest && (
+    <div className="reply-panel">
+
+      <h3>Reply to {selectedRequest.student}</h3>
+
+      <p><strong>Topic:</strong> {selectedRequest.topic}</p>
+      <p><strong>Message:</strong> {selectedRequest.message}</p>
+
+      <textarea
+        placeholder="Type your reply..."
+        value={reply}
+        onChange={(e) => setReply(e.target.value)}
+      />
+
+      <div className="reply-actions">
+        <button className="small-btn" onClick={sendReply}>
+          Send
+        </button>
+
+        <button
+          className="back-btn"
+          onClick={() => setSelectedRequest(null)}
+        >
+          Close
+        </button>
       </div>
 
     </div>
-  );
+  )}
+
+</div>
+
+);
 }
 
 export default HelpRequestsDetails;

@@ -14,7 +14,12 @@ function LowScoreDetails() {
     <div className="analytics-page">
 
       <div className="analytics-header">
-        <h2>📉 Low Score Students Analytics</h2>
+        <div className="top-bar">
+        <div></div>  {/* empty space for alignment */}
+
+        <h1 className="dashboard-heading">📉Low Score Students Analytics</h1>
+
+      </div>
         <Link to="/">
   <button className="back-btn">Back</button>
 </Link>

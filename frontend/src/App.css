@@ -1,10 +1,27 @@
 /* ===== PAGE BACKGROUND ===== */
+.dashboard-heading{
+  text-align: center;
+  font-size: 36px;
+  font-weight: 700;
+  color: #93def9;
+  font-family: sans-serif;
+}
+
 .dashboard-container {
   padding: 40px;
   min-height: 100vh;
-  background: linear-gradient(135deg, #e0eafc, #cfdef3);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  background:
+    linear-gradient(rgba(20,30,48,0.65), rgba(36,59,85,0.65)),
+    url("https://images.unsplash.com/photo-1519389950473-47ba0277781c");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  color: white;
 }
+
 
 /* ===== TOP HEADER BAR ===== */
 .top-bar {
@@ -14,8 +31,8 @@
   margin-bottom: 30px;
 }
 
-.top-bar h2 {
-  color: #2c3e50;
+.dashboard-title {
+  color: white;
 }
 
 .logout-btn {
@@ -49,18 +66,19 @@
 }
 
 /* ===== CARD BOX ===== */
-.dashboard-card {
-  background-color: #ffffff;
+.dashboard-card{
   padding: 25px;
-  border-radius: 15px;
+  border-radius: 14px;
   text-align: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: white;
+  background-color: #d9ecf0;   /* dark card color */
+  border: 1px solid #334155;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.dashboard-card:hover {
+.dashboard-card:hover{
   transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 10px 25px rgba(0,0,0,0.4);
 }
 
 /* ===== CARD ICON ===== */
@@ -146,8 +164,10 @@ body {
   transform: translateY(-5px);
   box-shadow: 0 15px 35px rgba(0,0,0,0.2);
 }
-.analytics-page {
+.analytics-page{
+  min-height: 100vh;
   padding: 40px;
+  background: linear-gradient(120deg, #2c3e50, #4a69bd);
 }
 
 .analytics-header {
@@ -273,4 +293,36 @@ tr:hover {
 .back-btn:hover {
   background: #5a67d8;
   transform: translateY(-2px);
+}
+
+/*REPLY PANEL*/
+.reply-panel{
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  height: 40%;
+  width: 18%;
+  background: #f1f5f9;
+  color: #2c3e50;
+  box-shadow: 0px 8px 25px rgba(0,0,0,0.35);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reply-panel textarea{
+  width: 100%;
+  height: 70px;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  background: white;
+  color: #2c3e50;
+}
+
+.reply-actions{
+  display: flex;
+  justify-content: space-between;
 }

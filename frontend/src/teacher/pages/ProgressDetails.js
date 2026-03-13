@@ -31,7 +31,13 @@ function ProgressDetails() {
     <div className="analytics-page">
 
       <div className="analytics-header">
-        <h2>📊 Student Progress Analytics</h2>
+        <div className="top-bar">
+        <div></div>  {/* empty space for alignment */}
+
+        <h1 className="dashboard-heading">📊 Student Progress Analytics</h1>
+
+      </div>
+        
         <Link to="/">
           <button className="back-btn">Back</button>
         </Link>

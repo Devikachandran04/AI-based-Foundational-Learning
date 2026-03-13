@@ -1,64 +1,69 @@
 import { Link } from "react-router-dom";
 
 function TeacherDashboard() {
-  return (
-    <div className="page-container">
+return ( <div className="dashboard-container">
 
-      {/* Top Bar */}
-      <div className="top-bar">
-        <h2>Foundation Learning - Teacher Panel</h2>
-        <button className="logout-btn">
-   Logout
-</button>
+  <div className="top-bar">
+  <div></div>  {/* empty space for alignment */}
 
-      </div>
+  <h1 className="dashboard-heading">Admin Dashboard</h1>
 
-      <h1 className="page-title">Dashboard Summary</h1>
+  <button className="logout-btn">Logout</button>
+</div>
 
-      <div className="card-grid">
+  <div className="card-grid">
 
-        {/* Low Score Students */}
-        <div className="card">
-          <h3>📉 Low Score Students</h3>
-          <p>Students performing below threshold.</p>
-          <span className="badge badge-primary">12 Students</span>
-          <Link to="/low-scores">
-            <button className="btn btn-primary">View Details</button>
-          </Link>
-        </div>
-
-        {/* Weak Topics */}
-        <div className="card">
-          <h3>📚 Weak Topics</h3>
-          <p>Topics where students are struggling.</p>
-          <span className="badge badge-warning">5 Topics</span>
-          <Link to="/weak-topics">
-            <button className="btn btn-warning">View Topics</button>
-          </Link>
-        </div>
-
-        {/* Help Requests */}
-        <div className="card">
-          <h3>❓ Help Requests</h3>
-          <p>Pending student doubts and queries.</p>
-          <span className="badge badge-danger">8 Pending</span>
-          <Link to="/help-requests">
-            <button className="btn btn-danger">Manage Requests</button>
-          </Link>
-        </div>
-
-        {/* Student Progress */}
-        <div className="card">
-          <h3>📊 Student Progress</h3>
-          <p>View overall performance analytics.</p>
-          <Link to="/progress">
-            <button className="btn btn-success">View Progress</button>
-          </Link>
-        </div>
-
-      </div>
+    {/* Low Score Students */}
+    <div className="dashboard-card">
+      <div className="card-icon">📉</div>
+      <h3>Low Score Students</h3>
+      <p>Students performing below threshold.</p>
+      <span className="badge">12 Students</span>
+      <br /><br />
+      <Link to="/low-scores">
+        <button className="card-btn">View Details</button>
+      </Link>
     </div>
-  );
+
+    {/* Weak Topics */}
+    <div className="dashboard-card">
+      <div className="card-icon">📚</div>
+      <h3>Weak Topics</h3>
+      <p>Topics where students are struggling.</p>
+      <span className="badge warning">5 Topics</span>
+      <br /><br />
+      <Link to="/weak-topics">
+        <button className="card-btn">View Topics</button>
+      </Link>
+    </div>
+
+    {/* Help Requests */}
+    <div className="dashboard-card">
+      <div className="card-icon">❓</div>
+      <h3>Help Requests</h3>
+      <p>Pending student doubts and queries.</p>
+      <span className="badge danger">8 Pending</span>
+      <br /><br />
+      <Link to="/help-requests">
+        <button className="card-btn">Manage Requests</button>
+      </Link>
+    </div>
+
+    {/* Student Progress */}
+    <div className="dashboard-card">
+      <div className="card-icon">📊</div>
+      <h3>Student Progress</h3>
+      <p>View overall performance analytics.</p>
+      <br />
+      <Link to="/progress">
+        <button className="card-btn">View Progress</button>
+      </Link>
+    </div>
+
+  </div>
+</div>
+
+);
 }
 
 export default TeacherDashboard;

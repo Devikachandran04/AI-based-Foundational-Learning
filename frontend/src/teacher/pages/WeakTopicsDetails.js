@@ -29,7 +29,12 @@ function WeakTopicsDetails() {
 
       {/* Header */}
       <div className="analytics-header">
-        <h2>📚 Weak Topics Analytics</h2>
+        <div className="top-bar">
+        <div></div>  {/* empty space for alignment */}
+
+        <h1 className="dashboard-heading">📚Weak Topics Analytics</h1>
+
+      </div>
         <Link to="/">
           <button className="back-btn">Back</button>
         </Link>
