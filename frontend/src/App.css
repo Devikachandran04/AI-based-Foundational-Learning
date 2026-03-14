@@ -1,3 +1,37 @@
+/*Login Page*/
+.login-page{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: linear-gradient(120deg,#2c3e50,#4a69bd);
+}
+
+.login-box{
+  background:white;
+  padding:40px;
+  border-radius:10px;
+  width:300px;
+  text-align:center;
+}
+
+.login-box input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+
+.login-box button{
+  width:100%;
+  padding:10px;
+  background:#4a69bd;
+  color:white;
+  border:none;
+  border-radius:6px;
+}
+
 /* ===== PAGE BACKGROUND ===== */
 .dashboard-heading{
   text-align: center;
@@ -262,7 +296,7 @@ tr:hover {
   padding: 6px 12px;
   border: none;
   border-radius: 6px;
-  background: #667eea;
+  background: #54086b;
   color: white;
   cursor: pointer;
 }
@@ -279,20 +313,27 @@ tr:hover {
   background: #e5fff0;
   color: #006600;
 }
-.back-btn {
-  padding: 8px 16px;
+.back-btn{
+  background-color: #3b82f6;   /* soft professional blue */
+  color: white;
+
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: 600;
+
   border: none;
   border-radius: 8px;
-  background: #667eea;
-  color: white;
-  font-weight: 500;
+
   cursor: pointer;
-  transition: 0.3s ease;
+
+  box-shadow: 0px 3px 8px rgba(0,0,0,0.2);
+
+  transition: all 0.25s ease;
 }
 
-.back-btn:hover {
-  background: #5a67d8;
-  transform: translateY(-2px);
+.back-btn:hover{
+  background-color: #2563eb;
+  transform: translateY(-1px);
 }
 
 /*REPLY PANEL*/
@@ -325,4 +366,29 @@ tr:hover {
 .reply-actions{
   display: flex;
   justify-content: space-between;
+}
+
+/* WEAK TOPICS REDBOX*/
+.student-popup{
+  position: fixed;
+  right: 40px;
+  bottom: 120px;
+  width: 220px;
+
+  background: rgb(147, 128, 225);
+  color: #021427;
+
+  padding: 15px;
+  border-radius: 10px;
+
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.25);
+}
+
+.student-popup h4{
+  margin-bottom: 10px;
+}
+
+.student-popup ul{
+  padding-left: 18px;
+  margin-bottom: 10px;
 }
