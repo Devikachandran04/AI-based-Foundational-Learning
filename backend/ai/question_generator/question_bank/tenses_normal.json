@@ -1,0 +1,14 @@
+[
+{"id":"t1","question":"Choose the correct tense: She ___ to school every day.","options":["go","goes","going","gone"],"answer":"goes","topic":"tenses","difficulty":"basic"},
+{"id":"t2","question":"Identify the tense: He is playing football.","options":["Present continuous","Past","Future","Present perfect"],"answer":"Present continuous","topic":"tenses","difficulty":"basic"},
+{"id":"t3","question":"Choose correct verb: They ___ dinner now.","options":["are eating","eat","ate","eaten"],"answer":"are eating","topic":"tenses","difficulty":"basic"},
+
+{"id":"t4","question":"Fill in: She ___ her homework yesterday.","options":["did","does","doing","done"],"answer":"did","topic":"tenses","difficulty":"moderate"},
+{"id":"t5","question":"Choose correct form: They ___ finished their project.","options":["have","has","had","having"],"answer":"have","topic":"tenses","difficulty":"moderate"},
+{"id":"t6","question":"Identify the tense: I will visit Delhi tomorrow.","options":["Future","Past","Present","Present continuous"],"answer":"Future","topic":"tenses","difficulty":"moderate"},
+{"id":"t7","question":"Fill in: He ___ watching TV when I arrived.","options":["was","is","has","will"],"answer":"was","topic":"tenses","difficulty":"moderate"},
+
+{"id":"t8","question":"Choose correct tense: She ___ in Kochi for five years.","options":["has lived","lived","living","live"],"answer":"has lived","topic":"tenses","difficulty":"hard"},
+{"id":"t9","question":"Identify tense: They had finished before we arrived.","options":["Past perfect","Present","Future","Present continuous"],"answer":"Past perfect","topic":"tenses","difficulty":"hard"},
+{"id":"t10","question":"Fill in: By next year, I ___ my degree.","options":["will complete","will have completed","complete","completed"],"answer":"will have completed","topic":"tenses","difficulty":"hard"}
+]

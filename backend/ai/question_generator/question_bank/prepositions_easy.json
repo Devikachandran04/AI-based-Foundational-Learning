@@ -1,0 +1,13 @@
+[
+{"id":"pre1","question":"The book is ___ the table.","options":["on","in","under","at"],"answer":"on","topic":"prepositions","difficulty":"basic"},
+{"id":"pre2","question":"She lives ___ Kochi.","options":["in","on","at","with"],"answer":"in","topic":"prepositions","difficulty":"basic"},
+{"id":"pre3","question":"The cat is ___ the chair.","options":["under","over","into","during"],"answer":"under","topic":"prepositions","difficulty":"basic"},
+{"id":"pre4","question":"The dog ran ___ the garden.","options":["into","between","during","since"],"answer":"into","topic":"prepositions","difficulty":"basic"},
+{"id":"pre5","question":"The picture is ___ the wall.","options":["on","under","inside","near"],"answer":"on","topic":"prepositions","difficulty":"basic"},
+{"id":"pre6","question":"She stood ___ her friend.","options":["beside","across","during","since"],"answer":"beside","topic":"prepositions","difficulty":"basic"},
+
+{"id":"pre7","question":"The meeting starts ___ 10 AM.","options":["at","on","in","during"],"answer":"at","topic":"prepositions","difficulty":"moderate"},
+{"id":"pre8","question":"The cat jumped ___ the table.","options":["onto","between","during","since"],"answer":"onto","topic":"prepositions","difficulty":"moderate"},
+{"id":"pre9","question":"The ball rolled ___ the chair.","options":["under","during","around","among"],"answer":"under","topic":"prepositions","difficulty":"moderate"},
+{"id":"pre10","question":"She divided the sweets ___ the children.","options":["among","between","during","inside"],"answer":"among","topic":"prepositions","difficulty":"moderate"}
+]
