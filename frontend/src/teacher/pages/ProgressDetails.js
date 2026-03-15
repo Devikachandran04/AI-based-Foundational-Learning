@@ -7,7 +7,8 @@ import {
   YAxis,
   Tooltip,
   CartesianGrid,
-  ResponsiveContainer
+  ResponsiveContainer,
+  Cell
 } from "recharts";
 
 function ProgressDetails() {
@@ -19,74 +20,126 @@ function ProgressDetails() {
     lowestScore: 38,
   };
 
-  // Distribution data for chart
-  const scoreDistribution = [
-    { range: "0-40", students: 5 },
-    { range: "40-60", students: 25 },
-    { range: "60-80", students: 60 },
-    { range: "80-100", students: 30 },
+  const scoreChart = [
+    { name: "Average", score: summary.averageScore },
+    { name: "Highest", score: summary.highestScore },
+    { name: "Lowest", score: summary.lowestScore },
+  ];
+
+  const colors = [
+    "#3b82f6", // average - blue
+    "#27ae60", // highest - green
+    "#e74c3c"  // lowest - red
   ];
 
   return (
     <div className="analytics-page">
 
+      {/* Header */}
       <div className="analytics-header">
+
         <div className="top-bar">
-        <div></div>  {/* empty space for alignment */}
+          <div></div>
+          <h1 className="dashboard-heading">📊 Student Progress Analytics</h1>
+        </div>
 
-        <h1 className="dashboard-heading">📊 Student Progress Analytics</h1>
-
-      </div>
-        
-        <Link to="/">
+        <Link to="/dashboard">
           <button className="back-btn">Back</button>
         </Link>
+
       </div>
 
       {/* KPI Cards */}
       <div className="kpi-grid">
+
         <div className="kpi-card">
-          <h4>Total Students</h4>
+          <h4>👨‍🎓 Total Students</h4>
           <p>{summary.totalStudents}</p>
         </div>
 
-        <div className="kpi-card">
-          <h4>Average Score</h4>
+        <div className="kpi-card average-card">
+          <h4>📈 Average Score</h4>
           <p>{summary.averageScore}%</p>
         </div>
 
-        <div className="kpi-card">
-          <h4>Highest Score</h4>
+        <div className="kpi-card highest-card">
+          <h4>🏆 Highest Score</h4>
           <p>{summary.highestScore}%</p>
         </div>
 
-        <div className="kpi-card">
-          <h4>Lowest Score</h4>
+        <div className="kpi-card lowest-card">
+          <h4>⚠️ Lowest Score</h4>
           <p>{summary.lowestScore}%</p>
         </div>
+
       </div>
 
       {/* Chart */}
-      <div style={{ width: "100%", height: 300, marginTop: "30px" }}>
+      <div style={{ width: "70%", height: 280, margin: "30px auto" }}>
         <ResponsiveContainer>
-          <BarChart data={scoreDistribution}>
+
+          <BarChart
+            data={scoreChart}
+            barCategoryGap="30%"
+          >
+
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="range" />
-            <YAxis />
+
+            <XAxis 
+              dataKey="name"
+              tick={{ fill: "#ffffff", fontSize: 14 }}
+            />
+
+            <YAxis
+              domain={[0,100]}
+              tickFormatter={(value)=>`${value}%`}
+              tick={{ fill: "#ffffff", fontSize: 14 }}
+            />
+
             <Tooltip />
-            <Bar dataKey="students" fill="#4CAF50" />
+
+            <Bar
+              dataKey="score"
+              radius={[10,10,0,0]}
+              barSize={80}
+            >
+
+              {scoreChart.map((entry, index) => (
+                <Cell key={index} fill={colors[index]} />
+              ))}
+
+            </Bar>
+
           </BarChart>
+
         </ResponsiveContainer>
       </div>
 
-      {/* Insights Section */}
+      {/* Insights */}
       <div className="table-container">
-        <h3>Performance Insights</h3>
+
+        <h3>📌 Performance Insights</h3>
+
         <ul>
-          <li>Majority of students scoring between 60% - 80%</li>
-          <li>5 students below 40%</li>
-          <li>Improvement trend observed in last 2 assessments</li>
+
+          <li>
+            Highest score achieved by a student is <b>{summary.highestScore}%</b>.
+          </li>
+
+          <li>
+            Lowest recorded score is <b>{summary.lowestScore}%</b>.
+          </li>
+
+          <li>
+            The overall class average performance is <b>{summary.averageScore}%</b>.
+          </li>
+
+          <li>
+            This indicates the class performance is <b>moderately strong</b>.
+          </li>
+
         </ul>
+
       </div>
 
     </div>
