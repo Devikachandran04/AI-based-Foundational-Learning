@@ -17,7 +17,7 @@ LESSON_TITLE_MAP = {
     "verbs": "Verbs Basics",
     "adjectives": "Adjectives Basics",
     "articles": "Articles Basics",
-    "basic_sentence_structure": "Basic Sentence Structure"
+    "prepositions": "Prepositions"
 }
 
 # Convert Person 2 difficulty naming -> backend naming

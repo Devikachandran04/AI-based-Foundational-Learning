@@ -87,15 +87,17 @@ def seed_all():
             "created_at": datetime.utcnow()
         },
         {
-            "subject": "English",
-            "title": "Basic Sentence Structure",
-            "content": "A sentence is usually made of subject, verb, and object.",
-            "simplified_content": "Sentence structure means how words are arranged in a sentence.",
-            "images": [],
-            "video_links": [],
-            "topics": ["basic_sentence_structure"],
-            "difficulty": "basic",
-            "created_at": datetime.utcnow()
+            
+    "subject": "English",
+    "title": "Prepositions",
+    "content": "Prepositions are words that show the relationship between a noun or pronoun and another word in the sentence. Examples include in, on, at, under, over, and between.",
+    "simplified_content": "Prepositions are small words like in, on, at that show place, time, or direction.",
+    "images": [],
+    "video_links": [],
+    "topics": ["prepositions"],
+    "difficulty": "basic",
+    "created_at": datetime.utcnow()
+
         }
     ]
 
