@@ -11,7 +11,7 @@ import HelpRequestsDetails from "./teacher/pages/HelpRequestsDetails";
 import AdminLogin from "./teacher/pages/AdminLogin";
 
 import ProtectedRoute from "./ProtectedRoute";
-
+import LearnerProfile from "./learner/learnerprofile";
 function App() {
   return (
     <Router>
@@ -63,6 +63,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/learner-profile" element={<LearnerProfile />} />
 
       </Routes>
     </Router>
