@@ -25,6 +25,7 @@ body {
 .login-box{
   background:#ffffff;
   border:1px solid #f1e2c8;
+  font-family:"Playfair Display", serif;
   box-shadow:0 8px 20px rgba(0,0,0,0.08);
   padding:40px;
   border-radius:10px;
@@ -43,8 +44,10 @@ body {
 .login-box button{
   width:100%;
   padding:10px;
+  font-size: 16px;
+  font-weight: 600;
   background:#f3b95f;
-  color:bold,rgb(83, 13, 13);
+  color:rgb(22, 87, 41);
   border:none;
   border-radius:6px;
 }
@@ -172,9 +175,10 @@ body {
   padding: 8px 16px;
   border: none;
   border-radius: 8px;
-  background-color: #f3b95f;
-  color: #6b6b6b;
+  font-size: 16px;
   font-weight: 500;
+  background:#f3b95f;
+  color:rgb(22, 87, 41);
   cursor: pointer;
   transition: 0.3s ease;
 }
