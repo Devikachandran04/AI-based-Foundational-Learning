@@ -23,58 +23,75 @@ function LearnerProfile() {
 
         <h1 className="profile-title">Learner Profile</h1>
 
-        <div className="profile-row">
-          <span>Student Name</span>
-          <span>{student.name}</span>
-        </div>
+        <div className="profile-grid">
 
-        <div className="profile-row">
-          <span>Class</span>
-          <span>{student.class}</span>
-        </div>
+          {/* LEFT CARD */}
+          <div className="profile-card">
+            <div className="section-title">Student Info</div>
 
-        <div className="profile-row">
-          <span>Lessons Completed</span>
-          <span>{student.lessonsCompleted}</span>
-        </div>
+            <div className="profile-row">
+              <span>Name</span>
+              <span>{student.name}</span>
+            </div>
 
-        <div className="profile-row">
-          <span>Basic Questions Attempted</span>
-          <span>{student.basicQuestions}</span>
-        </div>
+            <div className="profile-row">
+              <span>Class</span>
+              <span>{student.class}</span>
+            </div>
 
-        <div className="profile-row">
-          <span>Medium Questions Attempted</span>
-          <span>{student.mediumQuestions}</span>
-        </div>
+            <div className="profile-row">
+              <span>Lessons</span>
+              <span>{student.lessonsCompleted}</span>
+            </div>
 
-        <div className="profile-row">
-          <span>Hard Questions Attempted</span>
-          <span>{student.hardQuestions}</span>
-        </div>
+            <div className="profile-row">
+              <span>Average Score</span>
+              <span>{student.averageScore}%</span>
+            </div>
+          </div>
 
-        <div className="profile-row">
-          <span>Number of Attempts</span>
-          <span>{student.attempts}</span>
-        </div>
+          {/* RIGHT CARD */}
+          <div className="profile-card">
+            <div className="section-title">Attempts</div>
 
-        <div className="profile-row">
-          <span>Repeated Failures</span>
-          <span>{student.repeatedFailures}</span>
-        </div>
+            <div className="profile-row">
+              <span>Total Attempts</span>
+              <span>{student.attempts}</span>
+            </div>
 
-        <div className="profile-row">
-          <span>Average Score</span>
-          <span>{student.averageScore}%</span>
-        </div>
+            <div className="profile-row">
+              <span>Failures</span>
+              <span>{student.repeatedFailures}</span>
+            </div>
 
-        <div className="weak-section">
-          <h3>Weak Topics</h3>
-          <ul>
-            {student.weakTopics.map((topic, index) => (
-              <li key={index}>{topic}</li>
-            ))}
-          </ul>
+            <div className="stats">
+              <div className="stat-box">
+                <span>Basic</span>
+                <strong>{student.basicQuestions}</strong>
+              </div>
+
+              <div className="stat-box">
+                <span>Medium</span>
+                <strong>{student.mediumQuestions}</strong>
+              </div>
+
+              <div className="stat-box">
+                <span>Hard</span>
+                <strong>{student.hardQuestions}</strong>
+              </div>
+            </div>
+          </div>
+
+          {/* FULL WIDTH WEAK TOPICS */}
+          <div className="profile-card weak-section" style={{gridColumn: "span 2"}}>
+            <div className="section-title">Weak Topics</div>
+            <ul>
+              {student.weakTopics.map((topic, index) => (
+                <li key={index}>{topic}</li>
+              ))}
+            </ul>
+          </div>
+
         </div>
 
       </div>

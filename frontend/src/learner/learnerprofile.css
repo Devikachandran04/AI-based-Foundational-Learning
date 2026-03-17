@@ -1,60 +1,111 @@
-.profile-page{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+.profile-page {
+  min-height: 100vh;
+  padding: 30px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   background:
-  linear-gradient(rgba(20,30,48,0.7), rgba(36,59,85,0.7)),
-  url("https://images.unsplash.com/photo-1519389950473-47ba0277781c");
+    linear-gradient(rgba(20,30,48,0.75), rgba(36,59,85,0.75)),
+    url("https://images.unsplash.com/photo-1519389950473-47ba0277781c");
 
-  background-size:cover;
-  background-position:center;
+  background-size: cover;
+  background-position: center;
 }
 
-.profile-box{
-  width:450px;
-  background:white;
-  padding:35px;
+.profile-box {
+  width: 700px;
+  background: #f9fafc;
+  padding: 25px;
 
-  border-radius:12px;
-
-  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
 }
 
-.profile-title{
-  text-align:center;
-  margin-bottom:25px;
-  color:#2c3e50;
+/* TITLE */
+.profile-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  font-size: 24px;
 }
 
-.profile-row{
-  display:flex;
-  justify-content:space-between;
-
-  padding:10px 0;
-  border-bottom:1px solid #eee;
-
-  font-size:15px;
+/* GRID SECTIONS */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
 }
 
-.profile-row span:first-child{
-  font-weight:600;
-  color:#555;
+/* CARD STYLE */
+.profile-card {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
 }
 
-.profile-row span:last-child{
-  color:#222;
+/* LABEL + VALUE */
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+
+  font-size: 14px;
 }
 
-.weak-section{
-  margin-top:20px;
+.profile-row span:first-child {
+  color: #666;
+  font-weight: 500;
 }
 
-.weak-section h3{
-  margin-bottom:8px;
+.profile-row span:last-child {
+  font-weight: 600;
+  color: #222;
 }
 
-.weak-section ul{
-  padding-left:18px;
+/* SECTION HEADINGS */
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #2c3e50;
+}
+
+/* STATS BOX */
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.stat-box {
+  background: #eef2ff;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  flex: 1;
+  margin: 3px;
+}
+
+.stat-box span {
+  display: block;
+  font-size: 12px;
+  color: #555;
+}
+
+.stat-box strong {
+  font-size: 16px;
+}
+
+/* WEAK TOPICS */
+.weak-section ul {
+  padding-left: 18px;
+  margin-top: 5px;
+}
+
+.weak-section li {
+  font-size: 14px;
+  margin-bottom: 4px;
 }
