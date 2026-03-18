@@ -143,6 +143,7 @@ function ProgressDetails() {
       </div>
 
     </div>
+    
   );
 }
 

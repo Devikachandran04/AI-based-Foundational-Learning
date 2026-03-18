@@ -53,7 +53,11 @@ function LowScoreDetails() {
           <tbody>
             {students.map((student, index) => (
               <tr key={index}>
-                <td>{student.name}</td>
+                <td>
+                  <Link to={`/learner-profile/${student.name}`} className="student-link">
+                    {student.name}
+                  </Link>
+                </td>
                 <td>{student.consecutiveLowScores}</td>
                 <td>{student.lastScore}%</td>
                 <td>

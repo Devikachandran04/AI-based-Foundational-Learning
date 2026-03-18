@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { FiLogOut } from "react-icons/fi";
 
 function TeacherDashboard() {
 
@@ -16,22 +17,27 @@ function TeacherDashboard() {
   return (
     <div className="dashboard-container">
 
-      <div className="top-bar">
-        <div></div>
+      {/* NAVBAR */}
+      <div className="top-navbar">
 
-        <h1 className="dashboard-heading">Admin Dashboard</h1>
+        <div className="logo-section">
+          <img src="/logo.png" alt="GrammarPal" />
+          <h2 className="logo-text">GrammarPal</h2>
+        </div>
 
-        <button
-          className="logout-btn"
-          onClick={() => {
-            localStorage.removeItem("adminLoggedIn");
-            navigate("/", { replace: true });
-          }}
-        >
-          Logout
+        <button className="icon-btn">
+          <FiLogOut size={20} />
         </button>
+
       </div>
 
+      {/* HEADER */}
+      <div className="top-bar">
+        
+        <h1 className="dashboard-heading">Admin Dashboard</h1>
+      </div>
+
+      {/* CARD GRID */}
       <div className="card-grid">
 
         {/* Low Score Students */}
@@ -82,6 +88,7 @@ function TeacherDashboard() {
         </div>
 
       </div>
+
     </div>
   );
 }
