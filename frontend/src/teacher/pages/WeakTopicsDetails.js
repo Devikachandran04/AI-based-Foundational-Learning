@@ -53,7 +53,7 @@ function WeakTopicsDetails() {
         </div>
 
         <Link to="/dashboard">
-          <button className="back-btn">Back</button>
+          <button className="back-btn">← Back</button>
         </Link>
 
       </div>

@@ -1,7 +1,10 @@
 import React from "react";
 import "./learnerprofile.css";
+import { useNavigate } from "react-router-dom";
 
 function LearnerProfile() {
+
+  const navigate = useNavigate();
 
   const student = {
     name: "Samyuktha S",
@@ -82,7 +85,7 @@ function LearnerProfile() {
             </div>
           </div>
 
-          {/* FULL WIDTH WEAK TOPICS */}
+          {/* WEAK TOPICS */}
           <div className="profile-card weak-section" style={{gridColumn: "span 2"}}>
             <div className="section-title">Weak Topics</div>
             <ul>
@@ -93,6 +96,15 @@ function LearnerProfile() {
           </div>
 
         </div>
+        {/* ✅ CLOSE BUTTON */}
+        <div className="profile-actions">
+        <button 
+          className="back-btn"
+          onClick={() => navigate(-1)}
+        >
+          Close
+        </button>
+      </div>
 
       </div>
 

@@ -109,3 +109,9 @@
   font-size: 14px;
   margin-bottom: 4px;
 }
+
+.profile-actions {
+  display: flex;
+  justify-content: flex-end;  /* pushes button to right */
+  margin-top: 20px;
+}

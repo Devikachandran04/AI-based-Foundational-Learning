@@ -14,6 +14,12 @@ function TeacherDashboard() {
     }
   }, [navigate]);
 
+  // ✅ LOGOUT FUNCTION
+  const handleLogout = () => {
+    localStorage.removeItem("adminLoggedIn");
+    navigate("/"); // go back to login page
+  };
+
   return (
     <div className="dashboard-container">
 
@@ -21,11 +27,11 @@ function TeacherDashboard() {
       <div className="top-navbar">
 
         <div className="logo-section">
-          <img src="/logo.png" alt="GrammarPal" />
           <h2 className="logo-text">GrammarPal</h2>
         </div>
 
-        <button className="icon-btn">
+        {/* ✅ LOGOUT BUTTON WORKING */}
+        <button className="icon-btn" onClick={handleLogout}>
           <FiLogOut size={20} />
         </button>
 
@@ -33,14 +39,12 @@ function TeacherDashboard() {
 
       {/* HEADER */}
       <div className="top-bar">
-        
         <h1 className="dashboard-heading">Admin Dashboard</h1>
       </div>
 
       {/* CARD GRID */}
       <div className="card-grid">
 
-        {/* Low Score Students */}
         <div className="dashboard-card">
           <div className="card-icon">📉</div>
           <h3>Low Score Students</h3>
@@ -52,7 +56,6 @@ function TeacherDashboard() {
           </Link>
         </div>
 
-        {/* Weak Topics */}
         <div className="dashboard-card">
           <div className="card-icon">📚</div>
           <h3>Weak Topics</h3>
@@ -64,7 +67,6 @@ function TeacherDashboard() {
           </Link>
         </div>
 
-        {/* Help Requests */}
         <div className="dashboard-card">
           <div className="card-icon">❓</div>
           <h3>Help Requests</h3>
@@ -76,7 +78,6 @@ function TeacherDashboard() {
           </Link>
         </div>
 
-        {/* Student Progress */}
         <div className="dashboard-card">
           <div className="card-icon">📊</div>
           <h3>Student Progress</h3>

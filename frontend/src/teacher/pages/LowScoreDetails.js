@@ -3,31 +3,36 @@ import { Link } from "react-router-dom";
 
 function LowScoreDetails() {
 
+  // ✅ realistic student data
   const students = [
-    { name: "Student A", consecutiveLowScores: 3, lastScore: 42 },
-    { name: "Student B", consecutiveLowScores: 2, lastScore: 48 },
+    { name: "Samyuktha S", consecutiveLowScores: 3, lastScore: 42 },
+    { name: "Ardra A S", consecutiveLowScores: 2, lastScore: 48 },
+    { name: "Nivya R", consecutiveLowScores: 4, lastScore: 39 }
   ];
 
+  // ✅ high risk = >= 3 low scores
   const highRisk = students.filter(s => s.consecutiveLowScores >= 3).length;
 
   return (
     <div className="analytics-page">
 
+      {/* HEADER */}
       <div className="analytics-header">
+
         <div className="top-bar">
-        <div></div>  {/* empty space for alignment */}
+          <div></div>
+          <h1 className="dashboard-heading">📉 Low Score Students Analytics</h1>
+        </div>
 
-        <h1 className="dashboard-heading">📉Low Score Students Analytics</h1>
+        <Link to="/dashboard">
+          <button className="back-btn">← Back</button>
+        </Link>
 
       </div>
-        <Link to="/">
-  <button className="back-btn">Back</button>
-</Link>
 
-      </div>
-
-      {/* KPI Cards */}
+      {/* KPI CARDS */}
       <div className="kpi-grid">
+
         <div className="kpi-card">
           <h4>Total Low Score Students</h4>
           <p>{students.length}</p>
@@ -37,10 +42,12 @@ function LowScoreDetails() {
           <h4>High Risk Students</h4>
           <p>{highRisk}</p>
         </div>
+
       </div>
 
-      {/* Table */}
+      {/* TABLE */}
       <div className="table-container">
+
         <table>
           <thead>
             <tr>
@@ -50,25 +57,43 @@ function LowScoreDetails() {
               <th>Risk Level</th>
             </tr>
           </thead>
+
           <tbody>
-            {students.map((student, index) => (
-              <tr key={index}>
-                <td>
-                  <Link to={`/learner-profile/${student.name}`} className="student-link">
-                    {student.name}
-                  </Link>
-                </td>
-                <td>{student.consecutiveLowScores}</td>
-                <td>{student.lastScore}%</td>
-                <td>
-                  <span className={`risk-badge ${student.consecutiveLowScores >= 3 ? "high" : "medium"}`}>
-                    {student.consecutiveLowScores >= 3 ? "High" : "Medium"}
-                  </span>
-                </td>
-              </tr>
-            ))}
+            {students.map((student, index) => {
+
+              const isHigh = student.consecutiveLowScores >= 3;
+
+              return (
+                <tr key={index}>
+                  <td>
+                    {/* ✅ navigate to fixed profile */}
+                    <Link 
+                      to="/learner-profile"
+                      style={{
+                        textDecoration: "none",
+                        color: "#2563eb",
+                        fontWeight: "600"
+                      }}
+                    >
+                      {student.name}
+                    </Link>
+                  </td>
+
+                  <td>{student.consecutiveLowScores}</td>
+                  <td>{student.lastScore}%</td>
+
+                  <td>
+                    <span className={`risk-badge ${isHigh ? "high" : "medium"}`}>
+                      {isHigh ? "High" : "Medium"}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
+
         </table>
+
       </div>
 
     </div>
