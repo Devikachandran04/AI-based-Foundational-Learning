@@ -27,7 +27,7 @@ import {
 import { useStore } from './store';
 import confetti from 'canvas-confetti';
 import { GoogleGenAI } from "@google/genai";
-
+import axios from "axios";
 // --- Asset Generation ---
 
 const useAssets = () => {
@@ -1209,12 +1209,34 @@ const LoginPage = () => {
   const [username, setUsername] = useState('');
   const login = useStore((state) => state.login);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (username.trim()) {
-      login(username, 'Class 2');
-    }
-  };
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  try {
+    const res = await axios.post(
+      "http://127.0.0.1:5000/api/auth/login",
+      {
+        email: username,
+        password: "student123" // TEMP (we fix later)
+      }
+    );
+
+    console.log(res.data);
+
+    // ✅ store token
+    localStorage.setItem("token", res.data.token);
+
+    // ✅ keep existing store (optional)
+    login(username, "Class 2");
+
+    // ✅ redirect
+    window.location.href = "/dashboard";
+
+  } catch (err) {
+    console.error(err);
+    alert("Login failed");
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-stone-50 p-6">
