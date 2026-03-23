@@ -1,50 +1,31 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { FiLogOut } from "react-icons/fi";
 
 function TeacherDashboard() {
-
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loggedIn = localStorage.getItem("adminLoggedIn");
-
-    if (!loggedIn) {
-      navigate("/");
-    }
-  }, [navigate]);
-
-  // ✅ LOGOUT FUNCTION
   const handleLogout = () => {
     localStorage.removeItem("adminLoggedIn");
-    navigate("/"); // go back to login page
+    navigate("/"); // now "/" goes to dashboard
   };
 
   return (
     <div className="dashboard-container">
-
-      {/* NAVBAR */}
       <div className="top-navbar">
-
         <div className="logo-section">
           <h2 className="logo-text">GrammarPal</h2>
         </div>
 
-        {/* ✅ LOGOUT BUTTON WORKING */}
         <button className="icon-btn" onClick={handleLogout}>
           <FiLogOut size={20} />
         </button>
-
       </div>
 
-      {/* HEADER */}
       <div className="top-bar">
         <h1 className="dashboard-heading">Admin Dashboard</h1>
       </div>
 
-      {/* CARD GRID */}
       <div className="card-grid">
-
         <div className="dashboard-card">
           <div className="card-icon">📉</div>
           <h3>Low Score Students</h3>
@@ -87,9 +68,7 @@ function TeacherDashboard() {
             <button className="card-btn">View Progress</button>
           </Link>
         </div>
-
       </div>
-
     </div>
   );
 }
