@@ -4,12 +4,16 @@ from db import quizzes_col, attempts_col, question_bank_col
 from services.profile_service import update_profile_after_attempt
 from services.adaptive_policy import decide_next_step
 
+# 🎯 Difficulty weights
 WEIGHTS = {
     "basic": 1,
     "moderate": 2
 }
 
 
+# -----------------------------
+# 🔢 Get Attempt Number
+# -----------------------------
 def _get_attempt_no(user_id: str, lesson_id: str) -> int:
     count = attempts_col.count_documents({
         "user_id": user_id,
@@ -18,13 +22,13 @@ def _get_attempt_no(user_id: str, lesson_id: str) -> int:
     return count + 1
 
 
+# -----------------------------
+# 🎯 Pick Questions
+# -----------------------------
 def _pick_questions(lesson_id: str, attempt_no: int):
     """
-    Attempt 1 -> mixed quiz:
-        3 basic + 3 moderate
-
-    Attempt 2+ -> simplified quiz:
-        4 basic + 2 moderate
+    Attempt 1 -> 3 basic + 3 moderate
+    Attempt 2+ -> 4 basic + 2 moderate
     """
 
     if attempt_no == 1:
@@ -37,7 +41,7 @@ def _pick_questions(lesson_id: str, attempt_no: int):
     picked = []
     difficulty_breakdown = {"basic": 0, "moderate": 0}
 
-    for difficulty, needed_count in plan:
+    for difficulty, count in plan:
         questions = list(question_bank_col.aggregate([
             {
                 "$match": {
@@ -45,7 +49,7 @@ def _pick_questions(lesson_id: str, attempt_no: int):
                     "difficulty": difficulty
                 }
             },
-            {"$sample": {"size": needed_count}}
+            {"$sample": {"size": count}}
         ]))
 
         picked.extend(questions)
@@ -54,7 +58,13 @@ def _pick_questions(lesson_id: str, attempt_no: int):
     return picked, quiz_type, difficulty_breakdown
 
 
+# -----------------------------
+# 🚀 Start Quiz
+# -----------------------------
 def start_quiz(user_id: str, lesson_id: str):
+    # ✅ Ensure string match with DB
+    lesson_id = str(lesson_id)
+
     attempt_no = _get_attempt_no(user_id, lesson_id)
 
     questions, quiz_type, difficulty_breakdown = _pick_questions(lesson_id, attempt_no)
@@ -100,6 +110,9 @@ def start_quiz(user_id: str, lesson_id: str):
     }
 
 
+# -----------------------------
+# ✅ Submit Quiz
+# -----------------------------
 def submit_quiz(user_id: str, quiz_id: str, submitted_answers, time_taken_sec: int = 0):
     quiz = quizzes_col.find_one({"_id": ObjectId(quiz_id)})
 
@@ -120,9 +133,11 @@ def submit_quiz(user_id: str, quiz_id: str, submitted_answers, time_taken_sec: i
         "moderate": 0
     })
 
+    # 🔍 Fetch questions
     question_ids = [ObjectId(qid) for qid in quiz["question_ids"]]
     questions = list(question_bank_col.find({"_id": {"$in": question_ids}}))
 
+    # 🧠 Normalize answers
     answers_map = {}
 
     if isinstance(submitted_answers, list):
@@ -157,19 +172,19 @@ def submit_quiz(user_id: str, quiz_id: str, submitted_answers, time_taken_sec: i
             earned_weight += weight
             topic_stats[topic]["correct"] += 1
 
-    score = 0
-    if total_weight > 0:
-        score = round((earned_weight / total_weight) * 100)
+    # 🎯 Calculate score
+    score = round((earned_weight / total_weight) * 100) if total_weight > 0 else 0
 
-    topic_accuracy = {}
-    for topic, stats in topic_stats.items():
-        if stats["total"] == 0:
-            topic_accuracy[topic] = 0
-        else:
-            topic_accuracy[topic] = round(stats["correct"] / stats["total"], 2)
+    # 📊 Topic accuracy
+    topic_accuracy = {
+        topic: round(stats["correct"] / stats["total"], 2) if stats["total"] > 0 else 0
+        for topic, stats in topic_stats.items()
+    }
 
+    # 🤖 AI decision
     decision = decide_next_step(score_percent=score, attempt_no=attempt_no)
 
+    # 💾 Save attempt
     attempt_doc = {
         "user_id": user_id,
         "lesson_id": lesson_id,
@@ -191,6 +206,7 @@ def submit_quiz(user_id: str, quiz_id: str, submitted_answers, time_taken_sec: i
         {"$set": {"status": "submitted"}}
     )
 
+    # 🧠 Update learner profile
     update_profile_after_attempt(
         user_id=user_id,
         lesson_id=lesson_id,
