@@ -16,8 +16,6 @@ function App() {
     <Router>
       <Routes>
 
-        <Route path="/" element={<AdminLogin />} />
-
         <Route
           path="/dashboard"
           element={
