@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { FiLogOut } from "react-icons/fi";
 
 function TeacherDashboard() {
 
@@ -13,28 +14,37 @@ function TeacherDashboard() {
     }
   }, [navigate]);
 
+  // ✅ LOGOUT FUNCTION
+  const handleLogout = () => {
+    localStorage.removeItem("adminLoggedIn");
+    navigate("/"); // go back to login page
+  };
+
   return (
     <div className="dashboard-container">
 
-      <div className="top-bar">
-        <div></div>
+      {/* NAVBAR */}
+      <div className="top-navbar">
 
-        <h1 className="dashboard-heading">Admin Dashboard</h1>
+        <div className="logo-section">
+          <h2 className="logo-text">GrammarPal</h2>
+        </div>
 
-        <button
-          className="logout-btn"
-          onClick={() => {
-            localStorage.removeItem("adminLoggedIn");
-            navigate("/", { replace: true });
-          }}
-        >
-          Logout
+        {/* ✅ LOGOUT BUTTON WORKING */}
+        <button className="icon-btn" onClick={handleLogout}>
+          <FiLogOut size={20} />
         </button>
+
       </div>
 
+      {/* HEADER */}
+      <div className="top-bar">
+        <h1 className="dashboard-heading">Admin Dashboard</h1>
+      </div>
+
+      {/* CARD GRID */}
       <div className="card-grid">
 
-        {/* Low Score Students */}
         <div className="dashboard-card">
           <div className="card-icon">📉</div>
           <h3>Low Score Students</h3>
@@ -46,7 +56,6 @@ function TeacherDashboard() {
           </Link>
         </div>
 
-        {/* Weak Topics */}
         <div className="dashboard-card">
           <div className="card-icon">📚</div>
           <h3>Weak Topics</h3>
@@ -58,7 +67,6 @@ function TeacherDashboard() {
           </Link>
         </div>
 
-        {/* Help Requests */}
         <div className="dashboard-card">
           <div className="card-icon">❓</div>
           <h3>Help Requests</h3>
@@ -70,7 +78,6 @@ function TeacherDashboard() {
           </Link>
         </div>
 
-        {/* Student Progress */}
         <div className="dashboard-card">
           <div className="card-icon">📊</div>
           <h3>Student Progress</h3>
@@ -82,6 +89,7 @@ function TeacherDashboard() {
         </div>
 
       </div>
+
     </div>
   );
 }
