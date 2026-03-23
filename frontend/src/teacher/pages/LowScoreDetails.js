@@ -1,18 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+const token = localStorage.getItem("token");
 
+const config = {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+};
 function LowScoreDetails() {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:5000/api/teacher/dashboard/low-score-students")
-      .then((res) => {
-        setStudents(res.data?.low_score_students || []);
-      })
-      .catch((err) => console.error("Error fetching low score students:", err));
-  }, []);
+  const token = localStorage.getItem("token");
+
+  axios
+    .get("http://127.0.0.1:5000/api/teacher/dashboard/low-score-students", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((res) => {
+      setStudents(res.data?.low_score_students || []);
+    })
+    .catch((err) => console.error("Error fetching low score students:", err));
+}, []);
 
   const highRisk = students.filter(
     (s) => (s.consecutive_low_scores || s.consecutiveLowScores || 0) >= 3

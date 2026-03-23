@@ -1,20 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+const token = localStorage.getItem("token");
 
+const config = {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+};
 function HelpRequestsDetails() {
   const [helpRequests, setHelpRequests] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [reply, setReply] = useState("");
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:5000/api/help/all")
-      .then((res) => {
-        setHelpRequests(res.data?.all_doubts || []);
-      })
-      .catch((err) => console.error("Error fetching help requests:", err));
-  }, []);
+  const token = localStorage.getItem("token");
+
+  axios
+    .get("http://127.0.0.1:5000/api/help/all", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((res) => {
+      setHelpRequests(res.data?.all_doubts || []);
+    })
+    .catch((err) => console.error("Error fetching help requests:", err));
+}, []);
 
   const handleReplyClick = (request) => {
     setSelectedRequest(request);

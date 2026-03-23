@@ -11,18 +11,30 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
+const token = localStorage.getItem("token");
 
+const config = {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+};
 function ProgressDetails() {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:5000/api/teacher/dashboard/student-progress")
-      .then((res) => {
-        setStudents(res.data?.students || []);
-      })
-      .catch((err) => console.error("Error fetching progress data:", err));
-  }, []);
+  const token = localStorage.getItem("token");
+
+  axios
+    .get("http://127.0.0.1:5000/api/teacher/dashboard/student-progress", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((res) => {
+      setStudents(res.data?.students || []);
+    })
+    .catch((err) => console.error("Error fetching progress data:", err));
+}, []);
 
   const scores = students.map((s) => s.avg_score || 0);
 

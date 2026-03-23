@@ -2,7 +2,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import axios from "axios";
+const token = localStorage.getItem("token");
 
+const config = {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+};
 function TeacherDashboard() {
   const navigate = useNavigate();
 
@@ -17,13 +23,23 @@ function TeacherDashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        const [summaryRes, weakRes, helpRes] = await Promise.all([
-          axios.get("http://127.0.0.1:5000/api/teacher/dashboard/summary"),
-          axios.get("http://127.0.0.1:5000/api/teacher/dashboard/weak-topics"),
-          axios.get("http://127.0.0.1:5000/api/help/all")
-        ]);
+    // only axios part changed
+
+const fetchDashboardData = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
+
+    const [summaryRes, weakRes, helpRes] = await Promise.all([
+      axios.get("http://127.0.0.1:5000/api/teacher/dashboard/summary", config),
+      axios.get("http://127.0.0.1:5000/api/teacher/dashboard/weak-topics", config),
+      axios.get("http://127.0.0.1:5000/api/help/all", config)
+    ]);
 
         // summary data
         setSummaryData({

@@ -9,7 +9,13 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
+const token = localStorage.getItem("token");
 
+const config = {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+};
 function WeakTopicsDetails() {
   const [showStudents, setShowStudents] = useState(false);
   const [topicStudents, setTopicStudents] = useState([]);
@@ -17,13 +23,19 @@ function WeakTopicsDetails() {
   const [weakTopics, setWeakTopics] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:5000/api/teacher/dashboard/weak-topics")
-      .then((res) => {
-        setWeakTopics(res.data?.weak_topics || []);
-      })
-      .catch((err) => console.error("Error fetching weak topics:", err));
-  }, []);
+  const token = localStorage.getItem("token");
+
+  axios
+    .get("http://127.0.0.1:5000/api/teacher/dashboard/weak-topics", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((res) => {
+      setWeakTopics(res.data?.weak_topics || []);
+    })
+    .catch((err) => console.error("Error fetching weak topics:", err));
+}, []);
 
   const handleViewStudents = (topicItem) => {
     setTopicName(topicItem.topic || "Topic");
