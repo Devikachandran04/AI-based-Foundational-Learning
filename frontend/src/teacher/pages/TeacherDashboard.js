@@ -5,6 +5,7 @@ import axios from "axios";
 
 function TeacherDashboard() {
   const navigate = useNavigate();
+
   const [summaryData, setSummaryData] = useState({
     total_students: 0,
     avg_score_7d: 0,
@@ -18,6 +19,13 @@ function TeacherDashboard() {
     const fetchDashboardData = async () => {
       try {
         const token = localStorage.getItem("token");
+
+        if (!token) {
+          console.error("No token found! You need to login first.");
+          setLoading(false);
+          return;
+        }
+
         const config = { headers: { Authorization: `Bearer ${token}` } };
 
         const [summaryRes, weakRes, helpRes] = await Promise.all([
@@ -26,24 +34,33 @@ function TeacherDashboard() {
           axios.get("http://127.0.0.1:5000/api/help/all", config)
         ]);
 
+        console.log("SUMMARY API RESPONSE:", summaryRes.data);
+        console.log("WEAK TOPICS RESPONSE:", weakRes.data);
+        console.log("HELP REQUESTS RESPONSE:", helpRes.data);
+
         setSummaryData({
-          total_students: summaryRes.data?.total_students || 0,
-          avg_score_7d: summaryRes.data?.avg_score_7d || 0,
-          low_score_students: summaryRes.data?.low_score_students || 0
+          total_students: summaryRes.data?.total_students ?? 0,
+          avg_score_7d: summaryRes.data?.avg_score_7d ?? 0,
+          low_score_students: summaryRes.data?.low_score_students ?? 0
         });
 
-        setWeakCount(weakRes.data?.weak_topics?.length || 0);
-        setHelpCount(helpRes.data?.all_doubts?.length || 0);
+        setWeakCount(weakRes.data?.weak_topics?.length ?? 0);
+        setHelpCount(helpRes.data?.all_doubts?.length ?? 0);
       } catch (err) {
-        console.error("Error fetching dashboard data:", err);
+        console.error(
+          "Error fetching dashboard data:",
+          err.response?.data || err.message || err
+        );
       } finally {
         setLoading(false);
       }
     };
+
     fetchDashboardData();
   }, []);
 
   const handleLogout = () => {
+    localStorage.removeItem("token"); // clear the token
     localStorage.removeItem("adminLoggedIn");
     navigate("/");
   };
