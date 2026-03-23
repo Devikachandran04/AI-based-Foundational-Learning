@@ -11,32 +11,33 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
-const token = localStorage.getItem("token");
 
-const config = {
-  headers: {
-    Authorization: `Bearer ${token}`
-  }
-};
 function ProgressDetails() {
   const [students, setStudents] = useState([]);
-
-  useEffect(() => {
   const token = localStorage.getItem("token");
 
-  axios
-    .get("http://127.0.0.1:5000/api/teacher/dashboard/student-progress", {
-      headers: {
-        Authorization: `Bearer ${token}`
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(
+          "http://127.0.0.1:5000/api/teacher/dashboard/student-progress",
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setStudents(res.data?.students || []);
+      } catch (err) {
+        console.error("Error fetching progress data:", err);
       }
-    })
-    .then((res) => {
-      setStudents(res.data?.students || []);
-    })
-    .catch((err) => console.error("Error fetching progress data:", err));
-}, []);
+    };
+    fetchData();
+  }, [token]);
 
-  const scores = students.map((s) => s.avg_score || 0);
+  // Get latest attempt score for each student
+  const scores = students.map((s) => {
+    if (s.recent_attempts && s.recent_attempts.length > 0) {
+      return s.recent_attempts[0].score || 0;
+    }
+    return 0;
+  });
 
   const totalStudents = students.length;
   const averageScore = scores.length
@@ -88,24 +89,18 @@ function ProgressDetails() {
         </div>
       </div>
 
+      {/* Chart */}
       <div style={{ width: "70%", height: 280, margin: "30px auto" }}>
         <ResponsiveContainer>
           <BarChart data={scoreChart} barCategoryGap="30%">
             <CartesianGrid strokeDasharray="3 3" />
-
-            <XAxis
-              dataKey="name"
-              tick={{ fill: "#ffffff", fontSize: 14 }}
-            />
-
+            <XAxis dataKey="name" tick={{ fill: "#ffffff", fontSize: 14 }} />
             <YAxis
               domain={[0, 100]}
               tickFormatter={(value) => `${value}%`}
               tick={{ fill: "#ffffff", fontSize: 14 }}
             />
-
             <Tooltip />
-
             <Bar dataKey="score" radius={[10, 10, 0, 0]} barSize={80}>
               {scoreChart.map((entry, index) => (
                 <Cell key={index} fill={colors[index]} />
@@ -115,26 +110,49 @@ function ProgressDetails() {
         </ResponsiveContainer>
       </div>
 
+      {/* Table */}
       <div className="table-container">
-        <h3>📌 Performance Insights</h3>
-
-        <ul>
-          <li>
-            Highest score achieved by a student is <b>{highestScore}%</b>.
-          </li>
-
-          <li>
-            Lowest recorded score is <b>{lowestScore}%</b>.
-          </li>
-
-          <li>
-            The overall class average performance is <b>{averageScore}%</b>.
-          </li>
-
-          <li>
-            This indicates the class performance is <b>moderately strong</b>.
-          </li>
-        </ul>
+        <h3>📌 Student Scores</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th>Latest Score</th>
+              <th>Average Score</th>
+              <th>Risk Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            {students.length > 0 ? (
+              students.map((s, index) => {
+                const latestScore =
+                  s.recent_attempts && s.recent_attempts.length > 0
+                    ? s.recent_attempts[0].score
+                    : 0;
+                const riskLevel =
+                  latestScore < 50 ? "High" : latestScore < 65 ? "Medium" : "Low";
+                return (
+                  <tr key={s.user_id || index}>
+                    <td>
+                      {s.name || s.student_name || "Unnamed Student"}
+                    </td>
+                    <td>{latestScore}%</td>
+                    <td>{s.avg_score || 0}%</td>
+                    <td>
+                      <span className={`risk-badge ${riskLevel.toLowerCase()}`}>
+                        {riskLevel}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan="4">No students found.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
