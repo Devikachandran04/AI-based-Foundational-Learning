@@ -1,24 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function LowScoreDetails() {
+  const [students, setStudents] = useState([]);
 
-  // ✅ realistic student data
-  const students = [
-    { name: "Samyuktha S", consecutiveLowScores: 3, lastScore: 42 },
-    { name: "Ardra A S", consecutiveLowScores: 2, lastScore: 48 },
-    { name: "Nivya R", consecutiveLowScores: 4, lastScore: 39 }
-  ];
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:5000/api/teacher/dashboard/low-score-students")
+      .then((res) => {
+        setStudents(res.data?.low_score_students || []);
+      })
+      .catch((err) => console.error("Error fetching low score students:", err));
+  }, []);
 
-  // ✅ high risk = >= 3 low scores
-  const highRisk = students.filter(s => s.consecutiveLowScores >= 3).length;
+  const highRisk = students.filter(
+    (s) => (s.consecutive_low_scores || s.consecutiveLowScores || 0) >= 3
+  ).length;
 
   return (
     <div className="analytics-page">
-
-      {/* HEADER */}
       <div className="analytics-header">
-
         <div className="top-bar">
           <div></div>
           <h1 className="dashboard-heading">📉 Low Score Students Analytics</h1>
@@ -27,12 +29,9 @@ function LowScoreDetails() {
         <Link to="/dashboard">
           <button className="back-btn">← Back</button>
         </Link>
-
       </div>
 
-      {/* KPI CARDS */}
       <div className="kpi-grid">
-
         <div className="kpi-card">
           <h4>Total Low Score Students</h4>
           <p>{students.length}</p>
@@ -42,12 +41,9 @@ function LowScoreDetails() {
           <h4>High Risk Students</h4>
           <p>{highRisk}</p>
         </div>
-
       </div>
 
-      {/* TABLE */}
       <div className="table-container">
-
         <table>
           <thead>
             <tr>
@@ -59,43 +55,54 @@ function LowScoreDetails() {
           </thead>
 
           <tbody>
-            {students.map((student, index) => {
+            {students.length > 0 ? (
+              students.map((student, index) => {
+                const consecutive =
+                  student.consecutive_low_scores ||
+                  student.consecutiveLowScores ||
+                  0;
 
-              const isHigh = student.consecutiveLowScores >= 3;
+                const lastScore =
+                  student.last_score || student.lastScore || student.avg_score || 0;
 
-              return (
-                <tr key={index}>
-                  <td>
-                    {/* ✅ navigate to fixed profile */}
-                    <Link 
-                      to="/learner-profile"
-                      style={{
-                        textDecoration: "none",
-                        color: "#2563eb",
-                        fontWeight: "600"
-                      }}
-                    >
-                      {student.name}
-                    </Link>
-                  </td>
+                const isHigh = consecutive >= 3;
 
-                  <td>{student.consecutiveLowScores}</td>
-                  <td>{student.lastScore}%</td>
+                return (
+                  <tr key={student.id || index}>
+                    <td>
+                      <Link
+                        to="/learner-profile"
+                        style={{
+                          textDecoration: "none",
+                          color: "#2563eb",
+                          fontWeight: "600",
+                        }}
+                      >
+                        {student.name || student.student_name || "Unnamed Student"}
+                      </Link>
+                    </td>
 
-                  <td>
-                    <span className={`risk-badge ${isHigh ? "high" : "medium"}`}>
-                      {isHigh ? "High" : "Medium"}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })}
+                    <td>{consecutive}</td>
+                    <td>{lastScore}%</td>
+
+                    <td>
+                      <span
+                        className={`risk-badge ${isHigh ? "high" : "medium"}`}
+                      >
+                        {isHigh ? "High" : "Medium"}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan="4">No low score students found.</td>
+              </tr>
+            )}
           </tbody>
-
         </table>
-
       </div>
-
     </div>
   );
 }

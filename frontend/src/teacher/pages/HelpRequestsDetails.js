@@ -1,128 +1,135 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function HelpRequestsDetails() {
+  const [helpRequests, setHelpRequests] = useState([]);
+  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [reply, setReply] = useState("");
 
-const helpRequests = [
-{
-student: "Student C",
-topic: "Fractions",
-message: "Need help understanding division of fractions.",
-status: "Pending",
-},
-{
-student: "Student D",
-topic: "Grammar",
-message: "Confused about sentence structure.",
-status: "Resolved",
-},
-];
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:5000/api/help/all")
+      .then((res) => {
+        setHelpRequests(res.data?.all_doubts || []);
+      })
+      .catch((err) => console.error("Error fetching help requests:", err));
+  }, []);
 
-const [selectedRequest, setSelectedRequest] = useState(null);
-const [reply, setReply] = useState("");
+  const handleReplyClick = (request) => {
+    setSelectedRequest(request);
+  };
 
-const handleReplyClick = (request) => {
-setSelectedRequest(request);
-};
+  const sendReply = () => {
+    console.log("Reply sent:", reply, "for request:", selectedRequest);
+    setReply("");
+    setSelectedRequest(null);
+  };
 
-const sendReply = () => {
-console.log("Reply sent:", reply);
-setReply("");
-setSelectedRequest(null);
-};
+  return (
+    <div className="analytics-page">
+      <div className="analytics-header">
+        <div className="top-bar">
+          <div></div>
+          <h1 className="dashboard-heading">Help Requests</h1>
+        </div>
 
-return (
-<div className="analytics-page">
+        <Link to="/dashboard">
+          <button className="back-btn">← Back</button>
+        </Link>
+      </div>
 
-<div className="analytics-header">
-<div className="top-bar">
-<div></div>
-<h1 className="dashboard-heading">Help Requests</h1>
-</div>
+      <div className="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Topic</th>
+              <th>Message</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
 
-<Link to="/dashboard">
-<button className="back-btn">← Back</button>
-</Link>
-</div>
+          <tbody>
+            {helpRequests.length > 0 ? (
+              helpRequests.map((request, index) => (
+                <tr key={request.id || index}>
+                  <td>{request.student || request.student_name || "N/A"}</td>
+                  <td>{request.topic || "N/A"}</td>
+                  <td>{request.message || request.doubt || "No message"}</td>
 
-{/* TABLE */}
-<div className="table-container">
-<table>
-<thead>
-<tr>
-<th>Student</th>
-<th>Topic</th>
-<th>Message</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-</thead>
+                  <td>
+                    <span
+                      className={`risk-badge ${(
+                        request.status || "pending"
+                      ).toLowerCase()}`}
+                    >
+                      {request.status || "Pending"}
+                    </span>
+                  </td>
 
-<tbody>
-{helpRequests.map((request, index) => (
-<tr key={index}>
-<td>{request.student}</td>
-<td>{request.topic}</td>
-<td>{request.message}</td>
+                  <td>
+                    <button
+                      className="small-btn"
+                      onClick={() => handleReplyClick(request)}
+                    >
+                      Reply
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5">No help requests found.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
 
-<td>
-<span className={`risk-badge ${request.status.toLowerCase()}`}>
-{request.status}
-</span>
-</td>
+      {selectedRequest && (
+        <div className="reply-panel">
+          <div className="reply-header">
+            <h3>
+              Reply to{" "}
+              {selectedRequest.student || selectedRequest.student_name || "Student"}
+            </h3>
 
-<td>
-<button
-className="small-btn"
-onClick={() => handleReplyClick(request)}
->
-Reply
-</button>
-</td>
+            <button
+              className="close-reply"
+              onClick={() => setSelectedRequest(null)}
+            >
+              ✖
+            </button>
+          </div>
 
-</tr>
-))}
-</tbody>
-</table>
-</div>
+          <div className="request-details">
+            <p>
+              <strong>Topic:</strong> {selectedRequest.topic || "N/A"}
+            </p>
+            <p>
+              <strong>Message:</strong>{" "}
+              {selectedRequest.message || selectedRequest.doubt || "No message"}
+            </p>
+          </div>
 
-{/* REPLY PANEL */}
-{selectedRequest && (
-<div className="reply-panel">
+          <textarea
+            className="reply-textarea"
+            placeholder="Write your response to the student..."
+            value={reply}
+            onChange={(e) => setReply(e.target.value)}
+          />
 
-<div className="reply-header">
-<h3>Reply to {selectedRequest.student}</h3>
-<button
-className="close-reply"
-onClick={() => setSelectedRequest(null)}
->
-✖
-</button>
-</div>
-
-<div className="request-details">
-<p><strong>Topic:</strong> {selectedRequest.topic}</p>
-<p><strong>Message:</strong> {selectedRequest.message}</p>
-</div>
-
-<textarea
-className="reply-textarea"
-placeholder="Write your response to the student..."
-value={reply}
-onChange={(e) => setReply(e.target.value)}
-/>
-
-<div className="reply-actions">
-<button className="send-reply-btn" onClick={sendReply}>
-Send Reply
-</button>
-</div>
-
-</div>
-)}
-
-</div>
-);
+          <div className="reply-actions">
+            <button className="send-reply-btn" onClick={sendReply}>
+              Send Reply
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default HelpRequestsDetails;
