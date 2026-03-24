@@ -20,7 +20,7 @@ function ProgressDetails() {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          "http://127.0.0.1:5000/api/teacher/dashboard/student-progress",
+  "https://ai-based-foundational-learning-production.up.railway.app/api/teacher/dashboard/student-progress",
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setStudents(res.data?.students || []);

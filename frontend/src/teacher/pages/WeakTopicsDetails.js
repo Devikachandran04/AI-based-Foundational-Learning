@@ -13,7 +13,7 @@ function WeakTopicsDetails() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://127.0.0.1:5000/api/teacher/dashboard/weak-topics", {
+        const res = await axios.get("https://ai-based-foundational-learning-production.up.railway.app/api/teacher/dashboard/weak-topics", {
           headers: { Authorization: `Bearer ${token}` }
         });
         setWeakTopics(res.data?.weak_topics || []);

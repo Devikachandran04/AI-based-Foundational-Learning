@@ -11,7 +11,7 @@ function HelpRequestsDetails() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://127.0.0.1:5000/api/help/all", { headers: { Authorization: `Bearer ${token}` } });
+        const res = await axios.get("https://ai-based-foundational-learning-production.up.railway.app/api/help/all", { headers: { Authorization: `Bearer ${token}` } });
         setHelpRequests(res.data?.all_doubts || []);
       } catch (err) { console.error(err); }
     };

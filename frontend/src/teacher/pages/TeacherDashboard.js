@@ -26,12 +26,14 @@ function TeacherDashboard() {
           return;
         }
 
+        const BASE_URL = "https://ai-based-foundational-learning-production.up.railway.app";
+
         const config = { headers: { Authorization: `Bearer ${token}` } };
 
         const [summaryRes, weakRes, helpRes] = await Promise.all([
-          axios.get("http://127.0.0.1:5000/api/teacher/dashboard/summary", config),
-          axios.get("http://127.0.0.1:5000/api/teacher/dashboard/weak-topics", config),
-          axios.get("http://127.0.0.1:5000/api/help/all", config)
+          axios.get(`${BASE_URL}/api/teacher/dashboard/summary`, config),
+          axios.get(`${BASE_URL}/api/teacher/dashboard/weak-topics`, config),
+          axios.get(`${BASE_URL}/api/help/all`, config)
         ]);
 
         console.log("SUMMARY API RESPONSE:", summaryRes.data);

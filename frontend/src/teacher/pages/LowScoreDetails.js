@@ -9,7 +9,7 @@ function LowScoreDetails() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://127.0.0.1:5000/api/teacher/dashboard/low-score-students", {
+        const res = await axios.get("https://ai-based-foundational-learning-production.up.railway.app/api/teacher/dashboard/low-score-students", {
           headers: { Authorization: `Bearer ${token}` }
         });
         setStudents(res.data?.low_score_students || []);
