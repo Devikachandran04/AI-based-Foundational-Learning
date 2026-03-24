@@ -32,5 +32,7 @@ app.register_blueprint(teacher_bp, url_prefix="/api/teacher")
 app.register_blueprint(student_bp, url_prefix="/api/student")  # student blueprint last
 
 # 4️⃣ Run server
+import os
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
