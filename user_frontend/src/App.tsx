@@ -2590,7 +2590,7 @@ const LoginPage = ({ assets }: { assets: any }) => {
     e.preventDefault();
     const displayName = mode === 'register' ? name : email.split('@')[0];
     if (displayName.trim()) {
-      login(displayName, className);
+      login(displayName, password, className);
     }
   };
 
