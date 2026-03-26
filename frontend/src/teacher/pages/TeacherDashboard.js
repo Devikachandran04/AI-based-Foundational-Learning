@@ -59,11 +59,14 @@ navigate("/");
         setWeakCount(weakRes.data?.weak_topics?.length ?? 0);
         setHelpCount(helpRes.data?.all_doubts?.length ?? 0);
       } catch (err) {
-        console.error(
-          "Error fetching dashboard data:",
-          err.response?.data || err.message || err
-        );
-      } finally {
+  console.error("Error fetching dashboard data:", err);
+
+  if (err?.response?.status === 401) {
+    alert("Session expired. Please login again.");
+    localStorage.removeItem("token");
+    navigate("/");
+  }
+}finally {
         setLoading(false);
       }
     };
