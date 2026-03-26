@@ -18,11 +18,10 @@ function TeacherDashboard() {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        // ✅ Get token from URL
+        // ✅ TOKEN LOGIC (ONLY IMPORTANT ADDITION)
         const urlParams = new URLSearchParams(window.location.search);
         let token = urlParams.get("token");
 
-        // ✅ Save token if present
         if (token) {
           localStorage.setItem("token", token);
         } else {
@@ -38,9 +37,7 @@ function TeacherDashboard() {
         const BASE_URL = "https://ai-based-foundational-learning-production.up.railway.app";
 
         const config = {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          headers: { Authorization: `Bearer ${token}` }
         };
 
         const [summaryRes, weakRes, helpRes] = await Promise.all([
@@ -59,7 +56,7 @@ function TeacherDashboard() {
         setHelpCount(helpRes.data?.all_doubts?.length ?? 0);
 
       } catch (err) {
-        console.error("Error fetching dashboard:", err);
+        console.error("Error fetching dashboard data:", err);
 
         if (err?.response?.status === 401) {
           alert("Session expired. Please login again.");
@@ -76,29 +73,72 @@ function TeacherDashboard() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("adminLoggedIn");
     navigate("/");
   };
 
   return (
     <div className="dashboard-container">
       <div className="top-navbar">
-        <h2>GrammarPal</h2>
-        <button onClick={handleLogout}>
-          <FiLogOut />
+        <div className="logo-section">
+          <h2 className="logo-text">GrammarPal</h2>
+        </div>
+        <button className="icon-btn" onClick={handleLogout}>
+          <FiLogOut size={20} />
         </button>
       </div>
 
-      <h1>Admin Dashboard</h1>
+      <div className="top-bar">
+        <h1 className="dashboard-heading">Admin Dashboard</h1>
+      </div>
 
       {loading ? (
-        <p>Loading...</p>
+        <p className="loading-text">Loading dashboard...</p>
       ) : (
-        <div>
-          <p>Total Students: {summaryData.total_students}</p>
-          <p>Avg Score: {summaryData.avg_score_7d}</p>
-          <p>Low Score Students: {summaryData.low_score_students}</p>
-          <p>Weak Topics: {weakCount}</p>
-          <p>Help Requests: {helpCount}</p>
+        <div className="card-grid">
+          <div className="dashboard-card">
+            <div className="card-icon">📉</div>
+            <h3>Low Score Students</h3>
+            <p>Students performing below threshold.</p>
+            <span className="badge">{summaryData.low_score_students} Students</span>
+            <br /><br />
+            <Link to="/low-scores">
+              <button className="card-btn">View Details</button>
+            </Link>
+          </div>
+
+          <div className="dashboard-card">
+            <div className="card-icon">📚</div>
+            <h3>Weak Topics</h3>
+            <p>Topics where students are struggling.</p>
+            <span className="badge warning">{weakCount} Topics</span>
+            <br /><br />
+            <Link to="/weak-topics">
+              <button className="card-btn">View Topics</button>
+            </Link>
+          </div>
+
+          <div className="dashboard-card">
+            <div className="card-icon">❓</div>
+            <h3>Help Requests</h3>
+            <p>Pending student doubts and queries.</p>
+            <span className="badge danger">{helpCount} Pending</span>
+            <br /><br />
+            <Link to="/help-requests">
+              <button className="card-btn">Manage Requests</button>
+            </Link>
+          </div>
+
+          <div className="dashboard-card">
+            <div className="card-icon">📊</div>
+            <h3>Student Progress</h3>
+            <p>Total Students: {summaryData.total_students}</p>
+            <p>Average Score (7 days): {summaryData.avg_score_7d}%</p>
+            <br />
+            <Link to="/progress">
+              <button className="card-btn">View Progress</button>
+            </Link>
+          </div>
         </div>
       )}
     </div>

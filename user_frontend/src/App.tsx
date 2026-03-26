@@ -2602,7 +2602,10 @@ const handleSubmit = async (e: React.FormEvent) => {
   const role = result.user.role;
 
   if (role === "teacher") {
+    // ✅ redirect to admin dashboard WITH token
     window.location.href = `https://ai-based-foundational-learning-hu6m.vercel.app/dashboard?token=${result.token}`;
+  } else {
+    // ✅ student stays in same app
     console.log("Student logged in");
   }
 };
