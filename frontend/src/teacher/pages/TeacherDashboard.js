@@ -18,10 +18,20 @@ function TeacherDashboard() {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const token = localStorage.getItem("token");
+        // ✅ get token from URL first
+const urlParams = new URLSearchParams(window.location.search);
+let token = urlParams.get("token");
+
+// ✅ if token comes from URL → store it
+if (token) {
+  localStorage.setItem("token", token);
+} else {
+  token = localStorage.getItem("token");
+}
 
         if (!token) {
-          console.error("No token found! You need to login first.");
+          console.error("No token found! Redirecting...");
+navigate("/");
           setLoading(false);
           return;
         }

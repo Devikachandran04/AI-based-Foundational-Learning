@@ -2586,7 +2586,7 @@ const LoginPage = ({ assets }: { assets: any }) => {
   const [className, setClassName] = useState('Class 2');
   const login = useStore((state) => state.login);
 
-  const handleSubmit = (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
 
   if (!email || !password) {
@@ -2594,8 +2594,17 @@ const LoginPage = ({ assets }: { assets: any }) => {
     return;
   }
 
-  // ✅ send full email to backend
-  login(email, password, className);
+  // ✅ call login ONLY ONCE
+  const result = await login(email, password, className);
+
+  if (!result) return; // login failed
+
+  const role = result.user.role;
+
+  if (role === "teacher") {
+    window.location.href = `https://ai-based-foundational-learning-hu6m.vercel.app/dashboard?token=${result.token}`;
+    console.log("Student logged in");
+  }
 };
 
   return (
