@@ -2587,12 +2587,20 @@ const LoginPage = ({ assets }: { assets: any }) => {
   const login = useStore((state) => state.login);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const displayName = mode === 'register' ? name : email.split('@')[0];
-    if (displayName.trim()) {
-      login(displayName, password, className);
-    }
-  };
+  e.preventDefault();
+
+  const displayName =
+    mode === "register"
+      ? name
+      : email ? email.split("@")[0] : "";
+
+  if (!displayName || !password) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  login(displayName, password, className);
+};
 
   return (
     <div className="min-h-screen w-full bg-white relative overflow-x-hidden flex flex-col">
