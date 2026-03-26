@@ -14,22 +14,37 @@ import {
 
 function ProgressDetails() {
   const [students, setStudents] = useState([]);
-  const token = localStorage.getItem("token");
+const [token, setToken] = useState(null);
 
+useEffect(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  let t = urlParams.get("token");
+
+  if (t) {
+    localStorage.setItem("token", t);
+  } else {
+    t = localStorage.getItem("token");
+  }
+
+  setToken(t);
+}, []);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(
-  "https://ai-based-foundational-learning-production.up.railway.app/api/teacher/dashboard/student-progress",
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        setStudents(res.data?.students || []);
-      } catch (err) {
-        console.error("Error fetching progress data:", err);
-      }
-    };
-    fetchData();
-  }, [token]);
+  if (!token) return;
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(
+        "https://ai-based-foundational-learning-production.up.railway.app/api/teacher/dashboard/student-progress",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setStudents(res.data?.students || []);
+    } catch (err) {
+      console.error("Error fetching progress data:", err);
+    }
+  };
+
+  fetchData();
+}, [token]);
 
   // Get latest attempt score for each student
   const scores = students.map((s) => {

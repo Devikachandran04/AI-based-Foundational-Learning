@@ -4,21 +4,37 @@ import axios from "axios";
 
 function LowScoreDetails() {
   const [students, setStudents] = useState([]);
-  const token = localStorage.getItem("token");
+const [token, setToken] = useState(null);
 
+useEffect(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  let t = urlParams.get("token");
+
+  if (t) {
+    localStorage.setItem("token", t);
+  } else {
+    t = localStorage.getItem("token");
+  }
+
+  setToken(t);
+}, []);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get("https://ai-based-foundational-learning-production.up.railway.app/api/teacher/dashboard/low-score-students", {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setStudents(res.data?.low_score_students || []);
-      } catch (err) {
-        console.error("Error fetching low score students:", err);
-      }
-    };
-    fetchData();
-  }, [token]);
+  if (!token) return;
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(
+        "https://ai-based-foundational-learning-production.up.railway.app/api/teacher/dashboard/low-score-students",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setStudents(res.data?.low_score_students || []);
+    } catch (err) {
+      console.error("Error fetching low score students:", err);
+    }
+  };
+
+  fetchData();
+}, [token]);
 
   const highRisk = students.filter(s => (s.consecutive_low_scores || s.consecutiveLowScores || 0) >= 3).length;
 

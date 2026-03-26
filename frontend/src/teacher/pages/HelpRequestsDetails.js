@@ -6,17 +6,37 @@ function HelpRequestsDetails() {
   const [helpRequests, setHelpRequests] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [reply, setReply] = useState("");
-  const token = localStorage.getItem("token");
+const [token, setToken] = useState(null);
 
+useEffect(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  let t = urlParams.get("token");
+
+  if (t) {
+    localStorage.setItem("token", t);
+  } else {
+    t = localStorage.getItem("token");
+  }
+
+  setToken(t);
+}, []);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get("https://ai-based-foundational-learning-production.up.railway.app/api/help/all", { headers: { Authorization: `Bearer ${token}` } });
-        setHelpRequests(res.data?.all_doubts || []);
-      } catch (err) { console.error(err); }
-    };
-    fetchData();
-  }, [token]);
+  if (!token) return;
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(
+        "https://ai-based-foundational-learning-production.up.railway.app/api/help/all",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setHelpRequests(res.data?.all_doubts || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  fetchData();
+}, [token]);
 
   const handleReplyClick = (request) => setSelectedRequest(request);
   const sendReply = () => {

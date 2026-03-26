@@ -8,21 +8,37 @@ function WeakTopicsDetails() {
   const [topicStudents, setTopicStudents] = useState([]);
   const [topicName, setTopicName] = useState("");
   const [weakTopics, setWeakTopics] = useState([]);
-  const token = localStorage.getItem("token");
+const [token, setToken] = useState(null);
 
+useEffect(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  let t = urlParams.get("token");
+
+  if (t) {
+    localStorage.setItem("token", t);
+  } else {
+    t = localStorage.getItem("token");
+  }
+
+  setToken(t);
+}, []);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get("https://ai-based-foundational-learning-production.up.railway.app/api/teacher/dashboard/weak-topics", {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setWeakTopics(res.data?.weak_topics || []);
-      } catch (err) {
-        console.error("Error fetching weak topics:", err);
-      }
-    };
-    fetchData();
-  }, [token]);
+  if (!token) return;
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(
+        "https://ai-based-foundational-learning-production.up.railway.app/api/teacher/dashboard/weak-topics",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setWeakTopics(res.data?.weak_topics || []);
+    } catch (err) {
+      console.error("Error fetching weak topics:", err);
+    }
+  };
+
+  fetchData();
+}, [token]);
 
   const handleViewStudents = (topicItem) => {
     setTopicName(topicItem.topic || "Topic");
