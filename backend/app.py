@@ -8,13 +8,23 @@ from routes.lessons import lessons_bp
 from routes.quiz import quiz_bp
 from routes.help import help_bp
 from routes.teacher import teacher_bp
-from routes.student import student_bp  # new
+from routes.student import student_bp
 
 # 1️⃣ Create Flask app
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-# 2️⃣ Health check route
+# 2️⃣ Enable CORS (IMPORTANT)
+CORS(app)
+
+# 3️⃣ Handle preflight & headers manually (fixes browser issues)
+@app.after_request
+def after_request(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET,POST,PUT,DELETE,OPTIONS"
+    return response
+
+# 4️⃣ Health check route
 @app.get("/api/health")
 def health():
     try:
@@ -23,15 +33,15 @@ def health():
     except Exception as e:
         return jsonify({"ok": False, "error": str(e)}), 500
 
-# 3️⃣ Register blueprints
+# 5️⃣ Register blueprints
 app.register_blueprint(auth_bp, url_prefix="/api/auth")
 app.register_blueprint(lessons_bp, url_prefix="/api/lessons")
 app.register_blueprint(quiz_bp, url_prefix="/api/quiz")
 app.register_blueprint(help_bp, url_prefix="/api/help")
 app.register_blueprint(teacher_bp, url_prefix="/api/teacher")
-app.register_blueprint(student_bp, url_prefix="/api/student")  # student blueprint last
+app.register_blueprint(student_bp, url_prefix="/api/student")
 
-# 4️⃣ Run server
+# 6️⃣ Run server
 import os
 
 if __name__ == "__main__":
