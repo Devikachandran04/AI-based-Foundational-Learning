@@ -2589,17 +2589,13 @@ const LoginPage = ({ assets }: { assets: any }) => {
   const handleSubmit = (e: React.FormEvent) => {
   e.preventDefault();
 
-  const displayName =
-    mode === "register"
-      ? name
-      : email ? email.split("@")[0] : "";
-
-  if (!displayName || !password) {
+  if (!email || !password) {
     alert("Please fill all fields");
     return;
   }
 
-  login(displayName, password, className);
+  // ✅ send full email to backend
+  login(email, password, className);
 };
 
   return (

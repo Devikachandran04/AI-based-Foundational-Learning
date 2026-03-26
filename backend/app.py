@@ -12,7 +12,7 @@ from routes.student import student_bp  # new
 
 # 1️⃣ Create Flask app
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # 2️⃣ Health check route
 @app.get("/api/health")

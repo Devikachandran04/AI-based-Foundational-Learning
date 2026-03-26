@@ -33,16 +33,16 @@ export const useStore = create<AppState>()(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: username,
-          password: password,
-        }),
+  email: username,   // ✅ THIS IS THE FIX
+  password: password,
+}),
       }
     );
 
     const data = await res.json();
     console.log("LOGIN RESPONSE:", data);
     if (!res.ok) {
-  alert(data.message || "Login failed");
+  alert(data.error || "Login failed");
   return;
 }
 
