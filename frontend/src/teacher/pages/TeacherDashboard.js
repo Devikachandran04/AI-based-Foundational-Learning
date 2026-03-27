@@ -33,10 +33,15 @@ function TeacherDashboard() {
           navigate("/");
           return;
         }
-        const handleLogout = () => {
+       const handleLogout = () => {
+  // 1️⃣ Clear all tokens / storage
   localStorage.removeItem("token");
-  localStorage.removeItem("grammar-pal-storage"); // ⭐ VERY IMPORTANT
-  window.location.href = "/"; // full reset
+  localStorage.removeItem("grammar-pal-storage");
+
+  // 2️⃣ Navigate to home page safely
+  if (typeof window !== "undefined") {
+    window.location.href = "/"; // full reset to home page
+  }
 };
         const BASE_URL = "https://ai-based-foundational-learning-production.up.railway.app";
 
