@@ -33,7 +33,11 @@ function TeacherDashboard() {
           navigate("/");
           return;
         }
-
+        const handleLogout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("grammar-pal-storage"); // ⭐ VERY IMPORTANT
+  window.location.href = "/"; // full reset
+};
         const BASE_URL = "https://ai-based-foundational-learning-production.up.railway.app";
 
         const config = {
