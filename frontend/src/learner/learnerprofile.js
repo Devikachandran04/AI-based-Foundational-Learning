@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./learnerprofile.css";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function LearnerProfile() {
   const navigate = useNavigate();
-  const location = useLocation();
 const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
 
