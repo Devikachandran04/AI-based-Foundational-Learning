@@ -18,7 +18,7 @@ function TeacherDashboard() {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        // ✅ TOKEN LOGIC (ONLY IMPORTANT ADDITION)
+        // ✅ TOKEN LOGIC
         const urlParams = new URLSearchParams(window.location.search);
         let token = urlParams.get("token");
 
@@ -33,18 +33,8 @@ function TeacherDashboard() {
           navigate("/");
           return;
         }
-       const handleLogout = () => {
-  // 1️⃣ Clear all tokens / storage
-  localStorage.removeItem("token");
-  localStorage.removeItem("grammar-pal-storage");
 
-  // 2️⃣ Navigate to home page safely
-  if (typeof window !== "undefined") {
-    window.location.href = "/"; // full reset to home page
-  }
-};
         const BASE_URL = "https://ai-based-foundational-learning-production.up.railway.app";
-
         const config = {
           headers: { Authorization: `Bearer ${token}` }
         };
@@ -80,10 +70,14 @@ function TeacherDashboard() {
     fetchDashboardData();
   }, [navigate]);
 
+  // ✅ Safe logout function for button
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("adminLoggedIn");
-    navigate("/");
+    localStorage.removeItem("grammar-pal-storage"); // clear everything
+
+    if (typeof window !== "undefined") {
+      window.location.href = "/"; // full reset to home page
+    }
   };
 
   return (
