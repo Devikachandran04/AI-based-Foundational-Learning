@@ -71,14 +71,17 @@ function TeacherDashboard() {
   }, [navigate]);
 
   // ✅ Safe logout function for button
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("grammar-pal-storage"); // clear everything
+  // ✅ Safe logout function for button
+const handleLogout = () => {
+  // 1️⃣ Clear all tokens / storage
+  localStorage.removeItem("token");
+  localStorage.removeItem("grammar-pal-storage"); // clear everything
 
-    if (typeof window !== "undefined") {
-      window.location.href = "/"; // full reset to home page
-    }
-  };
+  // 2️⃣ Redirect to main user frontend interface
+  if (typeof window !== "undefined") {
+    window.location.href = "https://ai-based-foundational-learning-user.vercel.app/";
+  }
+};
 
   return (
     <div className="dashboard-container">
