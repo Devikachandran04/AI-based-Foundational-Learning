@@ -7,7 +7,8 @@ from services.adaptive_policy import decide_next_step
 # 🎯 Difficulty weights
 WEIGHTS = {
     "basic": 1,
-    "moderate": 2
+    "moderate": 2,
+    "advanced": 3   # 🔥 ADD THIS
 }
 
 
@@ -32,7 +33,7 @@ def _pick_questions(lesson_id: str, attempt_no: int):
     """
 
     if attempt_no == 1:
-        plan = [("basic", 3), ("moderate", 3)]
+        plan = [("basic", 2), ("moderate", 2), ("advanced", 2)]
         quiz_type = "mixed"
     else:
         plan = [("basic", 4), ("moderate", 2)]

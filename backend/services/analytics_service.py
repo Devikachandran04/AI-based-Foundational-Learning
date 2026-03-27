@@ -138,6 +138,7 @@ def student_progress():
         attempts = list(attempts_col.find({"user_id": user_id}))
         scores = [a.get("score", 0) for a in attempts]
 
+        # 📊 Score calculations
         if not scores:
             avg_score = highest_score = lowest_score = 0
         else:
@@ -145,19 +146,47 @@ def student_progress():
             highest_score = max(scores)
             lowest_score = min(scores)
 
-        # Get learner profile weak topics
-        profile = profiles_col.find_one({"user_id": user_id})
-        weak = [{"topic": t, "count": c} for t, c in profile.get("weak_topics", {}).items()] if profile else []
+        # 🧠 Difficulty count aggregation (NEW 🔥)
+        basic = 0
+        moderate = 0
+        advanced = 0
+        for a in attempts:
+            breakdown = a.get("difficulty_breakdown", {})
+            basic += breakdown.get("basic", 0)
+            moderate += breakdown.get("moderate", 0)
+            advanced += breakdown.get("advanced", 0)
 
+        # 📚 Learner profile (lessons + weak topics)
+        profile = profiles_col.find_one({"user_id": user_id})
+
+        if profile:
+            lessons_completed = len(profile.get("completed_lessons", []))
+            weak = [
+                {"topic": t, "count": c}
+                for t, c in profile.get("weak_topics", {}).items()
+            ]
+        else:
+            lessons_completed = 0
+            weak = []
+
+        # 📦 Final response
         result.append({
             "user_id": user_id,
             "name": student.get("name"),
             "email": student.get("email"),
+
             "avg_score": avg_score,
             "highest_score": highest_score,
             "lowest_score": lowest_score,
-            "lessons_completed": len(profile.get("completed_lessons", [])) if profile else 0,
+
+            "lessons_completed": lessons_completed,
+
+            # 🔥 NEW FIELDS (for learner profile UI)
+            "basic_questions_attempted": basic,
+            "intermediate_questions_attempted": moderate,
+            "advanced_questions_attempted": advanced,
             "weak_topics": weak,
+
             "recent_attempts": [
                 {
                     "lesson_id": a.get("lesson_id"),
@@ -166,7 +195,8 @@ def student_progress():
                     "quiz_type": a.get("quiz_type"),
                     "difficulty_breakdown": a.get("difficulty_breakdown", {}),
                     "created_at": a.get("created_at")
-                } for a in sorted(attempts, key=lambda x: x["created_at"], reverse=True)[:10]
+                }
+                for a in sorted(attempts, key=lambda x: x["created_at"], reverse=True)[:10]
             ]
         })
 
