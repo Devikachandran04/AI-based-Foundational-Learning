@@ -30,49 +30,66 @@ export const useStore = create<AppState>()(
 
       // ✅ ACTUAL FUNCTION HERE
       login: async (username: string, password: string, className: string) => {
-        try {
-          const res = await fetch(
-            "https://ai-based-foundational-learning-production.up.railway.app/api/auth/login",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                email: username,
-                password: password,
-              }),
-            }
-          );
+  try {
+    const res = await fetch(
+      "https://ai-based-foundational-learning-production.up.railway.app/api/auth/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: username,
+          password: password,
+        }),
+      }
+    );
 
-          const data = await res.json();
-          console.log("LOGIN RESPONSE:", data);
+    const data = await res.json();
+    console.log("LOGIN RESPONSE:", data);
 
-          if (!res.ok) {
-            alert(data.error || "Login failed");
-            return null;
-          }
+    if (!res.ok) {
+      alert(data.error || "Login failed");
+      return null;
+    }
 
-          localStorage.setItem("token", data.token);
+    // ✅ ALWAYS STORE TOKEN
+    localStorage.setItem("token", data.token);
 
-          set({
-            user: {
-              username,
-              class: className,
-              role: data.user.role,   // ✅ IMPORTANT
-              isLoggedIn: true,
-            },
-          });
+    // ✅ 🔥 IMPORTANT FIX
+    if (data.user.role === "teacher") {
+      // ❌ DO NOT store in Zustand
+      // 👉 directly go to admin
+      window.location.href =
+        `https://ai-based-foundational-learning-admin.vercel.app/?token=${data.token}`;
 
-          return data;   // ✅ VERY IMPORTANT
+      return data;
+    }
 
-        } catch (err) {
-          console.error("Login failed", err);
-          return null;
-        }
+    // ✅ ONLY STUDENTS STORED
+    set({
+      user: {
+        username,
+        class: className,
+        role: data.user.role,
+        isLoggedIn: true,
       },
+    });
 
-      logout: () => set({ user: null, currentLesson: null, score: 0 }),
+    return data;
+
+  } catch (err) {
+    console.error("Login failed", err);
+    return null;
+  }
+},
+
+      logout: () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("grammar-pal-storage");
+
+  set({ user: null, currentLesson: null, score: 0 });
+},
 
       setLesson: (lesson) => set({ currentLesson: lesson }),
 

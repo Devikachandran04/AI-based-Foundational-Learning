@@ -1,44 +1,34 @@
 import React, { useEffect, useState } from "react";
 import "./learnerprofile.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
 
 function LearnerProfile() {
   const navigate = useNavigate();
   const location = useLocation();
-  const studentId = location.state?.studentId;
 
-  const [student, setStudent] = useState(null);
+  // ✅ FIX: get full student object (NOT studentId)
+  const [student, setStudent] = useState(location.state?.student || null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!studentId) return;
-
-    const token = localStorage.getItem("token");
-    const fetchProfile = async () => {
-      try {
-        const res = await axios.get(
-          `https://ai-based-foundational-learning-production.up.railway.app/api/student/profile?id=${studentId}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        setStudent(res.data);
-      } catch (err) {
-        console.error("Error fetching student profile:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProfile();
-  }, [studentId]);
+    // ✅ since data already comes from previous page
+    if (student) {
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  }, [student]);
 
   if (loading) return <p>Loading profile...</p>;
+
   if (!student)
     return (
       <div className="profile-page">
         <div className="profile-box">
           <h1 className="profile-title">Student not found</h1>
-          <button className="back-btn" onClick={() => navigate(-1)}>Back</button>
+          <button className="back-btn" onClick={() => navigate(-1)}>
+            Back
+          </button>
         </div>
       </div>
     );
@@ -54,7 +44,7 @@ function LearnerProfile() {
             <div className="section-title">Student Info</div>
             <div className="profile-row">
               <span>Name</span>
-              <span>{student.name || "Unnamed Student"}</span>
+              <span>{student.name || student.student_name || "Unnamed Student"}</span>
             </div>
             <div className="profile-row">
               <span>Class</span>
@@ -84,18 +74,28 @@ function LearnerProfile() {
           </div>
 
           {/* WEAK TOPICS */}
-          <div className="profile-card weak-section" style={{ gridColumn: "span 2" }}>
+          <div
+            className="profile-card weak-section"
+            style={{ gridColumn: "span 2" }}
+          >
             <div className="section-title">Weak Topics</div>
             <ul>
-              {student.weak_topics && Object.keys(student.weak_topics).length > 0
-                ? Object.keys(student.weak_topics).map((topic, i) => <li key={i}>{topic}</li>)
-                : <li>No weak topics</li>}
+              {student.weak_topics &&
+              Object.keys(student.weak_topics).length > 0 ? (
+                Object.keys(student.weak_topics).map((topic, i) => (
+                  <li key={i}>{topic}</li>
+                ))
+              ) : (
+                <li>No weak topics</li>
+              )}
             </ul>
           </div>
         </div>
 
         <div className="profile-actions">
-          <button className="back-btn" onClick={() => navigate(-1)}>Close</button>
+          <button className="back-btn" onClick={() => navigate(-1)}>
+            Close
+          </button>
         </div>
       </div>
     </div>

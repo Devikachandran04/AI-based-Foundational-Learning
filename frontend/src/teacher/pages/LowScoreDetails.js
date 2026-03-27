@@ -7,15 +7,7 @@ function LowScoreDetails() {
 const [token, setToken] = useState(null);
 
 useEffect(() => {
-  const urlParams = new URLSearchParams(window.location.search);
-  let t = urlParams.get("token");
-
-  if (t) {
-    localStorage.setItem("token", t);
-  } else {
-    t = localStorage.getItem("token");
-  }
-
+  const t = localStorage.getItem("token");
   setToken(t);
 }, []);
   useEffect(() => {
