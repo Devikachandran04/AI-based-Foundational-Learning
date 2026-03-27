@@ -5,17 +5,34 @@ import { useNavigate, useLocation } from "react-router-dom";
 function LearnerProfile() {
   const navigate = useNavigate();
   const location = useLocation();
-const student = location.state?.student || null;
+const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // ✅ since data already comes from previous page
-    if (student) {
-      setLoading(false);
-    } else {
+  const fetchProfile = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(
+        "https://ai-based-foundational-learning-production.up.railway.app/api/student/profile",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await res.json();
+      setStudent(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
       setLoading(false);
     }
-  }, [student]);
+  };
+
+  fetchProfile();
+}, []);
 
   if (loading) return <p>Loading profile...</p>;
 
