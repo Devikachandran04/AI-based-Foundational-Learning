@@ -7,7 +7,6 @@ import ProgressDetails from "./teacher/pages/ProgressDetails";
 import WeakTopicsDetails from "./teacher/pages/WeakTopicsDetails";
 import LowScoreDetails from "./teacher/pages/LowScoreDetails";
 import HelpRequestsDetails from "./teacher/pages/HelpRequestsDetails";
-import Progress from "./pages/progress";
 import LearnerProfile from "./learner/learnerprofile";
 
 function App() {
