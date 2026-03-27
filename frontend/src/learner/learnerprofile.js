@@ -5,9 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 function LearnerProfile() {
   const navigate = useNavigate();
   const location = useLocation();
-
-  // ✅ FIX: get full student object (NOT studentId)
-  const [student, setStudent] = useState(location.state?.student || null);
+const student = location.state?.student || null;
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
