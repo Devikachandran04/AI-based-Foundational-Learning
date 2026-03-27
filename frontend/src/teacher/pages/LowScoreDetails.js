@@ -60,7 +60,15 @@ useEffect(() => {
               const isHigh = consecutive >= 3;
               return (
                 <tr key={s.id || i}>
-                  <td><Link to="/learner-profile" style={{ textDecoration: "none", color: "#2563eb", fontWeight: 600 }}>{s.name || s.student_name || "Unnamed Student"}</Link></td>
+                 <td>
+  <Link 
+    to="/learner-profile"
+    state={{ student: s }}  // ✅ Add this line
+    style={{ textDecoration: "none", color: "#2563eb", fontWeight: 600 }}
+  >
+    {s.name || s.student_name || "Unnamed Student"}
+  </Link>
+</td>
                   <td>{consecutive}</td>
                   <td>{lastScore}%</td>
                   <td><span className={`risk-badge ${isHigh ? "high" : "medium"}`}>{isHigh ? "High" : "Medium"}</span></td>
