@@ -2927,7 +2927,7 @@ const LoginPage = ({ assets }: { assets: any }) => {
   );
 };
 
-const Navbar = ({ user, onLogout, onBack, showBack, onHelp }: { user: any, onLogout: () => void, onBack?: () => void, showBack?: boolean, onHelp?: () => void }) => {
+const Navbar = ({ user, onLogout, onBack, showBack, onHelp, onProfile }: { user: any, onLogout: () => void, onBack?: () => void, showBack?: boolean, onHelp?: () => void, onProfile?: () => void }) => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-[100] bg-white/80 backdrop-blur-md border-b border-stone-100">
       <div className="px-8 py-4 flex justify-between items-center max-w-7xl mx-auto w-full">
@@ -2964,9 +2964,16 @@ const Navbar = ({ user, onLogout, onBack, showBack, onHelp }: { user: any, onLog
 
         <div className="flex items-center gap-4 sm:gap-6">
           <div className="text-right hidden sm:block">
-            <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-0.5">{user?.class}</p>
-            <p className="font-serif text-lg italic text-teal-900 leading-none">{user?.username}</p>
-          </div>
+  <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-0.5">
+    {user?.class}
+  </p>
+  <button
+    onClick={onProfile}
+    className="font-serif text-lg italic text-teal-900 leading-none hover:underline"
+  >
+    {user?.username}
+  </button>
+</div>
 
           {/* NEED HELP? Leaf - FIXED 2026 */}
           <button 
@@ -3477,13 +3484,138 @@ const HelpModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
 // --- Main App ---
 
 const MODULE_ORDER = ['nouns', 'verbs', 'articles', 'prepositions', 'pronouns', 'adjectives']; // ← UPDATED 2026: Defined module sequence
+const LearnerProfilePage = ({ onClose }: { onClose: () => void }) => {
+  const [student, setStudent] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
+  React.useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        const res = await fetch(
+          "https://ai-based-foundational-learning-production.up.railway.app/api/student/profile",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const data = await res.json();
+        setStudent(data);
+      } catch (err) {
+        console.error("Profile fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="max-w-4xl w-full bg-white p-10 rounded-[40px] shadow-xl border border-stone-50">
+        <p className="text-lg font-medium text-stone-600">Loading profile...</p>
+      </div>
+    );
+  }
+
+  if (!student) {
+    return (
+      <div className="max-w-4xl w-full bg-white p-10 rounded-[40px] shadow-xl border border-stone-50">
+        <h1 className="text-3xl font-serif italic mb-4 text-teal-900">Learner Profile</h1>
+        <p className="text-stone-600 mb-6">Profile not found.</p>
+        <button
+          className="px-6 py-3 bg-ink text-white rounded-2xl"
+          onClick={onClose}
+        >
+          Close
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-5xl w-full bg-white p-10 rounded-[40px] shadow-xl border border-stone-50">
+      <h1 className="text-4xl font-serif italic mb-8 text-teal-900">Learner Profile</h1>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Student Info */}
+        <div className="bg-stone-50 rounded-3xl p-6">
+          <h2 className="text-lg font-bold mb-4 text-teal-800">Student Info</h2>
+          <div className="space-y-3">
+            <div className="flex justify-between gap-4">
+              <span>Name</span>
+              <span className="font-medium text-right">{student.name || "Unnamed Student"}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span>Class</span>
+              <span className="font-medium text-right">{student.class || "-"}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span>Email</span>
+              <span className="font-medium text-right break-all">{student.email || "-"}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span>Lessons Completed</span>
+              <span className="font-medium text-right">{student.lessons_completed || 0}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Attempts */}
+        <div className="bg-stone-50 rounded-3xl p-6">
+          <h2 className="text-lg font-bold mb-4 text-teal-800">Attempts</h2>
+          <div className="space-y-3">
+            <div className="flex justify-between gap-4">
+              <span>Basic</span>
+              <strong>{student.basic_questions_attempted || 0}</strong>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span>Medium</span>
+              <strong>{student.intermediate_questions_attempted || 0}</strong>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span>Advanced</span>
+              <strong>{student.advanced_questions_attempted || 0}</strong>
+            </div>
+          </div>
+        </div>
+
+        {/* Weak Topics */}
+        <div className="bg-stone-50 rounded-3xl p-6 md:col-span-2">
+          <h2 className="text-lg font-bold mb-4 text-teal-800">Weak Topics</h2>
+          {student.weak_topics && Object.keys(student.weak_topics).length > 0 ? (
+            <ul className="list-disc pl-6 space-y-2">
+              {Object.keys(student.weak_topics).map((topic, i) => (
+                <li key={i}>{topic}</li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-stone-600">No weak topics</p>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-8">
+        <button
+          className="px-6 py-3 bg-ink text-white rounded-2xl hover:bg-stone-800 transition-all"
+          onClick={onClose}
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  );
+};
 export default function App() {
   const user = useStore((state) => state.user);
   const logout = useStore((state) => state.logout);
   const currentLesson = useStore((state) => state.currentLesson);
   const setLesson = useStore((state) => state.setLesson);
-  const [view, setView] = useState<'lesson' | 'choose_action' | 'video' | 'quiz' | 'simpler_quiz' | 'practice'>('lesson');
+  const [view, setView] = useState<'lesson' | 'choose_action' | 'video' | 'quiz' | 'simpler_quiz' | 'practice' | 'profile'>('lesson');
   const [navigationHistory, setNavigationHistory] = useState<{ view: string, lesson: string }[]>([]);
   const { assets, loading, error, generate } = useAssets();
   const [isCourseComplete, setIsCourseComplete] = useState(false); // ← UPDATED 2026: New state for course completion
@@ -3531,23 +3663,27 @@ export default function App() {
   }, [view, currentLesson, user?.isLoggedIn]);
 
   const handleGlobalBack = () => {
-    if (isHelpModalOpen) {
-      setIsHelpModalOpen(false);
-      return;
-    }
+  if (isHelpModalOpen) {
+    setIsHelpModalOpen(false);
+    return;
+  }
 
-    if (navigationHistory.length <= 1) {
-      // Go back to dashboard
-      setLesson('');
-      setView('lesson');
-      setNavigationHistory([]);
-      return;
-    }
+  if (view === 'profile') {
+    setView('lesson');
+    return;
+  }
 
-    const prev = navigationHistory[navigationHistory.length - 2];
-    setLesson(prev.lesson);
-    setView(prev.view as any);
-  };
+  if (navigationHistory.length <= 1) {
+    setLesson('');
+    setView('lesson');
+    setNavigationHistory([]);
+    return;
+  }
+
+  const prev = navigationHistory[navigationHistory.length - 2];
+  setLesson(prev.lesson);
+  setView(prev.view as any);
+};
 
   const handleBackToDashboard = () => {
     setLesson('');
@@ -3605,12 +3741,13 @@ export default function App() {
 
       {user?.isLoggedIn && (
         <Navbar 
-          user={user} 
-          onLogout={logout} 
-          onBack={handleGlobalBack} // ← UPDATED 2026: Use handleGlobalBack for consistent arrow behavior
-          showBack={!!currentLesson || isHelpModalOpen} // ← UPDATED 2026: Show when lesson or help is active
-          onHelp={() => setIsHelpModalOpen(true)} // ← UPDATED 2026: Pass help handler
-        />
+  user={user} 
+  onLogout={logout} 
+  onBack={handleGlobalBack}
+  showBack={!!currentLesson || isHelpModalOpen || view === 'profile'}
+  onHelp={() => setIsHelpModalOpen(true)}
+  onProfile={() => setView('profile')}
+/>
       )}
       <AnimatePresence mode="wait">
         {!user?.isLoggedIn ? (
@@ -3641,83 +3778,93 @@ export default function App() {
               </button>
             </div>
           </motion.div>
-        ) : !currentLesson ? (
-          <motion.div key="dashboard" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full">
-            <HomeScreen 
-              assets={assets} 
-              loading={loading} 
-              error={error} 
-              onRetry={generate} 
-              onSelectLesson={(id) => {
-                setLesson(id);
-                setView('lesson');
-              }}
-            />
-          </motion.div>
-        ) : (
-          <motion.div 
-            key="content" 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ opacity: 0 }}
-            className="flex flex-col items-center justify-center p-8 w-full pt-28" // ← UPDATED 2026: pt-28 for fixed Navbar
-          >
-            {view === 'lesson' && (
-              <LessonContentPage 
-                lessonId={currentLesson} 
-                onContinue={() => {
-                  if (currentLesson === 'prepositions') {
-                    setView('practice');
-                  } else {
-                    setView('choose_action');
-                  }
-                }} 
-                onBack={handleLessonBack}
-              />
-            )}
-            {view === 'choose_action' && (
-              <ChooseActionPage 
-                lessonId={currentLesson}
-                onWatchVideo={() => setView('video')}
-                onStartQuiz={() => setView('quiz')}
-                onStartPractice={() => setView('practice')}
-                onBack={handleChooseActionBack}
-              />
-            )}
-            {view === 'practice' && (
-              <InteractivePractice 
-                lessonId={currentLesson}
-                onComplete={() => setView('quiz')}
-                onWatchVideo={() => setView('video')}
-                onHelp={() => setIsHelpModalOpen(true)}
-                assets={assets}
-              />
-            )}
-            {view === 'video' && (
-              <VideoPage 
-                lessonId={currentLesson}
-                onDone={() => setView('choose_action')}
-              />
-            )}
-            {view === 'quiz' && (
-              <QuizPage 
-                lessonId={currentLesson} 
-                onComplete={handleQuizComplete} 
-                onNextModule={handleNextModule}
-                onBack={handleGlobalBack}
-              />
-            )}
-            {view === 'simpler_quiz' && (
-              <QuizPage 
-                lessonId={currentLesson} 
-                isSimpler={true}
-                onComplete={handleSimplerQuizComplete} 
-                onNextModule={handleNextModule}
-                onBack={handleGlobalBack}
-              />
-            )}
-          </motion.div>
-        )}
+        ) : view === 'profile' ? (
+  <motion.div
+    key="profile"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    className="flex flex-col items-center justify-center p-8 w-full pt-28"
+  >
+    <LearnerProfilePage onClose={() => setView('lesson')} />
+  </motion.div>
+) : !currentLesson ? (
+  <motion.div key="dashboard" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full">
+    <HomeScreen 
+      assets={assets} 
+      loading={loading} 
+      error={error} 
+      onRetry={generate} 
+      onSelectLesson={(id) => {
+        setLesson(id);
+        setView('lesson');
+      }}
+    />
+  </motion.div>
+) : (
+  <motion.div 
+    key="content" 
+    initial={{ opacity: 0 }} 
+    animate={{ opacity: 1 }} 
+    exit={{ opacity: 0 }}
+    className="flex flex-col items-center justify-center p-8 w-full pt-28"
+  >
+    {view === 'lesson' && (
+      <LessonContentPage 
+        lessonId={currentLesson} 
+        onContinue={() => {
+          if (currentLesson === 'prepositions') {
+            setView('practice');
+          } else {
+            setView('choose_action');
+          }
+        }} 
+        onBack={handleLessonBack}
+      />
+    )}
+    {view === 'choose_action' && (
+      <ChooseActionPage 
+        lessonId={currentLesson}
+        onWatchVideo={() => setView('video')}
+        onStartQuiz={() => setView('quiz')}
+        onStartPractice={() => setView('practice')}
+        onBack={handleChooseActionBack}
+      />
+    )}
+    {view === 'practice' && (
+      <InteractivePractice 
+        lessonId={currentLesson}
+        onComplete={() => setView('quiz')}
+        onWatchVideo={() => setView('video')}
+        onHelp={() => setIsHelpModalOpen(true)}
+        assets={assets}
+      />
+    )}
+    {view === 'video' && (
+      <VideoPage 
+        lessonId={currentLesson}
+        onDone={() => setView('choose_action')}
+      />
+    )}
+    {view === 'quiz' && (
+      <QuizPage 
+        lessonId={currentLesson} 
+        onComplete={handleQuizComplete} 
+        onNextModule={handleNextModule}
+        onBack={handleGlobalBack}
+      />
+    )}
+    {view === 'simpler_quiz' && (
+      <QuizPage 
+        lessonId={currentLesson} 
+        isSimpler={true}
+        onComplete={handleSimplerQuizComplete} 
+        onNextModule={handleNextModule}
+        onBack={handleGlobalBack}
+      />
+    )}
+  </motion.div>
+)}
       </AnimatePresence>
     </div>
   );

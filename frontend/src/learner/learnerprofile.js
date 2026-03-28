@@ -88,7 +88,7 @@ function LearnerProfile() {
               <strong>{student.intermediate_questions_attempted || 0}</strong>
             </div>
             <div className="profile-row">
-              <span>Hard</span>
+              <span>Advanced</span>
               <strong>{student.advanced_questions_attempted || 0}</strong>
             </div>
           </div>

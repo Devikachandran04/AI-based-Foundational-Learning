@@ -44,12 +44,12 @@ def seed_all():
         },
         {
             "subject": "English",
-            "title": "Pronouns Basics",
-            "content": "A pronoun is a word used instead of a noun.",
-            "simplified_content": "Pronoun means a word used in place of a noun.",
+            "title": "Tenses Basics",
+            "content": "Tenses tell us the time of an action",
+            "simplified_content": "Tenses show past, present, or future.",
             "images": [],
             "video_links": [],
-            "topics": ["pronouns"],
+            "topics": ["tenses"],
             "difficulty": "basic",
             "created_at": datetime.utcnow()
         },
