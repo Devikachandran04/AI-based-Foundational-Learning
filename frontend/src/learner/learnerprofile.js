@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./learnerprofile.css";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
+const location = useLocation();
+const studentId = location.state?.studentId; // ✅ now this will be "69c1046b7c629f3338b6b8d3"
 function LearnerProfile() {
   const navigate = useNavigate();
 const [student, setStudent] = useState(null);
@@ -17,16 +20,13 @@ useEffect(() => {
 
       let url = "https://ai-based-foundational-learning-production.up.railway.app/api/student/profile";
 
-      // ✅ IF ADMIN CLICKED → ADD ID
-      if (studentId) {
-        url += `?id=${studentId}`;
-      }
+if (studentId) {
+  url += `?id=${studentId}`;
+}
 
-      const res = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+const res = await fetch(url, {
+  headers: { Authorization: `Bearer ${token}` },
+});
 
       const data = await res.json();
       setStudent(data);

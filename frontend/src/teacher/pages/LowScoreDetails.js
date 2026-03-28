@@ -53,12 +53,13 @@ useEffect(() => {
               return (
                 <tr key={s.id || i}>
                  <td>
-  <Link 
-    to="/learner-profile"
-state={{ studentId: s.id }}    style={{ textDecoration: "none", color: "#2563eb", fontWeight: 600 }}
-  >
-    {s.name || s.student_name || "Unnamed Student"}
-  </Link>
+<Link 
+  to="/learner-profile"
+  state={{ studentId: s._id.$oid }} // ✅ send correct id
+  style={{ textDecoration: "none", color: "#2563eb", fontWeight: 600 }}
+>
+  {s.name || s.student_name || "Unnamed Student"}
+</Link>
 </td>
                   <td>{consecutive}</td>
                   <td>{lastScore}%</td>
