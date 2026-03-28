@@ -55,8 +55,7 @@ useEffect(() => {
                  <td>
   <Link 
     to="/learner-profile"
-    state={{ student: s }}  // ✅ Add this line
-    style={{ textDecoration: "none", color: "#2563eb", fontWeight: 600 }}
+state={{ studentId: s.id }}    style={{ textDecoration: "none", color: "#2563eb", fontWeight: 600 }}
   >
     {s.name || s.student_name || "Unnamed Student"}
   </Link>
