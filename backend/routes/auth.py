@@ -80,10 +80,12 @@ def login():
     token = make_token(user_id, role)
 
     return jsonify({
-        "token": token,
-        "user": {
-            "id": user_id,
-            "name": user["name"],
-            "role": role
-        }
-    })
+    "token": token,
+    "user": {
+        "id": user_id,
+        "name": user["name"],
+        "email": user.get("email", ""),
+        "class": user.get("class", ""),
+        "role": role
+    }
+})
