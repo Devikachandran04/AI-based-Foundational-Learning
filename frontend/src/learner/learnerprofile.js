@@ -1,11 +1,12 @@
+// LearnerProfile.js
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./learnerprofile.css";
 
 function LearnerProfile() {
   const navigate = useNavigate();
-  const location = useLocation(); // ✅ Get location state
-  const studentIdFromState = location.state?.studentId; // ✅ Admin navigation
+  const location = useLocation();
+  const studentId = location.state?.studentId; // ✅ studentId from LowScoreDetails
 
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -14,39 +15,25 @@ function LearnerProfile() {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("token");
-        if (!token) {
-          navigate("/login"); // redirect if no token
-          return;
-        }
 
-        // ✅ Build URL for API
         let url = "https://ai-based-foundational-learning-production.up.railway.app/api/student/profile";
-        if (studentIdFromState) {
-          url += `?id=${studentIdFromState}`; // admin view
-        }
+        if (studentId) url += `?id=${studentId}`; // ✅ add ?id if admin clicked
 
         const res = await fetch(url, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         const data = await res.json();
-
-        if (data.error) {
-          console.error(data.error);
-          setStudent(null);
-        } else {
-          setStudent(data);
-        }
+        setStudent(data);
       } catch (err) {
-        console.error(err);
-        setStudent(null);
+        console.error("Error fetching learner profile:", err);
       } finally {
         setLoading(false);
       }
     };
 
     fetchProfile();
-  }, [studentIdFromState, navigate]); // ✅ Add dependencies
+  }, [studentId]);
 
   if (loading) return <p>Loading profile...</p>;
 
@@ -108,8 +95,7 @@ function LearnerProfile() {
             <ul>
               {student.weak_topics && Object.keys(student.weak_topics).length > 0
                 ? Object.keys(student.weak_topics).map((topic, i) => <li key={i}>{topic}</li>)
-                : <li>No weak topics</li>
-              }
+                : <li>No weak topics</li>}
             </ul>
           </div>
         </div>

@@ -1,3 +1,4 @@
+// LowScoreDetails.js
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -6,13 +7,11 @@ function LowScoreDetails() {
   const [students, setStudents] = useState([]);
   const [token, setToken] = useState(null);
 
-  // Get token from localStorage
   useEffect(() => {
     const t = localStorage.getItem("token");
     setToken(t);
   }, []);
 
-  // Fetch low score students from backend
   useEffect(() => {
     if (!token) return;
 
@@ -31,7 +30,6 @@ function LowScoreDetails() {
     fetchData();
   }, [token]);
 
-  // Count high-risk students
   const highRisk = students.filter(
     (s) => (s.consecutive_low_scores || s.consecutiveLowScores || 0) >= 3
   ).length;
@@ -76,23 +74,30 @@ function LowScoreDetails() {
                 const lastScore = s.last_score || s.lastScore || s.avg_score || 0;
                 const isHigh = consecutive >= 3;
 
-                // ✅ Safe studentId extraction
-                const studentId = s._id?.$oid || s._id || s.id || i;
+                // ✅ Extract studentId safely
+                const studentId =
+                  typeof s._id === "string"
+                    ? s._id
+                    : s._id?.$oid || null;
 
                 return (
-                  <tr key={studentId}>
+                  <tr key={studentId || i}>
                     <td>
-                      <Link
-                        to="/learner-profile"
-                        state={{ studentId }} // send student id safely
-                        style={{
-                          textDecoration: "none",
-                          color: "#2563eb",
-                          fontWeight: 600,
-                        }}
-                      >
-                        {s.name || s.student_name || "Unnamed Student"}
-                      </Link>
+                      {studentId ? (
+                        <Link
+                          to="/learner-profile"
+                          state={{ studentId }}
+                          style={{
+                            textDecoration: "none",
+                            color: "#2563eb",
+                            fontWeight: 600,
+                          }}
+                        >
+                          {s.name || s.student_name || "Unnamed Student"}
+                        </Link>
+                      ) : (
+                        s.name || "Unnamed Student"
+                      )}
                     </td>
                     <td>{consecutive}</td>
                     <td>{lastScore}%</td>
