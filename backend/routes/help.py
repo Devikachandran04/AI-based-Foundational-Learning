@@ -15,12 +15,13 @@ help_bp = Blueprint("help", __name__)
 def submit_help():
     data = request.get_json(force=True)
     message = data.get("message")
-    if not message:
+
+    if not message or not message.strip():
         return jsonify({"error": "Message required"}), 400
 
     help_doc = {
         "user_id": g.user_id,
-        "message": message,
+        "message": message.strip(),
         "reply": None,
         "status": "pending",
         "created_at": datetime.utcnow(),
@@ -31,15 +32,39 @@ def submit_help():
     return jsonify({"ok": True, "help_id": str(res.inserted_id)})
 
 # ------------------------
-# 2️⃣ Teacher views all pending doubts (dashboard-friendly)
+# 2️⃣ Student views own doubts + replies
+# ------------------------
+@help_bp.get("/my")
+@require_auth
+def my_help_requests():
+    doubts = list(
+        help_requests_col.find({"user_id": g.user_id}).sort("created_at", -1)
+    )
+
+    formatted = []
+    for d in doubts:
+        formatted.append({
+            "id": str(d["_id"]),
+            "message": d.get("message", ""),
+            "reply": d.get("reply"),
+            "status": d.get("status", "pending"),
+            "created_at": d.get("created_at"),
+            "updated_at": d.get("updated_at")
+        })
+
+    return jsonify({"my_doubts": formatted})
+
+# ------------------------
+# 3️⃣ Teacher views all pending doubts
 # ------------------------
 @help_bp.get("/pending")
 @require_teacher
 def pending_help():
-    # Get pending doubts, newest first
-    doubts = list(help_requests_col.find({"status": "pending"}).sort("created_at", -1))
-    formatted = []
+    doubts = list(
+        help_requests_col.find({"status": "pending"}).sort("created_at", -1)
+    )
 
+    formatted = []
     for d in doubts:
         student = users_col.find_one({"_id": ObjectId(d["user_id"])})
         formatted.append({
@@ -47,9 +72,9 @@ def pending_help():
             "student_id": d["user_id"],
             "student_name": student.get("name") if student else "Unknown",
             "student_email": student.get("email") if student else "",
-            "message": d["message"],
+            "message": d.get("message", ""),
             "reply": d.get("reply"),
-            "status": d.get("status"),
+            "status": d.get("status", "pending"),
             "created_at": d.get("created_at"),
             "updated_at": d.get("updated_at")
         })
@@ -57,19 +82,31 @@ def pending_help():
     return jsonify({"pending_doubts": formatted})
 
 # ------------------------
-# 3️⃣ Teacher replies to a doubt
+# 4️⃣ Teacher replies to a doubt
 # ------------------------
 @help_bp.post("/reply/<help_id>")
 @require_teacher
 def reply_help(help_id):
     data = request.get_json(force=True)
     reply_msg = data.get("reply")
-    if not reply_msg:
+
+    if not reply_msg or not reply_msg.strip():
         return jsonify({"error": "Reply required"}), 400
 
+    try:
+        obj_id = ObjectId(help_id)
+    except:
+        return jsonify({"error": "Invalid help request id"}), 400
+
     res = help_requests_col.update_one(
-        {"_id": ObjectId(help_id)},
-        {"$set": {"reply": reply_msg, "status": "answered", "updated_at": datetime.utcnow()}}
+        {"_id": obj_id},
+        {
+            "$set": {
+                "reply": reply_msg.strip(),
+                "status": "answered",
+                "updated_at": datetime.utcnow()
+            }
+        }
     )
 
     if res.matched_count == 0:
@@ -78,15 +115,14 @@ def reply_help(help_id):
     return jsonify({"ok": True, "help_id": help_id})
 
 # ------------------------
-# 4️⃣ Teacher views all doubts (dashboard-friendly)
+# 5️⃣ Teacher views all doubts
 # ------------------------
 @help_bp.get("/all")
 @require_teacher
 def all_help_requests():
-    # Get all doubts, newest first
     doubts = list(help_requests_col.find({}).sort("created_at", -1))
-    formatted = []
 
+    formatted = []
     for d in doubts:
         student = users_col.find_one({"_id": ObjectId(d["user_id"])})
         formatted.append({
@@ -94,9 +130,9 @@ def all_help_requests():
             "student_id": d["user_id"],
             "student_name": student.get("name") if student else "Unknown",
             "student_email": student.get("email") if student else "",
-            "message": d["message"],
+            "message": d.get("message", ""),
             "reply": d.get("reply"),
-            "status": d.get("status"),
+            "status": d.get("status", "pending"),
             "created_at": d.get("created_at"),
             "updated_at": d.get("updated_at")
         })
