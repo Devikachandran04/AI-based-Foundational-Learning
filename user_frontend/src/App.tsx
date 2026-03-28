@@ -2977,7 +2977,7 @@ const Navbar = ({ user, onLogout, onBack, showBack, onHelp }: { user: any, onLog
               <Leaf size={20} className="fill-current" />
             </div>
             <span className="text-[9px] font-black text-teal-800 uppercase tracking-widest opacity-70 group-hover:opacity-100 transition-opacity">
-              Need Help?
+              Help Corner
             </span>
           </button>
 
@@ -3275,35 +3275,122 @@ const HomeScreen = ({ assets, loading, error, onRetry, onSelectLesson }: { asset
 };
 
 const HelpModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+  const [message, setMessage] = useState("");
+  const [sending, setSending] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [myDoubts, setMyDoubts] = useState<any[]>([]);
+
+  const fetchMyDoubts = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(
+        "https://ai-based-foundational-learning-production.up.railway.app/api/help/my",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        console.error(data.error || "Failed to fetch doubts");
+        return;
+      }
+
+      setMyDoubts(data.my_doubts || []);
+    } catch (error) {
+      console.error("Fetch doubts error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSend = async () => {
+    if (!message.trim()) {
+      alert("Please enter your doubt");
+      return;
+    }
+
+    try {
+      setSending(true);
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(
+        "https://ai-based-foundational-learning-production.up.railway.app/api/help/submit",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify({ message }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || "Failed to send help request");
+        return;
+      }
+
+      setMessage("");
+      await fetchMyDoubts();
+      alert("Doubt sent successfully");
+    } catch (error) {
+      console.error("Send doubt error:", error);
+      alert("Something went wrong");
+    } finally {
+      setSending(false);
+    }
+  };
+
+  React.useEffect(() => {
+    if (isOpen) {
+      fetchMyDoubts();
+    }
+  }, [isOpen]);
+
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
           onClick={onClose}
         >
-          <motion.div 
+          <motion.div
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className="relative w-full max-w-lg bg-[#FFF6E5] rounded-[32px] shadow-2xl overflow-hidden border-8 border-[#C89B6D]/20"
+            className="relative w-full max-w-2xl bg-[#FFF6E5] rounded-[32px] shadow-2xl overflow-hidden border-8 border-[#C89B6D]/20 max-h-[85vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Wood Texture Border Effect */}
             <div className="absolute inset-0 border-[12px] border-[#C89B6D]/10 pointer-events-none rounded-[24px]" />
-            
+
             {/* Header */}
             <div className="p-8 flex justify-between items-center bg-white/50 border-b border-[#C89B6D]/10 relative">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-pikachu/20 rounded-full flex items-center justify-center">
                   <Leaf size={24} className="text-[#A7D8F0]" />
                 </div>
-                <h2 className="text-2xl font-serif italic text-[#202124]">Need Help?</h2>
+                <div>
+                  <h2 className="text-2xl font-serif italic text-[#202124]">Help Corner</h2>
+                  <p className="text-sm text-stone-500 font-medium">
+                    Ask your doubt and view teacher replies
+                  </p>
+                </div>
               </div>
-              <button 
+
+              <button
                 onClick={onClose}
                 className="absolute -top-4 -right-4 w-12 h-12 bg-rose-500 text-white rounded-full shadow-lg hover:bg-rose-600 hover:scale-110 transition-all flex items-center justify-center z-50 border-4 border-white"
                 aria-label="Close"
@@ -3312,28 +3399,73 @@ const HelpModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
               </button>
             </div>
 
-            {/* Body */}
-            <div className="p-8 space-y-6">
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-[#C89B6D] uppercase tracking-widest">Your Message</label>
-                <textarea 
+            <div className="p-6 overflow-y-auto space-y-8">
+              {/* Send New Doubt */}
+              <div className="bg-white/60 rounded-3xl p-6 border border-[#C89B6D]/10">
+                <h3 className="text-lg font-bold text-[#202124] mb-4">Request Your Doubt</h3>
+
+                <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   placeholder="Type your doubt here..."
-                  className="w-full h-40 p-6 bg-white rounded-2xl border-2 border-[#C89B6D]/10 focus:border-pikachu/50 outline-none transition-all resize-none font-medium text-ink placeholder:text-muted/50"
+                  className="w-full h-32 p-5 bg-white rounded-2xl border-2 border-[#C89B6D]/10 focus:border-pikachu/50 outline-none transition-all resize-none font-medium text-ink placeholder:text-muted/50"
                 />
+
+                <button
+                  onClick={handleSend}
+                  disabled={sending}
+                  className="mt-4 w-full py-4 bg-[#FFCC70] text-[#202124] font-bold rounded-2xl shadow-lg shadow-orange-200/50 hover:bg-[#ffbd4a] hover:-translate-y-1 transition-all flex items-center justify-center gap-3 active:scale-95 disabled:opacity-50"
+                >
+                  <Send size={20} />
+                  {sending ? "Sending..." : "Send Doubt"}
+                </button>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-[#C89B6D] uppercase tracking-widest">Optional Attachment</label>
-                <div className="w-full p-8 border-2 border-dashed border-[#C89B6D]/20 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-white/50 transition-all cursor-pointer group">
-                  <Leaf size={32} className="text-[#A7D8F0] group-hover:scale-110 transition-transform" />
-                  <span className="text-sm font-medium text-muted">Attach screenshot</span>
-                </div>
-              </div>
+              {/* Previous Doubts and Replies */}
+              <div className="bg-white/60 rounded-3xl p-6 border border-[#C89B6D]/10">
+                <h3 className="text-lg font-bold text-[#202124] mb-4">Your Previous Doubts & Replies</h3>
 
-              <button className="w-full py-5 bg-[#FFCC70] text-[#202124] font-bold rounded-2xl shadow-lg shadow-orange-200/50 hover:bg-[#ffbd4a] hover:-translate-y-1 transition-all flex items-center justify-center gap-3 active:scale-95">
-                <Send size={20} />
-                Send to Teacher
-              </button>
+                {loading ? (
+                  <p className="text-stone-500">Loading...</p>
+                ) : myDoubts.length === 0 ? (
+                  <p className="text-stone-500">No previous doubts yet.</p>
+                ) : (
+                  <div className="space-y-4">
+                    {myDoubts.map((item) => (
+                      <div
+                        key={item.id}
+                        className="bg-white rounded-2xl p-4 border border-stone-200 shadow-sm"
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-bold text-[#202124]">Your Doubt</span>
+                          <span
+                            className={`text-xs font-bold px-3 py-1 rounded-full ${
+                              item.status === "answered"
+                                ? "bg-green-100 text-green-700"
+                                : "bg-amber-100 text-amber-700"
+                            }`}
+                          >
+                            {item.status}
+                          </span>
+                        </div>
+
+                        <p className="text-sm text-stone-700 mb-3">{item.message}</p>
+
+                        {item.reply ? (
+                          <div className="bg-teal-50 border border-teal-100 rounded-xl p-3">
+                            <p className="text-xs font-bold text-teal-700 mb-1">Teacher Reply</p>
+                            <p className="text-sm text-stone-700">{item.reply}</p>
+                          </div>
+                        ) : (
+                          <div className="bg-stone-50 border border-stone-200 rounded-xl p-3">
+                            <p className="text-sm text-stone-500">No reply yet.</p>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </motion.div>
         </motion.div>
