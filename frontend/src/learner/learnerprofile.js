@@ -1,45 +1,41 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./learnerprofile.css";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 
-const location = useLocation();
-const studentId = location.state?.studentId; // ✅ now this will be "69c1046b7c629f3338b6b8d3"
 function LearnerProfile() {
   const navigate = useNavigate();
-const [student, setStudent] = useState(null);
+  const location = useLocation(); // ✅ inside function
+  const studentId = location.state?.studentId; // ✅ inside function
+
+  const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  const fetchProfile = async () => {
-    try {
-      const token = localStorage.getItem("token");
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem("token");
 
-      // ✅ GET ID FROM NAVIGATION
-      const studentId = window.history.state?.usr?.studentId;
+        let url = "https://ai-based-foundational-learning-production.up.railway.app/api/student/profile";
 
-      let url = "https://ai-based-foundational-learning-production.up.railway.app/api/student/profile";
+        if (studentId) {
+          url += `?id=${studentId}`;
+        }
 
-if (studentId) {
-  url += `?id=${studentId}`;
-}
+        const res = await fetch(url, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-const res = await fetch(url, {
-  headers: { Authorization: `Bearer ${token}` },
-});
+        const data = await res.json();
+        setStudent(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      const data = await res.json();
-      setStudent(data);
-
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchProfile();
-}, []);
+    fetchProfile();
+  }, [studentId]); // ✅ add studentId as dependency
 
   if (loading) return <p>Loading profile...</p>;
 
@@ -59,7 +55,6 @@ const res = await fetch(url, {
     <div className="profile-page">
       <div className="profile-box">
         <h1 className="profile-title">Learner Profile</h1>
-
         <div className="profile-grid">
           {/* LEFT CARD */}
           <div className="profile-card">
@@ -96,28 +91,19 @@ const res = await fetch(url, {
           </div>
 
           {/* WEAK TOPICS */}
-          <div
-            className="profile-card weak-section"
-            style={{ gridColumn: "span 2" }}
-          >
+          <div className="profile-card weak-section" style={{ gridColumn: "span 2" }}>
             <div className="section-title">Weak Topics</div>
             <ul>
-              {student.weak_topics &&
-              Object.keys(student.weak_topics).length > 0 ? (
-                Object.keys(student.weak_topics).map((topic, i) => (
-                  <li key={i}>{topic}</li>
-                ))
-              ) : (
-                <li>No weak topics</li>
-              )}
+              {student.weak_topics && Object.keys(student.weak_topics).length > 0
+                ? Object.keys(student.weak_topics).map((topic, i) => <li key={i}>{topic}</li>)
+                : <li>No weak topics</li>
+              }
             </ul>
           </div>
         </div>
 
         <div className="profile-actions">
-          <button className="back-btn" onClick={() => navigate(-1)}>
-            Close
-          </button>
+          <button className="back-btn" onClick={() => navigate(-1)}>Close</button>
         </div>
       </div>
     </div>
