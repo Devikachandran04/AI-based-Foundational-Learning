@@ -4,8 +4,8 @@ import "./learnerprofile.css";
 
 function LearnerProfile() {
   const navigate = useNavigate();
-  const location = useLocation(); // ✅ inside function
-  const studentId = location.state?.studentId; // ✅ inside function
+  const location = useLocation(); // ✅ Get location state
+  const studentIdFromState = location.state?.studentId; // ✅ Admin navigation
 
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -14,11 +14,15 @@ function LearnerProfile() {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("token");
+        if (!token) {
+          navigate("/login"); // redirect if no token
+          return;
+        }
 
+        // ✅ Build URL for API
         let url = "https://ai-based-foundational-learning-production.up.railway.app/api/student/profile";
-
-        if (studentId) {
-          url += `?id=${studentId}`;
+        if (studentIdFromState) {
+          url += `?id=${studentIdFromState}`; // admin view
         }
 
         const res = await fetch(url, {
@@ -26,16 +30,23 @@ function LearnerProfile() {
         });
 
         const data = await res.json();
-        setStudent(data);
+
+        if (data.error) {
+          console.error(data.error);
+          setStudent(null);
+        } else {
+          setStudent(data);
+        }
       } catch (err) {
         console.error(err);
+        setStudent(null);
       } finally {
         setLoading(false);
       }
     };
 
     fetchProfile();
-  }, [studentId]); // ✅ add studentId as dependency
+  }, [studentIdFromState, navigate]); // ✅ Add dependencies
 
   if (loading) return <p>Loading profile...</p>;
 
@@ -55,6 +66,7 @@ function LearnerProfile() {
     <div className="profile-page">
       <div className="profile-box">
         <h1 className="profile-title">Learner Profile</h1>
+
         <div className="profile-grid">
           {/* LEFT CARD */}
           <div className="profile-card">
