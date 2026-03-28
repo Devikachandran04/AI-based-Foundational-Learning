@@ -1,4 +1,3 @@
-// LearnerProfile.js
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./learnerprofile.css";
@@ -6,7 +5,9 @@ import "./learnerprofile.css";
 function LearnerProfile() {
   const navigate = useNavigate();
   const location = useLocation();
-  const studentId = location.state?.studentId; // ✅ studentId from LowScoreDetails
+
+  // ✅ If coming from LowScoreDetails, we have studentId
+  const studentId = location.state?.studentId || null;
 
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,7 +18,11 @@ function LearnerProfile() {
         const token = localStorage.getItem("token");
 
         let url = "https://ai-based-foundational-learning-production.up.railway.app/api/student/profile";
-        if (studentId) url += `?id=${studentId}`; // ✅ add ?id if admin clicked
+
+        // ✅ Add ?id= if admin clicked a student
+        if (studentId) {
+          url += `?id=${studentId}`;
+        }
 
         const res = await fetch(url, {
           headers: { Authorization: `Bearer ${token}` },
@@ -26,7 +31,7 @@ function LearnerProfile() {
         const data = await res.json();
         setStudent(data);
       } catch (err) {
-        console.error("Error fetching learner profile:", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -53,7 +58,6 @@ function LearnerProfile() {
     <div className="profile-page">
       <div className="profile-box">
         <h1 className="profile-title">Learner Profile</h1>
-
         <div className="profile-grid">
           {/* LEFT CARD */}
           <div className="profile-card">
@@ -95,7 +99,8 @@ function LearnerProfile() {
             <ul>
               {student.weak_topics && Object.keys(student.weak_topics).length > 0
                 ? Object.keys(student.weak_topics).map((topic, i) => <li key={i}>{topic}</li>)
-                : <li>No weak topics</li>}
+                : <li>No weak topics</li>
+              }
             </ul>
           </div>
         </div>
