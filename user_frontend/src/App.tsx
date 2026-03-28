@@ -2579,36 +2579,50 @@ const LessonContentPage = ({ lessonId, onContinue, onBack }: { lessonId: string,
 const LoginPage = ({ assets }: { assets: any }) => {
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [showAuth, setShowAuth] = useState(false);
-  const [showAuthOptions, setShowAuthOptions] = useState(false); // ← UPDATED 2026: New state for auth options overlay
+  const [showAuthOptions, setShowAuthOptions] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [className, setClassName] = useState('Class 2');
+
   const login = useStore((state) => state.login);
+  const register = useStore((state) => state.register);
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  if (!email || !password) {
-    alert("Please fill all fields");
-    return;
-  }
+    if (mode === 'register') {
+      if (!name || !email || !password || !className) {
+        alert("Please fill all fields");
+        return;
+      }
 
-  // ✅ call login ONLY ONCE
-  const result = await login(email, password, className);
+      const result = await register(name, email, password, className);
 
-  if (!result) return; // login failed
+      if (!result) return;
 
-  const role = result.user.role;
+      console.log("Student registered successfully");
+      return;
+    }
 
-  if (role === "teacher") {
-    // ✅ redirect to admin dashboard WITH token
-    window.location.href = `https://ai-based-foundational-learning-hu6m.vercel.app/dashboard?token=${result.token}`;
-  } else {
-    // ✅ student stays in same app
-    console.log("Student logged in");
-  }
-};
+    // login part remains same
+    if (!email || !password) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    const result = await login(email, password, className);
+
+    if (!result) return;
+
+    const role = result.user.role;
+
+    if (role === "teacher") {
+      window.location.href = `https://ai-based-foundational-learning-hu6m.vercel.app/dashboard?token=${result.token}`;
+    } else {
+      console.log("Student logged in");
+    }
+  };
 
   return (
     <div className="min-h-screen w-full bg-white relative overflow-x-hidden flex flex-col">

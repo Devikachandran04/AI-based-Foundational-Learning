@@ -24,13 +24,11 @@ def register():
     name = data.get("name")
     email = data.get("email")
     password = data.get("password")
-    role = data.get("role", "student")
+    class_name = data.get("class")
+    role = "student"   # force student only
 
     if not name or not email or not password:
         return jsonify({"error": "name, email, password required"}), 400
-
-    if role not in ["student", "teacher"]:
-        return jsonify({"error": "role must be student or teacher"}), 400
 
     existing_user = users_col.find_one({"email": email})
     if existing_user:
@@ -41,6 +39,7 @@ def register():
         "email": email,
         "password_hash": generate_password_hash(password),
         "role": role,
+        "class": class_name or "",
         "created_at": datetime.utcnow()
     }
 
@@ -54,6 +53,8 @@ def register():
         "user": {
             "id": user_id,
             "name": name,
+            "email": email,
+            "class": class_name or "",
             "role": role
         }
     })
