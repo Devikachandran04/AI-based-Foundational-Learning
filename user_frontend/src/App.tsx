@@ -3610,6 +3610,14 @@ const LearnerProfilePage = ({ onClose }: { onClose: () => void }) => {
     </div>
   );
 };
+const LESSON_ID_MAP: Record<string, string> = {
+  nouns: "69c1046b7c629f3338b6b8d4",
+  verbs: "69c1046b7c629f3338b6b8d6",
+  adjectives: "69c1046b7c629f3338b6b8d7",
+  articles: "69c1046b7c629f3338b6b8d8",
+  prepositions: "69c1046b7c629f3338b6b8d9",
+  tenses: "69c80fc42daeaf5b3bff9616", // 👈 your new one
+};
 export default function App() {
   const user = useStore((state) => state.user);
   const logout = useStore((state) => state.logout);
