@@ -1,0 +1,50 @@
+[
+  {
+    "id": "ph1",
+    "question": "He is afraid ___ dogs.",
+    "options": ["of", "on", "in", "at"],
+    "answer": "of",
+    "topic": "prepositions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "ph2",
+    "question": "She is interested ___ music.",
+    "options": ["in", "on", "at", "with"],
+    "answer": "in",
+    "topic": "prepositions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "ph3",
+    "question": "The train arrived ___ time.",
+    "options": ["on", "in", "at", "during"],
+    "answer": "on",
+    "topic": "prepositions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "ph4",
+    "question": "He is good ___ mathematics.",
+    "options": ["at", "in", "on", "with"],
+    "answer": "at",
+    "topic": "prepositions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "ph5",
+    "question": "She suffers ___ fever.",
+    "options": ["from", "with", "in", "at"],
+    "answer": "from",
+    "topic": "prepositions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "ph6",
+    "question": "The manager is responsible ___ the work.",
+    "options": ["for", "to", "with", "on"],
+    "answer": "for",
+    "topic": "prepositions",
+    "difficulty": "hard"
+  }
+]

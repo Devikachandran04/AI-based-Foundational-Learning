@@ -1,0 +1,82 @@
+[
+  {
+    "id": "am1",
+    "question": "Choose the comparative form of 'big'.",
+    "options": ["big", "bigger", "biggest", "more big"],
+    "answer": "bigger",
+    "topic": "adjectives",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "am2",
+    "question": "Choose the superlative form of 'tall'.",
+    "options": ["tall", "taller", "tallest", "more tall"],
+    "answer": "tallest",
+    "topic": "adjectives",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "am3",
+    "question": "Fill in the blank: She is ___ than me.",
+    "options": ["tall", "taller", "tallest", "more tall"],
+    "answer": "taller",
+    "topic": "adjectives",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "am4",
+    "question": "Choose the correct adjective: It is a ___ day.",
+    "options": ["beauty", "beautiful", "beautifully", "beautify"],
+    "answer": "beautiful",
+    "topic": "adjectives",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "am5",
+    "question": "Select the correct form: This is the ___ boy in the class.",
+    "options": ["tall", "taller", "tallest", "more tall"],
+    "answer": "tallest",
+    "topic": "adjectives",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "am6",
+    "question": "Choose the comparative adjective.",
+    "options": ["faster", "fast", "fastest", "most fast"],
+    "answer": "faster",
+    "topic": "adjectives",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "am7",
+    "question": "Which word is an adjective in the sentence: She has a clever idea.",
+    "options": ["she", "has", "clever", "idea"],
+    "answer": "clever",
+    "topic": "adjectives",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "am8",
+    "question": "Choose the correct adjective: He is a ___ player.",
+    "options": ["skill", "skilled", "skilfully", "skills"],
+    "answer": "skilled",
+    "topic": "adjectives",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "am9",
+    "question": "Fill in: This road is ___ than that one.",
+    "options": ["narrow", "narrower", "narrowest", "more narrowest"],
+    "answer": "narrower",
+    "topic": "adjectives",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "am10",
+    "question": "Choose the superlative adjective.",
+    "options": ["small", "smaller", "smallest", "more small"],
+    "answer": "smallest",
+    "topic": "adjectives",
+    "difficulty": "moderate"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "th1",
+    "question": "She ___ completed the work before I arrived.",
+    "options": ["has", "had", "have", "having"],
+    "answer": "had",
+    "topic": "tenses",
+    "difficulty": "hard"
+  },
+  {
+    "id": "th2",
+    "question": "By next year, he ___ graduated.",
+    "options": ["will", "will have", "has", "had"],
+    "answer": "will have",
+    "topic": "tenses",
+    "difficulty": "hard"
+  },
+  {
+    "id": "th3",
+    "question": "If she had studied well, she ___ the exam.",
+    "options": ["passes", "would pass", "would have passed", "passed"],
+    "answer": "would have passed",
+    "topic": "tenses",
+    "difficulty": "hard"
+  },
+  {
+    "id": "th4",
+    "question": "By the time we reached, they ___ dinner.",
+    "options": ["finished", "had finished", "have finished", "finish"],
+    "answer": "had finished",
+    "topic": "tenses",
+    "difficulty": "hard"
+  },
+  {
+    "id": "th5",
+    "question": "She ___ for two hours when her friend arrived.",
+    "options": ["studied", "was studying", "had been studying", "has studied"],
+    "answer": "had been studying",
+    "topic": "tenses",
+    "difficulty": "hard"
+  },
+  {
+    "id": "th6",
+    "question": "This time tomorrow, I ___ on the train.",
+    "options": ["will travel", "will be travelling", "am travelling", "travelled"],
+    "answer": "will be travelling",
+    "topic": "tenses",
+    "difficulty": "hard"
+  }
+]

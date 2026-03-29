@@ -1,0 +1,82 @@
+[
+  {
+    "id": "vb1",
+    "question": "Which word is a verb?",
+    "options": ["run", "blue", "chair", "happy"],
+    "answer": "run",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb2",
+    "question": "Identify the verb: She eats rice.",
+    "options": ["She", "eats", "rice", "the"],
+    "answer": "eats",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb3",
+    "question": "Find the verb: They play daily.",
+    "options": ["They", "play", "daily", "none"],
+    "answer": "play",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb4",
+    "question": "Which is an action word?",
+    "options": ["jump", "table", "slow", "green"],
+    "answer": "jump",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb5",
+    "question": "Identify the verb: He writes neatly.",
+    "options": ["He", "writes", "neatly", "none"],
+    "answer": "writes",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb6",
+    "question": "Choose the verb.",
+    "options": ["sing", "blue", "fast", "tree"],
+    "answer": "sing",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb7",
+    "question": "Which word shows action?",
+    "options": ["dance", "flower", "red", "soft"],
+    "answer": "dance",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb8",
+    "question": "Find the verb: The baby cries loudly.",
+    "options": ["baby", "cries", "loudly", "the"],
+    "answer": "cries",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb9",
+    "question": "Choose the verb.",
+    "options": ["write", "book", "green", "small"],
+    "answer": "write",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb10",
+    "question": "Which is a verb?",
+    "options": ["swim", "chair", "happy", "blue"],
+    "answer": "swim",
+    "topic": "verbs",
+    "difficulty": "basic"
+  }
+]

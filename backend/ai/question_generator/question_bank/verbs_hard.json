@@ -1,0 +1,50 @@
+[
+  {
+    "id": "vh1",
+    "question": "Choose the correct form: They ___ finished their work.",
+    "options": ["has", "have", "had", "having"],
+    "answer": "have",
+    "topic": "verbs",
+    "difficulty": "hard"
+  },
+  {
+    "id": "vh2",
+    "question": "Identify the infinitive verb.",
+    "options": ["to run", "running", "ran", "runs"],
+    "answer": "to run",
+    "topic": "verbs",
+    "difficulty": "hard"
+  },
+  {
+    "id": "vh3",
+    "question": "Select the correct verb agreement: Neither of the boys ___ present.",
+    "options": ["are", "were", "is", "be"],
+    "answer": "is",
+    "topic": "verbs",
+    "difficulty": "hard"
+  },
+  {
+    "id": "vh4",
+    "question": "Choose the correct form: She ___ living here for five years.",
+    "options": ["has been", "have been", "had", "is"],
+    "answer": "has been",
+    "topic": "verbs",
+    "difficulty": "hard"
+  },
+  {
+    "id": "vh5",
+    "question": "Identify the participle form.",
+    "options": ["broken", "broke", "break", "breaks"],
+    "answer": "broken",
+    "topic": "verbs",
+    "difficulty": "hard"
+  },
+  {
+    "id": "vh6",
+    "question": "Choose the correct verb: If I ___ rich, I would travel the world.",
+    "options": ["am", "was", "were", "be"],
+    "answer": "were",
+    "topic": "verbs",
+    "difficulty": "hard"
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "vm1",
+    "question": "Choose correct: She ___ to school.",
+    "options": ["go", "goes", "gone", "going"],
+    "answer": "goes",
+    "topic": "verbs",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "vm2",
+    "question": "Select the past tense.",
+    "options": ["played", "play", "playing", "plays"],
+    "answer": "played",
+    "topic": "verbs",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "vm3",
+    "question": "Choose the helping verb.",
+    "options": ["is", "run", "blue", "book"],
+    "answer": "is",
+    "topic": "verbs",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "vm4",
+    "question": "Fill in: They ___ happy.",
+    "options": ["are", "is", "was", "be"],
+    "answer": "are",
+    "topic": "verbs",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "vm5",
+    "question": "Identify the helping verb: She is reading.",
+    "options": ["She", "is", "reading", "none"],
+    "answer": "is",
+    "topic": "verbs",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "vm6",
+    "question": "Which sentence contains a modal verb?",
+    "options": ["She can swim.", "He runs fast.", "They play daily.", "We ate rice."],
+    "answer": "She can swim.",
+    "topic": "verbs",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "vm7",
+    "question": "Select the correct verb: He ___ every day.",
+    "options": ["walk", "walks", "walking", "walked"],
+    "answer": "walks",
+    "topic": "verbs",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "vm8",
+    "question": "Choose the past form of 'go'.",
+    "options": ["go", "goes", "went", "gone"],
+    "answer": "went",
+    "topic": "verbs",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "vm9",
+    "question": "Fill in: I ___ my homework yesterday.",
+    "options": ["do", "did", "done", "does"],
+    "answer": "did",
+    "topic": "verbs",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "vm10",
+    "question": "Choose the correct verb: We ___ football now.",
+    "options": ["play", "plays", "are playing", "played"],
+    "answer": "are playing",
+    "topic": "verbs",
+    "difficulty": "moderate"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "ah1",
+    "question": "Choose the correct form: This is the ___ building in the city.",
+    "options": ["tall", "taller", "tallest", "more tall"],
+    "answer": "tallest",
+    "topic": "adjectives",
+    "difficulty": "hard"
+  },
+  {
+    "id": "ah2",
+    "question": "Choose the correct adjective order: She bought a ___ dress.",
+    "options": ["red beautiful", "beautiful red", "very red", "red silk beautiful"],
+    "answer": "beautiful red",
+    "topic": "adjectives",
+    "difficulty": "hard"
+  },
+  {
+    "id": "ah3",
+    "question": "Identify the adjective clause: The book which I borrowed is good.",
+    "options": ["which I borrowed", "book", "good", "is"],
+    "answer": "which I borrowed",
+    "topic": "adjectives",
+    "difficulty": "hard"
+  },
+  {
+    "id": "ah4",
+    "question": "Choose the correct form: She is ___ intelligent than her brother.",
+    "options": ["more", "most", "very", "much"],
+    "answer": "more",
+    "topic": "adjectives",
+    "difficulty": "hard"
+  },
+  {
+    "id": "ah5",
+    "question": "Choose the correct adjective: This is the ___ interesting chapter.",
+    "options": ["more", "much", "most", "very"],
+    "answer": "most",
+    "topic": "adjectives",
+    "difficulty": "hard"
+  },
+  {
+    "id": "ah6",
+    "question": "Identify the adjective agreement: She has ___ patience.",
+    "options": ["many", "much", "few", "several"],
+    "answer": "much",
+    "topic": "adjectives",
+    "difficulty": "hard"
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "nm1",
+    "question": "Identify the noun: The cat slept peacefully.",
+    "options": ["cat", "slept", "peacefully", "the"],
+    "answer": "cat",
+    "topic": "nouns",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "nm2",
+    "question": "Which word is a noun?",
+    "options": ["run", "happiness", "quickly", "blue"],
+    "answer": "happiness",
+    "topic": "nouns",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "nm3",
+    "question": "Choose the proper noun.",
+    "options": ["city", "India", "river", "teacher"],
+    "answer": "India",
+    "topic": "nouns",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "nm4",
+    "question": "Identify the noun: She bought a dress.",
+    "options": ["she", "bought", "dress", "a"],
+    "answer": "dress",
+    "topic": "nouns",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "nm5",
+    "question": "Which is an abstract noun?",
+    "options": ["freedom", "dog", "chair", "table"],
+    "answer": "freedom",
+    "topic": "nouns",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "nm6",
+    "question": "Choose the collective noun.",
+    "options": ["team", "boy", "run", "fast"],
+    "answer": "team",
+    "topic": "nouns",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "nm7",
+    "question": "Identify the noun: Students are studying.",
+    "options": ["students", "are", "studying", "none"],
+    "answer": "students",
+    "topic": "nouns",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "nm8",
+    "question": "Which is a common noun?",
+    "options": ["London", "river", "Monday", "Amazon"],
+    "answer": "river",
+    "topic": "nouns",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "nm9",
+    "question": "Identify the noun: He showed courage.",
+    "options": ["he", "showed", "courage", "none"],
+    "answer": "courage",
+    "topic": "nouns",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "nm10",
+    "question": "Which is a concrete noun?",
+    "options": ["chair", "honesty", "love", "bravery"],
+    "answer": "chair",
+    "topic": "nouns",
+    "difficulty": "moderate"
+  }
+]

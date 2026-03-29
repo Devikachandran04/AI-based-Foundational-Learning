@@ -1,0 +1,82 @@
+[
+  {
+    "id": "arm1",
+    "question": "He is ___ honest man.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "an",
+    "topic": "articles",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "arm2",
+    "question": "She bought ___ umbrella.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "an",
+    "topic": "articles",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "arm3",
+    "question": "___ Taj Mahal is beautiful.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "the",
+    "topic": "articles",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "arm4",
+    "question": "I went to ___ school.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "no article",
+    "topic": "articles",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "arm5",
+    "question": "She is ___ best student in the class.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "the",
+    "topic": "articles",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "arm6",
+    "question": "I saw ___ eagle in the sky.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "an",
+    "topic": "articles",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "arm7",
+    "question": "He is reading ___ book I gave him.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "the",
+    "topic": "articles",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "arm8",
+    "question": "She wants to become ___ engineer.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "an",
+    "topic": "articles",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "arm9",
+    "question": "We visited ___ museum yesterday.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "a",
+    "topic": "articles",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "arm10",
+    "question": "He is ___ MLA from this area.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "an",
+    "topic": "articles",
+    "difficulty": "moderate"
+  }
+]

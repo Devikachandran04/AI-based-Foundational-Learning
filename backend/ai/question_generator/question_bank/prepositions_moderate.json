@@ -1,0 +1,82 @@
+[
+  {
+    "id": "pm1",
+    "question": "The meeting starts ___ 10 AM.",
+    "options": ["at", "on", "in", "during"],
+    "answer": "at",
+    "topic": "prepositions",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "pm2",
+    "question": "The cat jumped ___ the table.",
+    "options": ["onto", "between", "during", "since"],
+    "answer": "onto",
+    "topic": "prepositions",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "pm3",
+    "question": "The ball rolled ___ the chair.",
+    "options": ["under", "during", "around", "among"],
+    "answer": "under",
+    "topic": "prepositions",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "pm4",
+    "question": "She divided the sweets ___ the children.",
+    "options": ["among", "between", "during", "inside"],
+    "answer": "among",
+    "topic": "prepositions",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "pm5",
+    "question": "He walked ___ the bridge.",
+    "options": ["across", "between", "around", "behind"],
+    "answer": "across",
+    "topic": "prepositions",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "pm6",
+    "question": "The keys are ___ my bag.",
+    "options": ["in", "on", "at", "over"],
+    "answer": "in",
+    "topic": "prepositions",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "pm7",
+    "question": "She sat ___ the two girls.",
+    "options": ["between", "among", "during", "inside"],
+    "answer": "between",
+    "topic": "prepositions",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "pm8",
+    "question": "We have lived here ___ 2010.",
+    "options": ["since", "for", "at", "by"],
+    "answer": "since",
+    "topic": "prepositions",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "pm9",
+    "question": "He stayed there ___ two hours.",
+    "options": ["for", "since", "on", "at"],
+    "answer": "for",
+    "topic": "prepositions",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "pm10",
+    "question": "The train passed ___ the tunnel.",
+    "options": ["through", "between", "among", "upon"],
+    "answer": "through",
+    "topic": "prepositions",
+    "difficulty": "moderate"
+  }
+]

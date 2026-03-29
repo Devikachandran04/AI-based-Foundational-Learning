@@ -1,0 +1,82 @@
+[
+  {
+    "id": "arb1",
+    "question": "Choose the correct article: ___ apple",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "an",
+    "topic": "articles",
+    "difficulty": "basic"
+  },
+  {
+    "id": "arb2",
+    "question": "Choose the correct article: ___ book",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "a",
+    "topic": "articles",
+    "difficulty": "basic"
+  },
+  {
+    "id": "arb3",
+    "question": "Choose the correct article: ___ sun",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "the",
+    "topic": "articles",
+    "difficulty": "basic"
+  },
+  {
+    "id": "arb4",
+    "question": "Select the correct article: ___ elephant",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "an",
+    "topic": "articles",
+    "difficulty": "basic"
+  },
+  {
+    "id": "arb5",
+    "question": "Choose the correct article: ___ pen",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "a",
+    "topic": "articles",
+    "difficulty": "basic"
+  },
+  {
+    "id": "arb6",
+    "question": "Select the correct article: ___ moon",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "the",
+    "topic": "articles",
+    "difficulty": "basic"
+  },
+  {
+    "id": "arb7",
+    "question": "Choose the correct article: ___ orange",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "an",
+    "topic": "articles",
+    "difficulty": "basic"
+  },
+  {
+    "id": "arb8",
+    "question": "Choose the correct article: ___ cat",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "a",
+    "topic": "articles",
+    "difficulty": "basic"
+  },
+  {
+    "id": "arb9",
+    "question": "Choose the correct article: ___ stars in the sky",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "the",
+    "topic": "articles",
+    "difficulty": "basic"
+  },
+  {
+    "id": "arb10",
+    "question": "Choose the correct article: ___ umbrella",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "an",
+    "topic": "articles",
+    "difficulty": "basic"
+  }
+]

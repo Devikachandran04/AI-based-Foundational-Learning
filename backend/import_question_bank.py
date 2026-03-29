@@ -13,17 +13,18 @@ QUESTION_BANK_FOLDER = os.path.join(
 # Map file topic names to lesson titles
 LESSON_TITLE_MAP = {
     "nouns": "Nouns Basics",
-    "pronouns": "Pronouns Basics",
     "verbs": "Verbs Basics",
+    "tenses": "Tenses Basics",
     "adjectives": "Adjectives Basics",
     "articles": "Articles Basics",
     "prepositions": "Prepositions"
 }
 
-# Convert Person 2 difficulty naming -> backend naming
+# File difficulty -> backend difficulty
 DIFFICULTY_MAP = {
-    "easy": "basic",
-    "normal": "moderate"
+    "basic": "basic",
+    "moderate": "moderate",
+    "hard": "advanced"
 }
 
 
@@ -47,9 +48,9 @@ def get_lessons_map():
 
 def normalize_question(raw_q, lesson_id, topic, difficulty):
     """
-    Convert Person 2 JSON question format into backend DB format.
+    Convert JSON question format into backend DB format.
 
-    This function supports common formats:
+    Supported formats:
     1) {
          "question": "...",
          "options": ["a","b","c","d"],
@@ -66,6 +67,12 @@ def normalize_question(raw_q, lesson_id, topic, difficulty):
          "question": "...",
          "choices": ["a","b","c","d"],
          "answer": 1
+       }
+
+    4) {
+         "question": "...",
+         "options": ["a","b","c","d"],
+         "answer": "correct option text"
        }
     """
 
@@ -106,10 +113,8 @@ def normalize_question(raw_q, lesson_id, topic, difficulty):
         correct_index = raw_q.get("correct_index")
 
         if correct_index is None and answer is not None:
-            # if answer is actual option text
             if isinstance(answer, str) and answer in options:
                 correct_index = options.index(answer)
-            # if answer is numeric
             elif isinstance(answer, int):
                 correct_index = answer
 
@@ -145,7 +150,7 @@ def import_question_bank():
         if not filename.endswith(".json"):
             continue
 
-        # Example: nouns_easy.json
+        # Example: nouns_basic.json
         name_without_ext = filename[:-5]
 
         if "_" not in name_without_ext:
@@ -155,12 +160,15 @@ def import_question_bank():
         difficulty_suffix = None
         topic_name = None
 
-        if name_without_ext.endswith("_easy"):
-            difficulty_suffix = "easy"
-            topic_name = name_without_ext[:-5]   # remove "_easy"
-        elif name_without_ext.endswith("_normal"):
-            difficulty_suffix = "normal"
-            topic_name = name_without_ext[:-7]   # remove "_normal"
+        if name_without_ext.endswith("_basic"):
+            difficulty_suffix = "basic"
+            topic_name = name_without_ext[:-6]   # remove "_basic"
+        elif name_without_ext.endswith("_moderate"):
+            difficulty_suffix = "moderate"
+            topic_name = name_without_ext[:-9]   # remove "_moderate"
+        elif name_without_ext.endswith("_hard"):
+            difficulty_suffix = "hard"
+            topic_name = name_without_ext[:-5]   # remove "_hard"
         else:
             print(f"⚠ Skipping unsupported filename: {filename}")
             continue

@@ -1,0 +1,55 @@
+[
+  {
+    "id": "nh1",
+    "question": "Identify the abstract noun.",
+    "options": ["beauty", "chair", "dog", "table"],
+    "answer": "beauty",
+    "topic": "nouns",
+    "difficulty": "hard"
+  },
+  {
+    "id": "nh2",
+    "question": "Choose the correct proper noun.",
+    "options": ["city", "river", "Kerala", "teacher"],
+    "answer": "Kerala",
+    "topic": "nouns",
+    "difficulty": "hard"
+  },
+  {
+    "id": "nh3",
+    "question": "Which is a material noun?",
+    "options": ["gold", "team", "happiness", "dog"],
+    "answer": "gold",
+    "topic": "nouns",
+    "difficulty": "hard"
+  },
+  {
+    "id": "nh4",
+    "question": "Identify the collective noun.",
+    "options": ["flock", "bird", "run", "quick"],
+    "answer": "flock",
+    "topic": "nouns",
+    "difficulty": "hard"
+  },
+  {
+    "id": "nh5",
+    "question": "Choose the correct noun form: He has great ___.",
+    "options": ["strength", "strong", "strongly", "stronger"],
+    "answer": "strength",
+    "topic": "nouns",
+    "difficulty": "hard"
+  },
+  {
+    "id": "nh6",
+    "question": "Which sentence has an abstract noun?",
+    "options": [
+      "She has kindness.",
+      "He runs fast.",
+      "They play football.",
+      "We eat food."
+    ],
+    "answer": "She has kindness.",
+    "topic": "nouns",
+    "difficulty": "hard"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "arh1",
+    "question": "___ Ganga is sacred.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "the",
+    "topic": "articles",
+    "difficulty": "hard"
+  },
+  {
+    "id": "arh2",
+    "question": "He plays ___ violin.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "the",
+    "topic": "articles",
+    "difficulty": "hard"
+  },
+  {
+    "id": "arh3",
+    "question": "She is ___ university student.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "a",
+    "topic": "articles",
+    "difficulty": "hard"
+  },
+  {
+    "id": "arh4",
+    "question": "I have ___ MBA degree.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "an",
+    "topic": "articles",
+    "difficulty": "hard"
+  },
+  {
+    "id": "arh5",
+    "question": "___ Earth revolves around the sun.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "the",
+    "topic": "articles",
+    "difficulty": "hard"
+  },
+  {
+    "id": "arh6",
+    "question": "She went to ___ bed early.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": "no article",
+    "topic": "articles",
+    "difficulty": "hard"
+  }
+]

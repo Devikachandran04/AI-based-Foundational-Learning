@@ -1,0 +1,82 @@
+[
+  {
+    "id": "tm1",
+    "question": "She ___ her homework yesterday.",
+    "options": ["did", "does", "doing", "done"],
+    "answer": "did",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm2",
+    "question": "They ___ watching TV now.",
+    "options": ["is", "are", "was", "be"],
+    "answer": "are",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm3",
+    "question": "He ___ to Chennai last week.",
+    "options": ["go", "goes", "went", "gone"],
+    "answer": "went",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm4",
+    "question": "We ___ dinner when the phone rang.",
+    "options": ["have", "had", "were having", "are having"],
+    "answer": "were having",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm5",
+    "question": "She ___ in this school for three years.",
+    "options": ["works", "worked", "has worked", "working"],
+    "answer": "has worked",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm6",
+    "question": "I ___ him yesterday.",
+    "options": ["see", "saw", "seen", "seeing"],
+    "answer": "saw",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm7",
+    "question": "They ___ lunch before the guests arrived.",
+    "options": ["have", "had", "having", "has"],
+    "answer": "had",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm8",
+    "question": "He ___ for the exam since morning.",
+    "options": ["studies", "studied", "has been studying", "study"],
+    "answer": "has been studying",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm9",
+    "question": "The train ___ before we reached the station.",
+    "options": ["left", "leaves", "had left", "leave"],
+    "answer": "had left",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm10",
+    "question": "She ___ a song when I entered the room.",
+    "options": ["sings", "sang", "was singing", "has sung"],
+    "answer": "was singing",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  }
+]

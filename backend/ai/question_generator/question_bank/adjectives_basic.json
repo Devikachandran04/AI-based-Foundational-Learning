@@ -1,0 +1,82 @@
+[
+  {
+    "id": "ab1",
+    "question": "Which word is an adjective?",
+    "options": ["happy", "run", "chair", "jump"],
+    "answer": "happy",
+    "topic": "adjectives",
+    "difficulty": "basic"
+  },
+  {
+    "id": "ab2",
+    "question": "Find the adjective: She wore a red dress.",
+    "options": ["red", "dress", "wore", "she"],
+    "answer": "red",
+    "topic": "adjectives",
+    "difficulty": "basic"
+  },
+  {
+    "id": "ab3",
+    "question": "Identify the adjective: The tall boy runs fast.",
+    "options": ["tall", "boy", "runs", "fast"],
+    "answer": "tall",
+    "topic": "adjectives",
+    "difficulty": "basic"
+  },
+  {
+    "id": "ab4",
+    "question": "Choose the adjective.",
+    "options": ["blue", "run", "table", "jump"],
+    "answer": "blue",
+    "topic": "adjectives",
+    "difficulty": "basic"
+  },
+  {
+    "id": "ab5",
+    "question": "Find the adjective: It is a cold day.",
+    "options": ["cold", "day", "it", "is"],
+    "answer": "cold",
+    "topic": "adjectives",
+    "difficulty": "basic"
+  },
+  {
+    "id": "ab6",
+    "question": "Which word describes a noun?",
+    "options": ["beautiful", "sing", "write", "jump"],
+    "answer": "beautiful",
+    "topic": "adjectives",
+    "difficulty": "basic"
+  },
+  {
+    "id": "ab7",
+    "question": "Choose the adjective: A small cat slept.",
+    "options": ["small", "cat", "slept", "a"],
+    "answer": "small",
+    "topic": "adjectives",
+    "difficulty": "basic"
+  },
+  {
+    "id": "ab8",
+    "question": "Which is an adjective?",
+    "options": ["sweet", "run", "dog", "eat"],
+    "answer": "sweet",
+    "topic": "adjectives",
+    "difficulty": "basic"
+  },
+  {
+    "id": "ab9",
+    "question": "Find the adjective: The sky is blue.",
+    "options": ["sky", "is", "blue", "the"],
+    "answer": "blue",
+    "topic": "adjectives",
+    "difficulty": "basic"
+  },
+  {
+    "id": "ab10",
+    "question": "Which word is an adjective?",
+    "options": ["big", "play", "pen", "walk"],
+    "answer": "big",
+    "topic": "adjectives",
+    "difficulty": "basic"
+  }
+]

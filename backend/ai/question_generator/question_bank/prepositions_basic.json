@@ -1,0 +1,82 @@
+[
+  {
+    "id": "pb1",
+    "question": "The book is ___ the table.",
+    "options": ["on", "in", "under", "at"],
+    "answer": "on",
+    "topic": "prepositions",
+    "difficulty": "basic"
+  },
+  {
+    "id": "pb2",
+    "question": "She lives ___ Kochi.",
+    "options": ["in", "on", "at", "with"],
+    "answer": "in",
+    "topic": "prepositions",
+    "difficulty": "basic"
+  },
+  {
+    "id": "pb3",
+    "question": "The cat is ___ the chair.",
+    "options": ["under", "over", "during", "since"],
+    "answer": "under",
+    "topic": "prepositions",
+    "difficulty": "basic"
+  },
+  {
+    "id": "pb4",
+    "question": "The dog ran ___ the garden.",
+    "options": ["into", "between", "during", "since"],
+    "answer": "into",
+    "topic": "prepositions",
+    "difficulty": "basic"
+  },
+  {
+    "id": "pb5",
+    "question": "The picture is ___ the wall.",
+    "options": ["on", "under", "inside", "near"],
+    "answer": "on",
+    "topic": "prepositions",
+    "difficulty": "basic"
+  },
+  {
+    "id": "pb6",
+    "question": "She stood ___ her friend.",
+    "options": ["beside", "across", "during", "since"],
+    "answer": "beside",
+    "topic": "prepositions",
+    "difficulty": "basic"
+  },
+  {
+    "id": "pb7",
+    "question": "The ball is ___ the box.",
+    "options": ["in", "over", "during", "by"],
+    "answer": "in",
+    "topic": "prepositions",
+    "difficulty": "basic"
+  },
+  {
+    "id": "pb8",
+    "question": "The bird flew ___ the tree.",
+    "options": ["over", "during", "since", "for"],
+    "answer": "over",
+    "topic": "prepositions",
+    "difficulty": "basic"
+  },
+  {
+    "id": "pb9",
+    "question": "The boy is sitting ___ his father.",
+    "options": ["near", "during", "inside", "across"],
+    "answer": "near",
+    "topic": "prepositions",
+    "difficulty": "basic"
+  },
+  {
+    "id": "pb10",
+    "question": "She walked ___ the room.",
+    "options": ["into", "at", "for", "since"],
+    "answer": "into",
+    "topic": "prepositions",
+    "difficulty": "basic"
+  }
+]
