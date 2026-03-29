@@ -8,7 +8,7 @@ from services.adaptive_policy import decide_next_step
 WEIGHTS = {
     "basic": 1,
     "moderate": 2,
-    "advanced": 3   # 🔥 ADD THIS
+    "advanced": 3
 }
 
 
@@ -28,7 +28,7 @@ def _get_attempt_no(user_id: str, lesson_id: str) -> int:
 # -----------------------------
 def _pick_questions(lesson_id: str, attempt_no: int):
     """
-    Attempt 1 -> 3 basic + 3 moderate
+    Attempt 1 -> 2 basic + 2 moderate + 2 advanced
     Attempt 2+ -> 4 basic + 2 moderate
     """
 
@@ -40,13 +40,17 @@ def _pick_questions(lesson_id: str, attempt_no: int):
         quiz_type = "simplified"
 
     picked = []
-    difficulty_breakdown = {"basic": 0, "moderate": 0}
+    difficulty_breakdown = {
+        "basic": 0,
+        "moderate": 0,
+        "advanced": 0
+    }
 
     for difficulty, count in plan:
         questions = list(question_bank_col.aggregate([
             {
                 "$match": {
-                    "lesson_id": lesson_id,
+                    "lesson_id": str(lesson_id),
                     "difficulty": difficulty
                 }
             },
@@ -63,7 +67,6 @@ def _pick_questions(lesson_id: str, attempt_no: int):
 # 🚀 Start Quiz
 # -----------------------------
 def start_quiz(user_id: str, lesson_id: str):
-    # ✅ Ensure string match with DB
     lesson_id = str(lesson_id)
 
     attempt_no = _get_attempt_no(user_id, lesson_id)
@@ -84,7 +87,7 @@ def start_quiz(user_id: str, lesson_id: str):
             "question_id": qid,
             "question": q["question"],
             "options": q["options"],
-            "difficulty": q["difficulty"],
+            "difficulty": q.get("difficulty", "basic"),
             "topic": q.get("topic", "unknown")
         })
 
@@ -131,7 +134,8 @@ def submit_quiz(user_id: str, quiz_id: str, submitted_answers, time_taken_sec: i
     quiz_type = quiz.get("quiz_type", "mixed")
     difficulty_breakdown = quiz.get("difficulty_breakdown", {
         "basic": 0,
-        "moderate": 0
+        "moderate": 0,
+        "advanced": 0
     })
 
     # 🔍 Fetch questions
