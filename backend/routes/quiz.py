@@ -9,12 +9,17 @@ quiz_bp = Blueprint("quiz", __name__)
 def start():
     data = request.get_json(force=True)
     lesson_id = data.get("lesson_id")
+    quiz_mode = data.get("quiz_mode", "mixed")   # NEW
 
     if not lesson_id:
         return jsonify({"error": "lesson_id is required"}), 400
 
     try:
-        result = start_quiz(user_id=g.user_id, lesson_id=lesson_id)
+        result = start_quiz(
+            user_id=g.user_id,
+            lesson_id=lesson_id,
+            quiz_mode=quiz_mode
+        )
         return jsonify(result)
     except Exception as e:
         return jsonify({"error": str(e)}), 500

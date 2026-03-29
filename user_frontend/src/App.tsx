@@ -211,8 +211,9 @@ const QuizPage = ({
               "Authorization": `Bearer ${token}`,
             },
             body: JSON.stringify({
-              lesson_id: dbLessonId,
-            }),
+  lesson_id: dbLessonId,
+  quiz_mode: isSimpler ? "simplified" : "mixed",
+}),
           }
         );
 

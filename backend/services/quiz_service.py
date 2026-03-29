@@ -4,7 +4,6 @@ from db import quizzes_col, attempts_col, question_bank_col
 from services.profile_service import update_profile_after_attempt
 from services.adaptive_policy import decide_next_step
 
-# 🎯 Difficulty weights
 WEIGHTS = {
     "basic": 1,
     "moderate": 2,
@@ -12,9 +11,6 @@ WEIGHTS = {
 }
 
 
-# -----------------------------
-# 🔢 Get Attempt Number
-# -----------------------------
 def _get_attempt_no(user_id: str, lesson_id: str) -> int:
     count = attempts_col.count_documents({
         "user_id": user_id,
@@ -23,21 +19,18 @@ def _get_attempt_no(user_id: str, lesson_id: str) -> int:
     return count + 1
 
 
-# -----------------------------
-# 🎯 Pick Questions
-# -----------------------------
-def _pick_questions(lesson_id: str, attempt_no: int):
+def _pick_questions(lesson_id: str, quiz_mode: str):
     """
-    Attempt 1 -> 2 basic + 2 moderate + 2 advanced
-    Attempt 2+ -> 4 basic + 2 moderate
+    mixed      -> 2 basic + 2 moderate + 2 advanced
+    simplified -> 4 basic + 2 moderate
     """
 
-    if attempt_no == 1:
-        plan = [("basic", 2), ("moderate", 2), ("advanced", 2)]
-        quiz_type = "mixed"
-    else:
+    if quiz_mode == "simplified":
         plan = [("basic", 4), ("moderate", 2)]
         quiz_type = "simplified"
+    else:
+        plan = [("basic", 2), ("moderate", 2), ("advanced", 2)]
+        quiz_type = "mixed"
 
     picked = []
     difficulty_breakdown = {
@@ -63,15 +56,12 @@ def _pick_questions(lesson_id: str, attempt_no: int):
     return picked, quiz_type, difficulty_breakdown
 
 
-# -----------------------------
-# 🚀 Start Quiz
-# -----------------------------
-def start_quiz(user_id: str, lesson_id: str):
+def start_quiz(user_id: str, lesson_id: str, quiz_mode: str = "mixed"):
     lesson_id = str(lesson_id)
 
     attempt_no = _get_attempt_no(user_id, lesson_id)
 
-    questions, quiz_type, difficulty_breakdown = _pick_questions(lesson_id, attempt_no)
+    questions, quiz_type, difficulty_breakdown = _pick_questions(lesson_id, quiz_mode)
 
     if not questions:
         raise ValueError("No questions found for this lesson.")
@@ -114,9 +104,6 @@ def start_quiz(user_id: str, lesson_id: str):
     }
 
 
-# -----------------------------
-# ✅ Submit Quiz
-# -----------------------------
 def submit_quiz(user_id: str, quiz_id: str, submitted_answers, time_taken_sec: int = 0):
     quiz = quizzes_col.find_one({"_id": ObjectId(quiz_id)})
 
@@ -138,11 +125,9 @@ def submit_quiz(user_id: str, quiz_id: str, submitted_answers, time_taken_sec: i
         "advanced": 0
     })
 
-    # 🔍 Fetch questions
     question_ids = [ObjectId(qid) for qid in quiz["question_ids"]]
     questions = list(question_bank_col.find({"_id": {"$in": question_ids}}))
 
-    # 🧠 Normalize answers
     answers_map = {}
 
     if isinstance(submitted_answers, list):
@@ -177,18 +162,15 @@ def submit_quiz(user_id: str, quiz_id: str, submitted_answers, time_taken_sec: i
             earned_weight += weight
             topic_stats[topic]["correct"] += 1
 
-    # 🎯 Calculate score
     score = round((earned_weight / total_weight) * 100) if total_weight > 0 else 0
 
-    # 📊 Topic accuracy
     topic_accuracy = {
         topic: round(stats["correct"] / stats["total"], 2) if stats["total"] > 0 else 0
         for topic, stats in topic_stats.items()
     }
 
-    # 🤖 AI decision
     decision = decide_next_step(score_percent=score, quiz_type=quiz_type)
-    # 💾 Save attempt
+
     attempt_doc = {
         "user_id": user_id,
         "lesson_id": lesson_id,
@@ -210,7 +192,6 @@ def submit_quiz(user_id: str, quiz_id: str, submitted_answers, time_taken_sec: i
         {"$set": {"status": "submitted"}}
     )
 
-    # 🧠 Update learner profile
     update_profile_after_attempt(
         user_id=user_id,
         lesson_id=lesson_id,
