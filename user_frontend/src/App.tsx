@@ -2421,15 +2421,7 @@ const LessonContentPage = ({ lessonId, onContinue, onBack }: { lessonId: string,
                 Previous
               </button>
               )}
-              {lessonId === 'prepositions' && step < steps.length - 1 && (
-                <button 
-                  onClick={onContinue}
-                  className="flex-1 bg-orange-50 text-orange-600 font-bold py-6 rounded-2xl hover:bg-orange-100 transition-all flex items-center justify-center gap-3 btn-plushy border border-orange-200"
-                >
-                  <Sparkles size={20} />
-                  Skip to Practice
-                </button>
-              )}
+              
               <button 
                 onClick={() => step < steps.length - 1 ? setStep(s => s + 1) : onContinue()}
                 className="flex-[2] bg-primary text-white font-bold py-6 rounded-2xl hover:bg-blue-600 transition-all flex items-center justify-center gap-3 shadow-lg shadow-primary/20 btn-plushy"
@@ -2825,8 +2817,7 @@ const LoginPage = ({ assets }: { assets: any }) => {
   );
 };
 
-const Navbar = ({ user, onLogout, onBack, showBack, onHelp, onProfile }: { user: any, onLogout: () => void, onBack?: () => void, showBack?: boolean, onHelp?: () => void, onProfile?: () => void }) => {
-  return (
+const Navbar = ({ user, onLogout, onBack, onDashboard, showBack, onHelp, onProfile }: { user: any, onLogout: () => void, onBack?: () => void, onDashboard?: () => void, showBack?: boolean, onHelp?: () => void, onProfile?: () => void }) => {  return (
     <nav className="fixed top-0 left-0 right-0 z-[100] bg-white/80 backdrop-blur-md border-b border-stone-100">
       <div className="px-8 py-4 flex justify-between items-center max-w-7xl mx-auto w-full">
         <div className="flex items-center gap-4 sm:gap-8">
@@ -2850,14 +2841,15 @@ const Navbar = ({ user, onLogout, onBack, showBack, onHelp, onProfile }: { user:
             <span className="font-serif text-xl sm:text-2xl italic tracking-tight text-teal-900">GrammarPal</span>
           </div>
 
-          {showBack && onBack && (
-            <button 
-              onClick={onBack}
-              className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-stone-100 shadow-sm hover:bg-stone-50 transition-all text-muted hover:text-ink font-bold text-[10px] uppercase tracking-widest btn-plushy"
-            >
-              Back to Dashboard
-            </button>
-          )}
+          {showBack && onDashboard && (
+  <button 
+    onClick={onDashboard}
+    className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-stone-100 shadow-sm hover:bg-stone-50 transition-all text-muted hover:text-ink font-bold text-[10px] uppercase tracking-widest btn-plushy"
+  >
+    Back to Dashboard
+  </button>
+)}
+          
         </div>
 
         <div className="flex items-center gap-4 sm:gap-6">
@@ -3086,9 +3078,9 @@ const HomeScreen = ({ assets, loading, error, onRetry, onSelectLesson }: { asset
     />
     <div className="relative z-10">
       <GrammaChu 
-        reaction={loading ? 'thinking' : 'happy'} 
-        message=""   // ✅ no text at all
-      />
+  reaction={loading ? 'thinking' : 'happy'} 
+  message={loading ? "Generating your world..." : "Ready to begin!"}
+/>
       {/* Towel on head */}
       <motion.div 
         className="absolute -top-1 left-1/2 -translate-x-1/2 w-10 h-3 bg-white rounded-full shadow-sm border border-stone-100"
@@ -3658,6 +3650,7 @@ export default function App() {
   user={user} 
   onLogout={logout} 
   onBack={handleGlobalBack}
+  onDashboard={handleGoToDashboard}
   showBack={!!currentLesson || isHelpModalOpen || view === 'profile'}
   onHelp={() => setIsHelpModalOpen(true)}
   onProfile={() => setView('profile')}
@@ -3724,18 +3717,12 @@ export default function App() {
     className="flex flex-col items-center justify-center p-8 w-full pt-28"
   >
     {view === 'lesson' && (
-      <LessonContentPage 
-        lessonId={currentLesson} 
-        onContinue={() => {
-          if (currentLesson === 'prepositions') {
-            setView('practice');
-          } else {
-            setView('choose_action');
-          }
-        }} 
-        onBack={handleLessonBack}
-      />
-    )}
+  <LessonContentPage 
+    lessonId={currentLesson} 
+    onContinue={() => setView('choose_action')} 
+    onBack={handleLessonBack}
+  />
+)}
     {view === 'choose_action' && (
       <ChooseActionPage 
         lessonId={currentLesson}
