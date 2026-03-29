@@ -7,7 +7,15 @@ function LowScoreDetails() {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    const t = localStorage.getItem("token");
+    const urlParams = new URLSearchParams(window.location.search);
+    let t = urlParams.get("token");
+
+    if (t) {
+      localStorage.setItem("token", t);
+    } else {
+      t = localStorage.getItem("token");
+    }
+
     setToken(t);
   }, []);
 
@@ -18,8 +26,11 @@ function LowScoreDetails() {
       try {
         const res = await axios.get(
           "https://ai-based-foundational-learning-production.up.railway.app/api/teacher/dashboard/low-score-students",
-          { headers: { Authorization: `Bearer ${token}` } }
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
         );
+
         setStudents(res.data?.students || []);
       } catch (err) {
         console.error("Error fetching low score students:", err);
@@ -30,7 +41,7 @@ function LowScoreDetails() {
   }, [token]);
 
   const highRisk = students.filter(
-    (s) => (s.consecutive_low_scores || s.consecutiveLowScores || 0) >= 3
+    (s) => (s.consecutive_low || 0) >= 3
   ).length;
 
   return (
@@ -39,6 +50,7 @@ function LowScoreDetails() {
         <div className="top-bar">
           <h1 className="dashboard-heading">📉 Low Score Students Analytics</h1>
         </div>
+
         <Link to="/dashboard">
           <button className="back-btn">← Back</button>
         </Link>
@@ -49,6 +61,7 @@ function LowScoreDetails() {
           <h4>Total Low Score Students</h4>
           <p>{students.length}</p>
         </div>
+
         <div className="kpi-card">
           <h4>High Risk Students</h4>
           <p>{highRisk}</p>
@@ -68,13 +81,12 @@ function LowScoreDetails() {
           <tbody>
             {students.length > 0 ? (
               students.map((s, i) => {
-                const consecutive = s.consecutive_low_scores || s.consecutiveLowScores || 0;
-                const lastScore = s.last_score || s.lastScore || s.avg_score || 0;
-                const isHigh = consecutive >= 3;
+                const consecutive = s.consecutive_low || 0;
+                const lastScore = s.last_score || 0;
+                const riskLevel =
+                  consecutive >= 3 ? "High" : consecutive === 2 ? "Medium" : "Low";
 
-                // ✅ Get proper studentId
-                const studentId =
-                  typeof s._id === "string" ? s._id : s._id?.$oid || null;
+                const studentId = s.user_id || null;
 
                 return (
                   <tr key={studentId || i}>
@@ -90,7 +102,7 @@ function LowScoreDetails() {
                             cursor: "pointer",
                           }}
                         >
-                          {s.name || s.student_name || "Unnamed Student"}
+                          {s.name || "Unnamed Student"}
                         </Link>
                       ) : (
                         <span>{s.name || "Unnamed Student"}</span>
@@ -99,8 +111,8 @@ function LowScoreDetails() {
                     <td>{consecutive}</td>
                     <td>{lastScore}%</td>
                     <td>
-                      <span className={`risk-badge ${isHigh ? "high" : "medium"}`}>
-                        {isHigh ? "High" : "Medium"}
+                      <span className={`risk-badge ${riskLevel.toLowerCase()}`}>
+                        {riskLevel}
                       </span>
                     </td>
                   </tr>
