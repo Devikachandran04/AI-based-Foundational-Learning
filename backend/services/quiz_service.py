@@ -187,8 +187,7 @@ def submit_quiz(user_id: str, quiz_id: str, submitted_answers, time_taken_sec: i
     }
 
     # 🤖 AI decision
-    decision = decide_next_step(score_percent=score, attempt_no=attempt_no)
-
+    decision = decide_next_step(score_percent=score, quiz_type=quiz_type)
     # 💾 Save attempt
     attempt_doc = {
         "user_id": user_id,

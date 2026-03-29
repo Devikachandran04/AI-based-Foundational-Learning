@@ -150,25 +150,31 @@ const LESSON_CONTENT: Record<string, LessonContentData> = {
   }
 };
 const LESSON_ID_MAP: Record<string, string> = {
-  nouns: "69c1046b7c629f3338b6b8d4",
-  verbs: "69c1046b7c629f3338b6b8d6",
-  adjectives: "69c1046b7c629f3338b6b8d7",
-  articles: "69c1046b7c629f3338b6b8d8",
-  prepositions: "69c1046b7c629f3338b6b8d9",
-  tenses: "69c80fc42daeaf5b3bff9616", // 👈 your new one
+  nouns: "69c92ff2ce9565b0bc396eb0",
+  tenses: "69c92ff2ce9565b0bc396eb1",
+  verbs: "69c92ff2ce9565b0bc396eb2",
+  adjectives: "69c92ff2ce9565b0bc396eb3",
+  articles: "69c92ff2ce9565b0bc396eb4",
+  prepositions: "69c92ff2ce9565b0bc396eb5",
 };
 const QuizPage = ({
   lessonId,
   isSimpler = false,
   onComplete,
   onNextModule,
-  onBack
+  onBack,
+  onWatchVideo,
+  onDashboard,
+  onMainQuiz
 }: {
   lessonId: string,
   isSimpler?: boolean,
   onComplete: (score: number, backendResult?: any) => void,
   onNextModule?: () => void,
-  onBack?: () => void
+  onBack?: () => void,
+  onWatchVideo?: () => void,
+  onDashboard?: () => void,
+  onMainQuiz?: () => void
 }) => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [quizId, setQuizId] = useState<string | null>(null);
@@ -314,62 +320,102 @@ const QuizPage = ({
   }
 
   if (showResult && backendResult) {
-    const percentage = backendResult.score || 0;
-    const passed = backendResult.decision === "NEXT_LESSON";
-    const goSimpler = backendResult.decision === "GO_SIMPLIFIED_QUIZ";
-    const showSupport = backendResult.decision === "SHOW_SUPPORT_OPTIONS";
+  const percentage = backendResult.score || 0;
+  const decision = backendResult.decision;
+  const passed = decision === "NEXT_LESSON";
+  const goSimpler = decision === "GO_SIMPLIFIED_QUIZ";
+  const showSupport = decision === "SHOW_SUPPORT_OPTIONS";
 
-    return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="max-w-md w-full bg-white p-10 rounded-[40px] shadow-xl border border-stone-50 text-center"
-      >
-        <GrammaChu reaction={passed ? 'victory' : 'confused'} />
-        <h2 className="text-4xl font-serif italic mb-2">Quiz Complete!</h2>
+  let mascotMessage = "";
+  let primaryLabel = "";
+  let secondaryLabel = "";
+  let primaryAction: (() => void) | undefined;
+  let secondaryAction: (() => void) | undefined;
 
-        <div className="my-8">
-          <div className={`text-6xl font-black mb-2 ${passed ? 'text-green-600' : 'text-primary'}`}>
-            {percentage}%
-          </div>
-          <p className="text-muted font-medium">Decision: {backendResult.decision}</p>
+  if (!isSimpler) {
+    // MAIN QUIZ
+    if (goSimpler) {
+      mascotMessage = "Let's try a simpler quiz once.";
+      primaryLabel = "Go to Simpler Quiz";
+      secondaryLabel = "Watch Video";
+      primaryAction = () => onComplete(percentage, backendResult);
+      secondaryAction = onWatchVideo;
+    } else if (showSupport) {
+      mascotMessage = "Watch videos or practice again, then come back stronger.";
+      primaryLabel = "Watch Video";
+      secondaryLabel = "Return to Dashboard";
+      primaryAction = onWatchVideo;
+      secondaryAction = onDashboard;
+    } else if (passed) {
+      mascotMessage = "Excellent! You've cleared this lesson.";
+      primaryLabel = "Next Module";
+      secondaryLabel = "Return to Dashboard";
+      primaryAction = onNextModule;
+      secondaryAction = onDashboard;
+    }
+  } else {
+    // SIMPLER QUIZ
+    if (showSupport) {
+      mascotMessage = "Watch videos or practice again, then come back stronger.";
+      primaryLabel = "Watch Video";
+      secondaryLabel = "Return to Dashboard";
+      primaryAction = onWatchVideo;
+      secondaryAction = onDashboard;
+    } else if (passed) {
+      mascotMessage = "Great improvement! You can now return to the main quiz or move ahead.";
+      primaryLabel = "Return to Main Quiz";
+      secondaryLabel = "Next Module";
+      primaryAction = onMainQuiz;
+      secondaryAction = onNextModule;
+    }
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="max-w-md w-full bg-white p-10 rounded-[40px] shadow-xl border border-stone-50 text-center"
+    >
+      <GrammaChu reaction={passed ? 'victory' : 'confused'} />
+      <h2 className="text-4xl font-serif italic mb-2">Quiz Complete!</h2>
+
+      <div className="my-8">
+        <div className={`text-6xl font-black mb-2 ${passed ? 'text-green-600' : 'text-primary'}`}>
+          {percentage}%
         </div>
+      </div>
 
-        <div className="mb-10">
-          <AshMascot
-            type={passed ? 'success' : 'warning'}
-            message={
-              passed
-                ? "Excellent! You've cleared this lesson."
-                : goSimpler
-                ? "Let's try a simpler quiz once."
-                : "Watch videos or practice again, then come back stronger."
-            }
-          />
-        </div>
+      <div className="mb-10">
+        <AshMascot
+          type={passed ? 'success' : 'warning'}
+          message={mascotMessage}
+        />
+      </div>
 
-        <div className="space-y-3">
+      <div className="space-y-3">
+        {primaryAction && (
           <button
-            onClick={() => onComplete(percentage, backendResult)}
+            onClick={primaryAction}
             className="w-full bg-ink text-white font-bold py-5 rounded-2xl hover:bg-stone-800 transition-all flex items-center justify-center gap-3 btn-plushy"
           >
-            Continue
+            {primaryLabel}
             <ArrowRight size={18} />
           </button>
+        )}
 
-          {passed && onNextModule && (
-            <button
-              onClick={onNextModule}
-              className="w-full bg-stone-100 text-ink font-bold py-5 rounded-2xl hover:bg-stone-200 transition-all flex items-center justify-center gap-3"
-            >
-              Jump to Next Module
-              <ArrowRight size={18} />
-            </button>
-          )}
-        </div>
-      </motion.div>
-    );
-  }
+        {secondaryAction && (
+          <button
+            onClick={secondaryAction}
+            className="w-full bg-stone-100 text-ink font-bold py-5 rounded-2xl hover:bg-stone-200 transition-all flex items-center justify-center gap-3"
+          >
+            {secondaryLabel}
+            <ArrowRight size={18} />
+          </button>
+        )}
+      </div>
+    </motion.div>
+  );
+}
 
   return (
     <div className="max-w-2xl w-full">
@@ -3471,7 +3517,10 @@ export default function App() {
   const [navigationHistory, setNavigationHistory] = useState<{ view: string, lesson: string }[]>([]);
   const { assets, loading, error, generate } = useAssets();
   const [isCourseComplete, setIsCourseComplete] = useState(false); // ← UPDATED 2026: New state for course completion
-
+  const handleGoToDashboard = () => {
+  setLesson('');
+  setView('lesson');
+};
   const setScore = useStore((state) => state.setScore);
 
  // React.useEffect(() => {
@@ -3711,22 +3760,28 @@ export default function App() {
       />
     )}
     {view === 'quiz' && (
-      <QuizPage 
-        lessonId={currentLesson} 
-        onComplete={handleQuizComplete} 
-        onNextModule={handleNextModule}
-        onBack={handleGlobalBack}
-      />
-    )}
+  <QuizPage 
+    lessonId={currentLesson} 
+    onComplete={handleQuizComplete} 
+    onNextModule={handleNextModule}
+    onBack={handleGlobalBack}
+    onWatchVideo={() => setView('video')}
+    onDashboard={handleGoToDashboard}
+    onMainQuiz={() => setView('quiz')}
+  />
+)}
     {view === 'simpler_quiz' && (
-      <QuizPage 
-        lessonId={currentLesson} 
-        isSimpler={true}
-        onComplete={handleSimplerQuizComplete} 
-        onNextModule={handleNextModule}
-        onBack={handleGlobalBack}
-      />
-    )}
+  <QuizPage 
+    lessonId={currentLesson} 
+    isSimpler={true}
+    onComplete={handleSimplerQuizComplete} 
+    onNextModule={handleNextModule}
+    onBack={handleGlobalBack}
+    onWatchVideo={() => setView('video')}
+    onDashboard={handleGoToDashboard}
+    onMainQuiz={() => setView('quiz')}
+  />
+)}
   </motion.div>
 )}
       </AnimatePresence>
