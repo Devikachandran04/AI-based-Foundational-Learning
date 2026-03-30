@@ -590,12 +590,13 @@ const AshMascot = ({ message, type = 'default', customSprite }: { message: strin
       exit={{ opacity: 0, y: -10 }}
     >
       <div className="w-20 h-20 bg-stone-50 rounded-3xl overflow-hidden border border-stone-100 shrink-0 flex items-center justify-center">
-        <img 
-          src={customSprite || icons[type]} 
-          alt="Ash" 
-          className="w-16 h-16 object-contain scale-150"
-          referrerPolicy="no-referrer"
-        />
+        <div className="w-20 h-20 bg-yellow-50 rounded-3xl border border-yellow-100 flex items-center justify-center shadow-sm">
+  <img
+    src="https://www.freeiconspng.com/uploads/pikachu-transparent-hd-1.png"
+    alt="Pikachu"
+    className="w-14 h-14 object-contain"
+  />
+</div>
       </div>
       <div>
         <p className={`text-[10px] font-black uppercase tracking-widest mb-1 ${
@@ -658,7 +659,30 @@ const generateVerbRound = (roundIndex: number) => {
     hint
   };
 };
+const generatePrepositionRound = (step: number) => {
+  const rounds = [
+    {
+      sentence: "The book is ___ the table.",
+      target: "on",
+      cards: ["in", "on", "under"],
+      image: "https://static.vecteezy.com/system/resources/previews/045/926/058/non_2x/a-book-placed-on-a-table-isolated-on-white-background-vector.jpg", // book on table
+    },
+    {
+      sentence: "She is sitting ___ a tree.",
+      target: "under",
+      cards: ["on", "under", "behind"],
+      image: "https://media.baamboozle.com/uploads/images/120650/1646988418_663328.png", // sitting on chair
+    },
+    {
+      sentence: "The cat is hiding ___ the box.",
+      target: "in",
+      cards: ["on", "in", "over"],
+      image: "https://thumbs.dreamstime.com/b/cat-sitting-box-kitten-hiding-86115100.jpg", // cat in box
+    },
+  ];
 
+  return rounds[step];
+};
 // --- Article Practice Data & Logic --- // ← UPDATED 2026
 const ARTICLE_CHALLENGES = [
   { item: "apple", image: "https://img.pokemondb.net/sprites/items/apple.png", target: "an", hint: "Apple starts with a vowel sound!" },
@@ -766,6 +790,9 @@ const InteractivePractice = ({ lessonId, onComplete, onWatchVideo, onHelp, asset
   const [step, setStep] = useState(0);
   const [verbStep, setVerbStep] = useState(0);
   const [articleStep, setArticleStep] = useState(0); // ← UPDATED 2026
+  const [prepStep, setPrepStep] = useState(0);
+const [currentPrepChallenge, setCurrentPrepChallenge] = useState<any>(null);
+const [prepFeedback, setPrepFeedback] = useState<any>(null);
   const [adjectiveStep, setAdjectiveStep] = useState(0); // ← UPDATED 2026
   const [currentVerbChallenge, setCurrentVerbChallenge] = useState<any>(null); // ← UPDATED 2026
   const [currentArticleChallenge, setCurrentArticleChallenge] = useState<any>(null); // ← UPDATED 2026
@@ -798,29 +825,35 @@ const InteractivePractice = ({ lessonId, onComplete, onWatchVideo, onHelp, asset
 
   // ← UPDATED 2026: Full session reset with character and word randomization
   React.useEffect(() => {
-    if (lessonId === 'verbs') {
-      setVerbStep(0);
-      setCurrentVerbChallenge(generateVerbRound(0));
-    } else if (lessonId === 'articles') {
-      setArticleStep(0);
-      setCurrentArticleChallenge(generateArticleRound(0));
-      setChestState('closed');
-      setItemFlying(false);
-    } else if (lessonId === 'adjectives') {
-      setAdjectiveStep(0);
-      setCurrentAdjectiveChallenge(generateAdjectiveRound(0));
-      setSelectedAdjectives([]);
-      setMirrorState('blank');
-    } else {
-      setSessionWords(generateSessionWords());
-      setCharacter(getRandomCharacter());
-      setCollectedNouns([]);
-    }
-    setIsDone(false);
-    setVerbFeedback(null);
-    setArticleFeedback(null);
-    setAdjectiveFeedback(null);
-  }, [lessonId]);
+  if (lessonId === 'verbs') {
+    setVerbStep(0);
+    setCurrentVerbChallenge(generateVerbRound(0));
+  } else if (lessonId === 'prepositions') {
+    setPrepStep(0);
+    setCurrentPrepChallenge(generatePrepositionRound(0));
+    setPrepFeedback(null);
+  } else if (lessonId === 'articles') {
+    setArticleStep(0);
+    setCurrentArticleChallenge(generateArticleRound(0));
+    setChestState('closed');
+    setItemFlying(false);
+  } else if (lessonId === 'adjectives') {
+    setAdjectiveStep(0);
+    setCurrentAdjectiveChallenge(generateAdjectiveRound(0));
+    setSelectedAdjectives([]);
+    setMirrorState('blank');
+  } else {
+    setSessionWords(generateSessionWords());
+    setCharacter(getRandomCharacter());
+    setCollectedNouns([]);
+  }
+
+  setIsDone(false);
+  setVerbFeedback(null);
+  setPrepFeedback(null);
+  setArticleFeedback(null);
+  setAdjectiveFeedback(null);
+}, [lessonId]);
 
   // Helper: Check if two rectangles overlap by at least 30%
   const checkOverlap = (cardRect: DOMRect, bagRect: DOMRect) => {
@@ -870,34 +903,63 @@ const InteractivePractice = ({ lessonId, onComplete, onWatchVideo, onHelp, asset
   };
 
   const handleVerbDragEnd = (event: any, info: any, card: string) => {
-    if (!characterRef.current || !currentVerbChallenge) return;
-    
-    const charRect = characterRef.current.getBoundingClientRect();
-    const cardRect = (event.target as HTMLElement).getBoundingClientRect();
+  if (!characterRef.current || !currentVerbChallenge) return;
 
-    const isOverChar = checkOverlap(cardRect, charRect);
+  const boxRect = characterRef.current.getBoundingClientRect();
+  const cardRect = (event.target as HTMLElement).getBoundingClientRect();
 
-    if (isOverChar) {
-      if (card === currentVerbChallenge.target) {
-        setVerbFeedback({ type: 'correct', card });
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-        
-        setTimeout(() => {
-          if (verbStep < 4) { // 5 rounds total
-            const nextStep = verbStep + 1;
-            setVerbStep(nextStep);
-            setCurrentVerbChallenge(generateVerbRound(nextStep));
-            setVerbFeedback(null);
-          } else {
-            setIsDone(true);
-          }
-        }, 2000);
+  const isOverBox = checkOverlap(cardRect, boxRect);
+
+  if (!isOverBox) return;
+
+  if (card === currentVerbChallenge.target) {
+    setVerbFeedback({ type: "correct", card });
+    confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
+
+    setTimeout(() => {
+      if (verbStep < 2) {
+        const nextStep = verbStep + 1;
+        setVerbStep(nextStep);
+        setCurrentVerbChallenge(generateVerbRound(nextStep));
+        setVerbFeedback(null);
       } else {
-        setVerbFeedback({ type: 'wrong', card });
-        setTimeout(() => setVerbFeedback(null), 2500);
+        setIsDone(true);
       }
-    }
-  };
+    }, 1200);
+  } else {
+    setVerbFeedback({ type: "wrong", card });
+    setTimeout(() => setVerbFeedback(null), 1800);
+  }
+};
+const handlePrepDragEnd = (event: any, info: any, card: string) => {
+  if (!characterRef.current || !currentPrepChallenge) return;
+
+  const boxRect = characterRef.current.getBoundingClientRect();
+  const cardRect = (event.target as HTMLElement).getBoundingClientRect();
+
+  const isOverBox = checkOverlap(cardRect, boxRect);
+
+  if (!isOverBox) return;
+
+  if (card === currentPrepChallenge.target) {
+    setPrepFeedback({ type: "correct", card });
+    confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
+
+    setTimeout(() => {
+      if (prepStep < 2) {
+        const nextStep = prepStep + 1;
+        setPrepStep(nextStep);
+        setCurrentPrepChallenge(generatePrepositionRound(nextStep));
+        setPrepFeedback(null);
+      } else {
+        setIsDone(true);
+      }
+    }, 1200);
+  } else {
+    setPrepFeedback({ type: "wrong", card });
+    setTimeout(() => setPrepFeedback(null), 1800);
+  }
+};
 
   const handleArticleDragEnd = (event: any, info: any, card: string) => {
     if (!chestRef.current || !currentArticleChallenge) return;
@@ -1028,228 +1090,332 @@ const InteractivePractice = ({ lessonId, onComplete, onWatchVideo, onHelp, asset
   ];
 
   if (lessonId === 'verbs') {
-    if (!currentVerbChallenge) return null;
-    const lessonChar = LESSON_CHARACTERS.verbs;
-    
-    return (
-      <div className="max-w-4xl w-full flex flex-col items-center relative">
-        <div className="text-center mb-8">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">Let's Practice</p>
-          <h2 className="text-5xl font-serif italic mb-6">Mastering Verbs</h2>
-          
-          {/* Character Area - Charmander Exclusively for Verbs */}
-          <div className="flex justify-center mb-8">
-            <motion.div 
-              ref={characterRef}
-              animate={verbFeedback?.type === 'correct' ? { 
-                scale: [1, 1.15, 1],
-                y: [0, -20, 0],
-                ...(verbFeedback.card.includes('run') || verbFeedback.card.includes('running') || verbFeedback.card.includes('ran') ? { 
-                  x: [-40, 40, -40, 40, 0],
-                  skewX: [-10, 10, -10, 10, 0]
-                } : {}),
-                ...(verbFeedback.card.includes('jump') || verbFeedback.card.includes('jumping') || verbFeedback.card.includes('jumped') ? { 
-                  y: [0, -100, 0, -60, 0],
-                  scaleY: [1, 0.8, 1.2, 1]
-                } : {}),
-                ...(verbFeedback.card.includes('eat') || verbFeedback.card.includes('eating') || verbFeedback.card.includes('ate') ? { 
-                  scale: [1, 1.3, 0.9, 1.2, 1],
-                  rotate: [0, 5, -5, 5, 0]
-                } : {}),
-                ...(verbFeedback.card.includes('sing') ? { rotate: [0, -15, 15, -15, 15, 0] } : {}),
-                ...(verbFeedback.card.includes('fly') ? { y: [0, -120, 0], scale: [1, 0.9, 1.1, 1] } : {})
-              } : verbFeedback?.type === 'wrong' ? {
-                x: [0, -5, 5, -5, 5, 0]
-              } : {}}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
-              className="relative w-64 h-64 flex items-center justify-center"
-            >
-              <img 
-                src={lessonChar.sprite} 
-                alt={lessonChar.name} 
-                className={`w-full h-full object-contain transition-all ${verbFeedback?.type === 'wrong' ? 'grayscale brightness-50' : ''}`}
-                referrerPolicy="no-referrer"
+  if (!currentVerbChallenge) return null;
+
+  return (
+    <div className="max-w-4xl w-full flex flex-col items-center relative">
+      <div className="text-center mb-10">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-2">
+          Interactive Practice
+        </p>
+        <h2 className="text-5xl font-serif italic mb-4">Mastering Verbs</h2>
+        <p className="text-lg text-muted font-medium max-w-2xl mx-auto">
+          Drag the correct verb card into the answer box.
+        </p>
+      </div>
+
+      {!isDone ? (
+        <div className="w-full max-w-3xl bg-white rounded-[40px] shadow-xl border border-stone-50 p-10">
+          {/* progress */}
+          <div className="flex justify-between items-center mb-8">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-primary">
+              Question {verbStep + 1} of 3
+            </p>
+            <div className="w-32 h-2 bg-stone-100 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-primary transition-all duration-300"
+                style={{ width: `${((verbStep + 1) / 3) * 100}%` }}
               />
-              
-              {/* Beaming Reaction Overlays - Signature Wise Beaming Reaction */}
-              {verbFeedback?.type === 'correct' && (
-                <div className="absolute inset-0 pointer-events-none">
-                  <svg viewBox="0 0 100 100" className="w-full h-full">
-                    {/* Curved Eyes */}
-                    <path d="M35,40 Q40,35 45,40" fill="none" stroke="#333" strokeWidth="4" strokeLinecap="round" />
-                    <path d="M55,40 Q60,35 65,40" fill="none" stroke="#333" strokeWidth="4" strokeLinecap="round" />
-                    {/* Pink Cheek Glow */}
-                    <circle cx="25" cy="55" r="8" fill="#FFB6C1" opacity="0.8" />
-                    <circle cx="75" cy="55" r="8" fill="#FFB6C1" opacity="0.8" />
-                  </svg>
-                </div>
-              )}
+            </div>
+          </div>
 
-              {/* Speech Bubbles */}
-              <AnimatePresence>
-                {verbFeedback?.type === 'correct' && (
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                    animate={{ opacity: 1, scale: 1, y: -40 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    className="absolute -top-20 left-1/2 -translate-x-1/2 bg-white px-6 py-3 rounded-2xl shadow-2xl border-2 border-pikachu text-teal-900 font-black z-50 min-w-[250px] text-center"
-                  >
-                    Perfect subject-verb agreement!
-                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-r-2 border-b-2 border-pikachu rotate-45" />
-                  </motion.div>
-                )}
-                {verbFeedback?.type === 'wrong' && (
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                    animate={{ opacity: 1, scale: 1, y: -60 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    className="absolute -top-24 left-1/2 -translate-x-1/2 bg-white px-6 py-3 rounded-2xl shadow-2xl border-2 border-rose-400 text-rose-600 font-black z-50 min-w-[200px] text-center"
-                  >
-                    Subject doesn't match!
-                    <div className="text-sm mt-1 opacity-80 font-bold">Hint: {currentVerbChallenge.hint}</div>
-                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-r-2 border-b-2 border-rose-400 rotate-45" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+          {/* sentence */}
+          <div className="text-center mb-10">
+            <p className="text-3xl font-bold text-ink">
+              He ____ {currentVerbChallenge.timeClue.toLowerCase()}.
+            </p>
+          </div>
 
-              {/* Trainer Pop-in - Ash pops to screen on correct answer */}
-              <AnimatePresence>
-                {verbFeedback?.type === 'correct' && (
-                  <motion.div
-                    initial={{ x: 100, opacity: 0, scale: 0.5 }}
-                    animate={{ x: 0, opacity: 1, scale: 1 }}
-                    exit={{ x: 100, opacity: 0 }}
-                    className="absolute -right-32 bottom-0 w-48 h-48 z-40"
-                  >
-                    <img 
-                      src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/trainers/1.png" 
-                      alt="Ash" 
-                      className="w-full h-full object-contain"
-                      referrerPolicy="no-referrer"
-                    />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {/* Star Burst */}
-              <AnimatePresence>
-                {verbFeedback?.type === 'correct' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 0 }}
-                    animate={{ opacity: 1, y: -120 }}
-                    exit={{ opacity: 0 }}
-                    className="absolute top-0 text-amber-500 font-black text-5xl z-50 drop-shadow-lg"
-                  >
-                    +10 ⭐
-                  </motion.div>
-                )}
-              </AnimatePresence>
+          {/* drop box */}
+          <div className="flex justify-center mb-12">
+            <motion.div
+              ref={characterRef}
+              animate={
+                verbFeedback?.type === "correct"
+                  ? { scale: [1, 1.05, 1] }
+                  : verbFeedback?.type === "wrong"
+                  ? { x: [0, -6, 6, -6, 6, 0] }
+                  : {}
+              }
+              className={`w-72 h-24 rounded-3xl border-2 border-dashed flex items-center justify-center text-lg font-bold transition-all ${
+                verbFeedback?.type === "correct"
+                  ? "border-green-400 bg-green-50 text-green-700"
+                  : verbFeedback?.type === "wrong"
+                  ? "border-rose-400 bg-rose-50 text-rose-600"
+                  : "border-stone-300 bg-stone-50 text-stone-400"
+              }`}
+            >
+              {verbFeedback?.type === "correct"
+                ? currentVerbChallenge.target
+                : "Drop answer here"}
             </motion.div>
           </div>
 
-          <p className="text-2xl text-ink font-bold">
-            “Drag the correct verb form onto Charmander!”
-          </p>
-        </div>
-
-        <div className="relative w-full min-h-[400px] flex flex-col items-center justify-center">
-          {!isDone && (
-            <>
-              {/* Time Clue */}
-              <motion.div 
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                key={currentVerbChallenge.timeClue}
-                className="mb-8"
-              >
-                <span className="px-10 py-4 bg-amber-100 text-amber-800 rounded-full font-black text-3xl shadow-sm border-2 border-amber-200">
-                  {currentVerbChallenge.timeClue}
-                </span>
-              </motion.div>
-
-              <div className="flex flex-wrap justify-center gap-6 mt-8">
-                {currentVerbChallenge.cards.map((card: string) => (
-                  <motion.div
-                    key={card}
-                    drag
-                    dragSnapToOrigin
-                    onDragEnd={(e, info) => handleVerbDragEnd(e, info, card)}
-                    whileHover={{ scale: 1.05 }}
-                    whileDrag={{ scale: 1.1, zIndex: 50 }}
-                    className={`px-8 py-5 bg-white rounded-2xl shadow-xl border-2 cursor-grab active:cursor-grabbing font-black text-xl transition-all select-none ${
-                      verbFeedback?.card === card && verbFeedback.type === 'wrong' 
-                        ? 'border-rose-500 bg-rose-50 text-rose-600' 
-                        : verbFeedback?.card === card && verbFeedback.type === 'correct'
-                        ? 'border-pikachu bg-amber-50 text-amber-700 shadow-[0_0_20px_rgba(251,215,67,0.4)]'
-                        : 'border-stone-100 text-ink'
-                    }`}
-                    style={{ touchAction: 'none' }}
-                  >
-                    {card}
-                  </motion.div>
-                ))}
-              </div>
-            </>
+          {/* feedback */}
+          {verbFeedback && (
+            <div className="text-center mb-8">
+              {verbFeedback.type === "correct" ? (
+                <p className="text-green-600 font-bold text-lg">
+                  Correct answer!
+                </p>
+              ) : (
+                <p className="text-rose-600 font-bold text-lg">
+                  Wrong answer. Try again.
+                </p>
+              )}
+            </div>
           )}
 
-          {/* Post-Practice Options */}
-          <AnimatePresence>
-            {isDone && (
-              <motion.div 
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="w-full max-w-3xl space-y-8"
+          {/* cards */}
+          <div className="flex flex-wrap justify-center gap-6">
+            {currentVerbChallenge.cards.map((card: string) => (
+              <motion.div
+                key={card}
+                drag
+                dragSnapToOrigin
+                onDragEnd={(e, info) => handleVerbDragEnd(e, info, card)}
+                whileHover={{ scale: 1.05 }}
+                whileDrag={{ scale: 1.1, zIndex: 50 }}
+                className={`px-8 py-5 bg-white rounded-2xl shadow-lg border-2 cursor-grab active:cursor-grabbing font-bold text-xl transition-all select-none ${
+                  verbFeedback?.card === card && verbFeedback.type === "wrong"
+                    ? "border-rose-500 bg-rose-50 text-rose-600"
+                    : verbFeedback?.card === card && verbFeedback.type === "correct"
+                    ? "border-green-500 bg-green-50 text-green-700"
+                    : "border-stone-100 text-ink"
+                }`}
+                style={{ touchAction: "none" }}
               >
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                  <button 
-                    onClick={onWatchVideo}
-                    className="p-8 bg-white rounded-[40px] shadow-xl border border-stone-50 hover:border-blue-200 transition-all group text-left btn-plushy"
-                  >
-                    <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-100 transition-colors">
-                      <Play size={28} className="text-blue-600" />
-                    </div>
-                    <h3 className="text-xl font-serif italic mb-1">Watch Videos</h3>
-                    <p className="text-xs text-muted font-medium">Visual review.</p>
-                  </button>
-
-                  <div className="p-8 bg-green-50 rounded-[40px] shadow-xl border border-green-100 text-left relative overflow-hidden">
-                    <div className="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mb-6">
-                      <CheckCircle2 size={28} className="text-green-600" />
-                    </div>
-                    <h3 className="text-xl font-serif italic mb-1">Practice</h3>
-                    <p className="text-xs text-green-700 font-bold">Already Done!</p>
-                    <div className="absolute -right-4 -bottom-4 opacity-10">
-                      <CheckCircle2 size={100} />
-                    </div>
-                  </div>
-
-                  <button 
-                    onClick={onHelp}
-                    className="p-8 bg-white rounded-[40px] shadow-xl border border-stone-50 hover:border-teal-200 transition-all group text-left btn-plushy"
-                  >
-                    <div className="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-teal-100 transition-colors">
-                      <Leaf size={28} className="text-teal-600" />
-                    </div>
-                    <h3 className="text-xl font-serif italic mb-1">Help</h3>
-                    <p className="text-xs text-muted font-medium">Ask Sensei.</p>
-                  </button>
-                </div>
-
-                <button 
-                  onClick={onComplete}
-                  className="w-full py-6 bg-ink text-white font-bold rounded-3xl hover:bg-stone-800 transition-all flex items-center justify-center gap-3 shadow-2xl btn-plushy group"
-                >
-                  <span className="text-2xl">Quiz time</span>
-                  <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform" />
-                </button>
+                {card}
               </motion.div>
-            )}
-          </AnimatePresence>
+            ))}
+          </div>
         </div>
-      </div>
-    );
-  }
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full max-w-3xl space-y-8"
+        >
+          <div className="bg-white rounded-[40px] shadow-xl border border-stone-50 p-10 text-center">
+            <GrammaChu reaction="excited" />
+            <h3 className="text-3xl font-serif italic mb-3">Well done!</h3>
+            <p className="text-muted font-medium mb-8">
+              You completed the verb practice. Now continue to the quiz or revise using videos.
+            </p>
 
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+              <button
+                onClick={onWatchVideo}
+                className="p-8 bg-white rounded-[32px] shadow-md border border-stone-100 hover:border-blue-200 transition-all group text-left btn-plushy"
+              >
+                <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-blue-100 transition-colors">
+                  <Play size={28} className="text-blue-600" />
+                </div>
+                <h3 className="text-xl font-serif italic mb-1">Watch Videos</h3>
+                <p className="text-xs text-muted font-medium">Revise the concept.</p>
+              </button>
+
+              <div className="p-8 bg-green-50 rounded-[32px] shadow-md border border-green-100 text-left">
+                <div className="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mb-5">
+                  <CheckCircle2 size={28} className="text-green-600" />
+                </div>
+                <h3 className="text-xl font-serif italic mb-1">Practice</h3>
+                <p className="text-xs text-green-700 font-bold">Completed</p>
+              </div>
+
+              <button
+                onClick={onHelp}
+                className="p-8 bg-white rounded-[32px] shadow-md border border-stone-100 hover:border-teal-200 transition-all group text-left btn-plushy"
+              >
+                <div className="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-teal-100 transition-colors">
+                  <Leaf size={28} className="text-teal-600" />
+                </div>
+                <h3 className="text-xl font-serif italic mb-1">Help</h3>
+                <p className="text-xs text-muted font-medium">Ask Sensei.</p>
+              </button>
+            </div>
+
+            <button
+              onClick={onComplete}
+              className="w-full py-6 bg-ink text-white font-bold rounded-3xl hover:bg-stone-800 transition-all flex items-center justify-center gap-3 shadow-2xl btn-plushy group"
+            >
+              <span className="text-2xl">Quiz time</span>
+              <ArrowRight
+                size={24}
+                className="group-hover:translate-x-2 transition-transform"
+              />
+            </button>
+          </div>
+        </motion.div>
+      )}
+    </div>
+  );
+}
+if (lessonId === 'prepositions') {
+  if (!currentPrepChallenge) return null;
+
+  return (
+    <div className="max-w-4xl w-full flex flex-col items-center relative">
+      <div className="text-center mb-10">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-2">
+          Interactive Practice
+        </p>
+        <h2 className="text-5xl font-serif italic mb-4">Mastering Prepositions</h2>
+        <p className="text-lg text-muted font-medium max-w-2xl mx-auto">
+          Drag the correct preposition card into the answer box.
+        </p>
+      </div>
+
+      {!isDone ? (
+        <div className="w-full max-w-3xl bg-white rounded-[40px] shadow-xl border border-stone-50 p-10">
+          <div className="flex justify-between items-center mb-8">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-primary">
+              Question {prepStep + 1} of 3
+            </p>
+            <div className="w-32 h-2 bg-stone-100 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-primary transition-all duration-300"
+                style={{ width: `${((prepStep + 1) / 3) * 100}%` }}
+              />
+            </div>
+          </div>
+
+          <div className="text-center mb-10">
+            <div className="flex justify-center mb-6">
+  <img
+    src={currentPrepChallenge.image}
+    alt="preposition example"
+    className="w-56 h-56 object-contain"
+  />
+</div>
+
+<p className="text-3xl font-bold text-ink">
+  {currentPrepChallenge.sentence}
+</p>
+          </div>
+
+          <div className="flex justify-center mb-12">
+            <motion.div
+              ref={characterRef}
+              animate={
+                prepFeedback?.type === "correct"
+                  ? { scale: [1, 1.05, 1] }
+                  : prepFeedback?.type === "wrong"
+                  ? { x: [0, -6, 6, -6, 6, 0] }
+                  : {}
+              }
+              className={`w-72 h-24 rounded-3xl border-2 border-dashed flex items-center justify-center text-lg font-bold transition-all ${
+                prepFeedback?.type === "correct"
+                  ? "border-green-400 bg-green-50 text-green-700"
+                  : prepFeedback?.type === "wrong"
+                  ? "border-rose-400 bg-rose-50 text-rose-600"
+                  : "border-stone-300 bg-stone-50 text-stone-400"
+              }`}
+            >
+              {prepFeedback?.type === "correct"
+                ? currentPrepChallenge.target
+                : "Drop answer here"}
+            </motion.div>
+          </div>
+
+          {prepFeedback && (
+            <div className="text-center mb-8">
+              {prepFeedback.type === "correct" ? (
+                <p className="text-green-600 font-bold text-lg">
+                  Correct answer!
+                </p>
+              ) : (
+                <p className="text-rose-600 font-bold text-lg">
+                  Wrong answer. Try again.
+                </p>
+              )}
+            </div>
+          )}
+
+          <div className="flex flex-wrap justify-center gap-6">
+            {currentPrepChallenge.cards.map((card: string) => (
+              <motion.div
+                key={card}
+                drag
+                dragSnapToOrigin
+                onDragEnd={(e, info) => handlePrepDragEnd(e, info, card)}
+                whileHover={{ scale: 1.05 }}
+                whileDrag={{ scale: 1.1, zIndex: 50 }}
+                className={`px-8 py-5 bg-white rounded-2xl shadow-lg border-2 cursor-grab active:cursor-grabbing font-bold text-xl transition-all select-none ${
+                  prepFeedback?.card === card && prepFeedback.type === "wrong"
+                    ? "border-rose-500 bg-rose-50 text-rose-600"
+                    : prepFeedback?.card === card && prepFeedback.type === "correct"
+                    ? "border-green-500 bg-green-50 text-green-700"
+                    : "border-stone-100 text-ink"
+                }`}
+                style={{ touchAction: "none" }}
+              >
+                {card}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full max-w-3xl space-y-8"
+        >
+          <div className="bg-white rounded-[40px] shadow-xl border border-stone-50 p-10 text-center">
+            <GrammaChu reaction="excited" />
+            <h3 className="text-3xl font-serif italic mb-3">Well done!</h3>
+            <p className="text-muted font-medium mb-8">
+              You completed the preposition practice. Now continue to the quiz or revise using videos.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+              <button
+                onClick={onWatchVideo}
+                className="p-8 bg-white rounded-[32px] shadow-md border border-stone-100 hover:border-blue-200 transition-all group text-left btn-plushy"
+              >
+                <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-blue-100 transition-colors">
+                  <Play size={28} className="text-blue-600" />
+                </div>
+                <h3 className="text-xl font-serif italic mb-1">Watch Videos</h3>
+                <p className="text-xs text-muted font-medium">Revise the concept.</p>
+              </button>
+
+              <div className="p-8 bg-green-50 rounded-[32px] shadow-md border border-green-100 text-left">
+                <div className="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mb-5">
+                  <CheckCircle2 size={28} className="text-green-600" />
+                </div>
+                <h3 className="text-xl font-serif italic mb-1">Practice</h3>
+                <p className="text-xs text-green-700 font-bold">Completed</p>
+              </div>
+
+              <button
+                onClick={onHelp}
+                className="p-8 bg-white rounded-[32px] shadow-md border border-stone-100 hover:border-teal-200 transition-all group text-left btn-plushy"
+              >
+                <div className="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-teal-100 transition-colors">
+                  <Leaf size={28} className="text-teal-600" />
+                </div>
+                <h3 className="text-xl font-serif italic mb-1">Help</h3>
+                <p className="text-xs text-muted font-medium">Ask Sensei.</p>
+              </button>
+            </div>
+
+            <button
+              onClick={onComplete}
+              className="w-full py-6 bg-ink text-white font-bold rounded-3xl hover:bg-stone-800 transition-all flex items-center justify-center gap-3 shadow-2xl btn-plushy group"
+            >
+              <span className="text-2xl">Quiz time</span>
+              <ArrowRight
+                size={24}
+                className="group-hover:translate-x-2 transition-transform"
+              />
+            </button>
+          </div>
+        </motion.div>
+      )}
+    </div>
+  );
+}
   if (lessonId === 'adjectives') {
     if (!currentAdjectiveChallenge) return null;
     const lessonChar = LESSON_CHARACTERS.adjectives;
@@ -3287,13 +3453,13 @@ const HelpModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
                 </div>
               </div>
 
-              <button
-                onClick={onClose}
-                className="absolute -top-4 -right-4 w-12 h-12 bg-rose-500 text-white rounded-full shadow-lg hover:bg-rose-600 hover:scale-110 transition-all flex items-center justify-center z-50 border-4 border-white"
-                aria-label="Close"
-              >
-                <X size={24} strokeWidth={3} />
-              </button>
+             <button
+  onClick={onClose}
+  className="w-11 h-11 shrink-0 bg-rose-500 text-white rounded-full shadow-lg hover:bg-rose-600 hover:scale-105 transition-all flex items-center justify-center z-50 border-4 border-white"
+  aria-label="Close"
+>
+  <X size={22} strokeWidth={3} />
+</button>
             </div>
 
             <div className="p-6 overflow-y-auto space-y-8">
