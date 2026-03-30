@@ -9,8 +9,9 @@ function TeacherDashboard() {
   const [summaryData, setSummaryData] = useState({
     total_students: 0,
     avg_score_7d: 0,
-    low_score_students: 0
   });
+
+  const [lowScoreCount, setLowScoreCount] = useState(0);
   const [weakCount, setWeakCount] = useState(0);
   const [helpCount, setHelpCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -18,7 +19,6 @@ function TeacherDashboard() {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        // ✅ TOKEN LOGIC
         const urlParams = new URLSearchParams(window.location.search);
         let token = urlParams.get("token");
 
@@ -39,8 +39,9 @@ function TeacherDashboard() {
           headers: { Authorization: `Bearer ${token}` }
         };
 
-        const [summaryRes, weakRes, helpRes] = await Promise.all([
+        const [summaryRes, lowRes, weakRes, helpRes] = await Promise.all([
           axios.get(`${BASE_URL}/api/teacher/dashboard/summary`, config),
+          axios.get(`${BASE_URL}/api/teacher/dashboard/low-score-students`, config),
           axios.get(`${BASE_URL}/api/teacher/dashboard/weak-topics`, config),
           axios.get(`${BASE_URL}/api/help/all`, config)
         ]);
@@ -48,12 +49,11 @@ function TeacherDashboard() {
         setSummaryData({
           total_students: summaryRes.data?.total_students ?? 0,
           avg_score_7d: summaryRes.data?.avg_score_7d ?? 0,
-          low_score_students: summaryRes.data?.low_score_students ?? 0
         });
 
+        setLowScoreCount(lowRes.data?.students?.length ?? 0);
         setWeakCount(weakRes.data?.weak_topics?.length ?? 0);
         setHelpCount(helpRes.data?.all_doubts?.length ?? 0);
-
       } catch (err) {
         console.error("Error fetching dashboard data:", err);
 
@@ -70,32 +70,33 @@ function TeacherDashboard() {
     fetchDashboardData();
   }, [navigate]);
 
-  // ✅ Safe logout function for button
-  // ✅ Safe logout function for button
-const handleLogout = () => {
-  // 1️⃣ Clear all tokens / storage
-  localStorage.removeItem("token");
-  localStorage.removeItem("grammar-pal-storage"); // clear everything
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("grammar-pal-storage");
 
-  // 2️⃣ Redirect to main user frontend interface
-  if (typeof window !== "undefined") {
-    window.location.href = "https://ai-based-foundational-learning-user.vercel.app/";
-  }
-};
+    if (typeof window !== "undefined") {
+      window.location.href = "https://ai-based-foundational-learning-user.vercel.app/";
+    }
+  };
 
   return (
     <div className="dashboard-container">
       <div className="top-navbar">
         <div className="logo-section">
           <h2 className="logo-text">GrammarPal</h2>
+          <p className="logo-subtitle">Admin Panel</p>
         </div>
-        <button className="icon-btn" onClick={handleLogout}>
+
+        <button className="icon-btn" onClick={handleLogout} title="Logout">
           <FiLogOut size={20} />
         </button>
       </div>
 
       <div className="top-bar">
         <h1 className="dashboard-heading">Admin Dashboard</h1>
+        <p className="dashboard-subheading">
+          Track learner performance, weak areas, and support requests.
+        </p>
       </div>
 
       {loading ? (
@@ -106,7 +107,7 @@ const handleLogout = () => {
             <div className="card-icon">📉</div>
             <h3>Low Score Students</h3>
             <p>Students performing below threshold.</p>
-            <span className="badge">{summaryData.low_score_students} Students</span>
+            <span className="badge">{lowScoreCount} Students</span>
             <br /><br />
             <Link to="/low-scores">
               <button className="card-btn">View Details</button>
