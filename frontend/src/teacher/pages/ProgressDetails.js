@@ -149,8 +149,23 @@ useEffect(() => {
                 return (
                   <tr key={s.user_id || index}>
                     <td>
-                      {s.name || s.student_name || "Unnamed Student"}
-                    </td>
+  {s.user_id ? (
+    <Link
+      to="/learner-profile"
+      state={{ studentId: s.user_id }}
+      style={{
+        textDecoration: "none",
+        color: "#2563eb",
+        fontWeight: 600,
+        cursor: "pointer",
+      }}
+    >
+      {s.name || s.student_name || "Unnamed Student"}
+    </Link>
+  ) : (
+    <span>{s.name || s.student_name || "Unnamed Student"}</span>
+  )}
+</td>
                     <td>{latestScore}%</td>
                     <td>{s.avg_score || 0}%</td>
                     <td>

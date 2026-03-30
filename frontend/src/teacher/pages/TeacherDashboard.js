@@ -94,9 +94,7 @@ function TeacherDashboard() {
 
       <div className="top-bar">
         <h1 className="dashboard-heading">Admin Dashboard</h1>
-        <p className="dashboard-subheading">
-          Track learner performance, weak areas, and support requests.
-        </p>
+        
       </div>
 
       {loading ? (

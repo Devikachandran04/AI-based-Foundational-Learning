@@ -88,7 +88,6 @@ useEffect(() => {
                   <td>{item.topic}</td>
                   <td>{score}%</td>
                   <td><span className={`risk-badge ${riskLevel.toLowerCase()}`}>{riskLevel}</span></td>
-                  <td><button className="small-btn" onClick={()=>handleViewStudents(item)}>View Students</button></td>
                 </tr>
               );
             }) : <tr><td colSpan="4">No weak topics found.</td></tr>}
@@ -96,13 +95,7 @@ useEffect(() => {
         </table>
       </div>
 
-      {showStudents && (
-        <div className="student-popup">
-          <h4>Weak in {topicName}</h4>
-          {topicStudents.length>0 ? <ul>{topicStudents.map((s,i)=><li key={i}>{s.name||s.student_name||s}</li>)}</ul> : <p>No student list available.</p>}
-          <button className="small-btn" onClick={()=>setShowStudents(false)}>Close</button>
-        </div>
-      )}
+      
     </div>
   );
 }
