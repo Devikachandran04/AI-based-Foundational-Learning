@@ -2,9 +2,11 @@ from flask import Blueprint, request, jsonify
 from werkzeug.security import check_password_hash, generate_password_hash
 import jwt
 from datetime import datetime, timedelta
+from urllib.parse import quote_plus
+import secrets
+
 from db import users_col
 from config import JWT_SECRET
-import secrets
 from services.email_service import send_email
 
 auth_bp = Blueprint("auth", __name__)
@@ -122,13 +124,17 @@ def forgot_password():
         }
     )
 
-    reset_link = f"{FRONTEND_URL}/?resetToken={reset_token}&email={email}"
+    safe_email = quote_plus(email)
+    reset_link = f"{FRONTEND_URL}/?resetToken={reset_token}&email={safe_email}"
 
-    send_email(
-        email,
-        "GrammarPal Password Reset",
-        f"Click this link to reset your password:\n\n{reset_link}\n\nThis link expires in 30 minutes."
-    )
+    try:
+        send_email(
+            email,
+            "GrammarPal Password Reset",
+            f"Click this link to reset your password:\n\n{reset_link}\n\nThis link expires in 30 minutes."
+        )
+    except Exception as e:
+        return jsonify({"error": f"Failed to send reset email: {str(e)}"}), 500
 
     return jsonify({
         "ok": True,
