@@ -47,10 +47,32 @@ def register():
         if existing_user.get("is_verified", False):
             return jsonify({"error": "Email already registered. Please login."}), 409
         else:
-            return jsonify({
-                "error": "Email already registered but not verified. Please verify your account."
-            }), 409
+            # 🔥 RESEND OTP FOR UNVERIFIED USER
+            otp = generate_otp()
+            expiry = datetime.utcnow() + timedelta(minutes=10)
 
+            users_col.update_one(
+                {"email": email},
+                {
+                    "$set": {
+                        "verification_otp": otp,
+                        "verification_otp_expiry": expiry
+                    }
+                }
+            )
+
+            send_email(
+                email,
+                "Verify your GrammarPal account",
+                f"Your new OTP for email verification is: {otp}. It expires in 10 minutes."
+            )
+
+            return jsonify({
+                "ok": True,
+                "message": "Email already registered but not verified. A new OTP has been sent."
+            }), 200
+
+    # 🆕 NEW USER REGISTRATION
     otp = generate_otp()
     expiry = datetime.utcnow() + timedelta(minutes=10)
 
