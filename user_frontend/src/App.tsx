@@ -2,8 +2,7 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   BookOpen, 
@@ -198,7 +197,7 @@ const QuizPage = ({
         const dbLessonId = LESSON_ID_MAP[lessonId];
 
         if (!dbLessonId) {
-          alert(`No backend lesson id mapped for ${lessonId}`);
+          console.error(`No backend lesson id mapped for ${lessonId}`);
           return;
         }
 
@@ -221,7 +220,7 @@ const QuizPage = ({
 
         if (!res.ok) {
           console.error("Quiz start failed:", data);
-          alert(data.error || "Failed to start quiz");
+          console.error(data.error || "Failed to start quiz");
           return;
         }
 
@@ -229,7 +228,7 @@ const QuizPage = ({
         setQuestions(data.questions || []);
       } catch (err) {
         console.error("Quiz start error:", err);
-        alert("Failed to start quiz");
+        console.error("Failed to start quiz");
       } finally {
         setLoadingQuiz(false);
       }
@@ -281,7 +280,7 @@ const QuizPage = ({
 
         if (!res.ok) {
           console.error("Quiz submit failed:", data);
-          alert(data.error || "Failed to submit quiz");
+          console.error(data.error || "Failed to submit quiz");
           return;
         }
 
@@ -289,7 +288,7 @@ const QuizPage = ({
         setShowResult(true);
       } catch (err) {
         console.error("Quiz submit error:", err);
-        alert("Failed to submit quiz");
+        console.error("Failed to submit quiz");
       } finally {
         setSubmitting(false);
       }
@@ -2640,7 +2639,7 @@ const LoginPage = ({ assets }: { assets: any }) => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [className, setClassName] = useState('');
-
+const [message, setMessage] = useState('');
   const login = useStore((state) => state.login);
   const register = useStore((state) => state.register);
 
@@ -2649,7 +2648,7 @@ const LoginPage = ({ assets }: { assets: any }) => {
 
     if (mode === 'register') {
       if (!name || !email || !password || !className) {
-        alert("Please fill all fields");
+        setMessage("Please fill all fields");
         return;
       }
 
@@ -2663,7 +2662,7 @@ const LoginPage = ({ assets }: { assets: any }) => {
 
     // login part remains same
     if (!email || !password) {
-      alert("Please fill all fields");
+      setMessage("Please fill all fields");
       return;
     }
 
@@ -2805,7 +2804,11 @@ const LoginPage = ({ assets }: { assets: any }) => {
                   {mode === 'login' ? 'Continue your journey to mastery.' : 'Create your account to start learning.'}
                 </p>
               </div>
-
+{message && (
+  <div className="mb-4 p-3 rounded-xl bg-teal-100 text-teal-800 font-medium text-sm text-center shadow">
+    {message}
+  </div>
+)}
               <form onSubmit={handleSubmit} className="space-y-5">
                 <AnimatePresence mode="wait">
                   {mode === 'register' && (
@@ -3376,7 +3379,7 @@ const HelpModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
 
   const handleSend = async () => {
     if (!message.trim()) {
-      alert("Please enter your doubt");
+      setMessage("Please enter your doubt");
       return;
     }
 
@@ -3399,16 +3402,16 @@ const HelpModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.error || "Failed to send help request");
+        setMessage(data.error || "Failed to send help request");
         return;
       }
 
       setMessage("");
       await fetchMyDoubts();
-      alert("Doubt sent successfully");
+      setMessage("Doubt sent successfully");
     } catch (error) {
       console.error("Send doubt error:", error);
-      alert("Something went wrong");
+      setMessage("Something went wrong");
     } finally {
       setSending(false);
     }
@@ -3675,7 +3678,8 @@ export default function App() {
   const [view, setView] = useState<'lesson' | 'choose_action' | 'video' | 'quiz' | 'simpler_quiz' | 'practice' | 'profile'>('lesson');
   const [navigationHistory, setNavigationHistory] = useState<{ view: string, lesson: string }[]>([]);
   const { assets, loading, error, generate } = useAssets();
-  const [isCourseComplete, setIsCourseComplete] = useState(false); // ← UPDATED 2026: New state for course completion
+  const [isCourseComplete, setIsCourseComplete] = useState(false); 
+  const [message, setMessage] = useState('');
   const handleGoToDashboard = () => {
   setLesson('');
   setView('lesson');
