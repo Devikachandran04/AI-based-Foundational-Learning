@@ -16,15 +16,11 @@ interface AppState {
 
   login: (username: string, password: string, className: string) => Promise<any>;
   register: (name: string, email: string, password: string, className: string) => Promise<any>;
-  forgotPassword: (email: string) => Promise<any>;
-  resetPassword: (email: string, resetToken: string, newPassword: string) => Promise<any>;
 
   logout: () => void;
   setLesson: (lesson: string) => void;
   setScore: (score: number) => void;
 }
-
-const BASE_URL = "https://ai-based-foundational-learning-production.up.railway.app";
 
 export const useStore = create<AppState>()(
   persist(
@@ -35,14 +31,19 @@ export const useStore = create<AppState>()(
 
       login: async (username: string, password: string, className: string) => {
         try {
-          const res = await fetch(`${BASE_URL}/api/auth/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email: username,
-              password: password,
-            }),
-          });
+          const res = await fetch(
+            "https://ai-based-foundational-learning-production.up.railway.app/api/auth/login",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email: username,
+                password: password,
+              }),
+            }
+          );
 
           const data = await res.json();
 
@@ -79,16 +80,21 @@ export const useStore = create<AppState>()(
 
       register: async (name: string, email: string, password: string, className: string) => {
         try {
-          const res = await fetch(`${BASE_URL}/api/auth/register`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              name,
-              email,
-              password,
-              class: className,
-            }),
-          });
+          const res = await fetch(
+            "https://ai-based-foundational-learning-production.up.railway.app/api/auth/register",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                name,
+                email,
+                password,
+                class: className
+              }),
+            }
+          );
 
           const data = await res.json();
 
@@ -113,58 +119,6 @@ export const useStore = create<AppState>()(
         } catch (err) {
           console.error("Registration failed", err);
           alert("Registration failed");
-          return null;
-        }
-      },
-
-      forgotPassword: async (email: string) => {
-        try {
-          const res = await fetch(`${BASE_URL}/api/auth/forgot-password`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email }),
-          });
-
-          const data = await res.json();
-
-          if (!res.ok) {
-            alert(data.error || "Failed to send reset link");
-            return null;
-          }
-
-          alert(data.message || "Reset link sent");
-          return data;
-        } catch (err) {
-          console.error("Forgot password failed", err);
-          alert("Forgot password failed");
-          return null;
-        }
-      },
-
-      resetPassword: async (email: string, resetToken: string, newPassword: string) => {
-        try {
-          const res = await fetch(`${BASE_URL}/api/auth/reset-password`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email,
-              reset_token: resetToken,
-              new_password: newPassword,
-            }),
-          });
-
-          const data = await res.json();
-
-          if (!res.ok) {
-            alert(data.error || "Failed to reset password");
-            return null;
-          }
-
-          alert(data.message || "Password reset successful");
-          return data;
-        } catch (err) {
-          console.error("Reset password failed", err);
-          alert("Reset password failed");
           return null;
         }
       },
