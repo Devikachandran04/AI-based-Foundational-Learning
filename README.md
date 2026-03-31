@@ -1,319 +1,136 @@
-# PrepositionPal - AI-based Foundational Learning Platform
+# 🚀 AI-Based Foundational Learning
 
-A colorful, interactive educational web application designed to help children learn English prepositions through fun drag-and-drop games and engaging quizzes.
+**Master English Grammar with Adaptive AI-Powered Quizzes & Personalized Guidance**
 
-## Features
+![License](https://img.shields.io/github/license/Devikachandran04/AI-based-Foundational-Learning)
+![Python](https://img.shields.io/badge/Backend-Flask-000000?logo=flask&logoColor=white)
+![React](https://img.shields.io/badge/Frontend-React-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TS-Vite%20%2B%20TypeScript-3178C6?logo=typescript&logoColor=white)
+![MongoDB](https://img.shields.io/badge/Database-MongoDB-47A248?logo=mongodb&logoColor=white)
+![Google Gemini](https://img.shields.io/badge/AI-Google%20Gemini-4285F4?logo=google&logoColor=white)
 
-- **Interactive Drag & Drop Quiz**: Learn prepositions by dragging a cute ball to different positions around a table
-- **Colorful Cartoon Design**: Shinchan/Pokémon-inspired aesthetic with bright colors and playful animations
-- **User Authentication**: Email/password and Google sign-in powered by Firebase
-- **Class Selection**: Choose between Class 7 or Class 8
-- **Progress Tracking**: Track quiz scores and learning progress
-- **Educational Videos**: Embedded YouTube videos for additional learning
-- **Help System**: Students can submit help requests with screenshots
-- **Confetti Celebrations**: Reward successful quiz completion with animations
-- **Responsive Design**: Works beautifully on tablets, desktops, and mobile devices
+<grok-card data-id="84bc93" data-type="image_card" data-plain-type="render_searched_image"  data-arg-image_id="Vy9C2"  data-arg-size="LARGE" ></grok-card>
 
-## Tech Stack
 
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS with custom theme
-- **UI Components**: shadcn/ui + Radix UI primitives
-- **Animations**: Framer Motion + react-confetti
-- **Drag & Drop**: @dnd-kit/core
-- **State Management**: Zustand
-- **Forms**: React Hook Form + Zod validation
-- **Backend**: Firebase (Authentication, Firestore, Storage)
-- **Icons**: lucide-react
-- **Fonts**: Comic Neue, Bubblegum Sans
+<grok-card data-id="1a9b2b" data-type="image_card" data-plain-type="render_searched_image"  data-arg-image_id="1YNu4"  data-arg-size="LARGE" ></grok-card>
 
-## Project Structure
-
-```
-preposition-pal/
-├── app/
-│   ├── class-select/       # Class selection page
-│   ├── help/               # Help request form
-│   ├── lessons/            # Lessons listing
-│   ├── login/              # Authentication page
-│   ├── quiz/               # Interactive quiz
-│   ├── results/            # Quiz results with confetti
-│   ├── videos/             # Educational videos
-│   ├── globals.css         # Global styles
-│   ├── layout.tsx          # Root layout
-│   └── page.tsx            # Landing page
-├── components/
-│   ├── ui/                 # Reusable UI components
-│   │   ├── button.tsx
-│   │   ├── card.tsx
-│   │   ├── input.tsx
-│   │   └── label.tsx
-│   ├── AuthProvider.tsx    # Auth state provider
-│   ├── DraggableQuiz.tsx   # Main quiz component
-│   └── Navbar.tsx          # Navigation bar
-├── lib/
-│   ├── auth.ts             # Firebase auth functions
-│   ├── firebase.ts         # Firebase initialization
-│   └── utils.ts            # Utility functions
-├── stores/
-│   ├── authStore.ts        # Authentication state
-│   └── quizStore.ts        # Quiz state management
-├── types/
-│   └── index.ts            # TypeScript type definitions
-├── .env.local.example      # Environment variables template
-├── next.config.ts          # Next.js configuration
-├── tailwind.config.ts      # Tailwind CSS configuration
-└── package.json
-```
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+ installed
-- A Firebase project set up
-- npm or yarn package manager
-
-### Firebase Setup
-
-1. **Create a Firebase Project**
-   - Go to [Firebase Console](https://console.firebase.google.com/)
-   - Click "Add project" and follow the steps
-   - Give your project a name (e.g., "PrepositionPal")
-
-2. **Enable Authentication**
-   - In Firebase Console, go to "Authentication" > "Sign-in method"
-   - Enable "Email/Password" provider
-   - Enable "Google" provider
-   - Add your domain to authorized domains (localhost is pre-authorized)
-
-3. **Create Firestore Database**
-   - Go to "Firestore Database" > "Create database"
-   - Choose "Start in test mode" for development
-   - Select a location close to your users
-
-4. **Set up Firestore Rules** (for production)
-   ```
-   rules_version = '2';
-   service cloud.firestore {
-     match /databases/{database}/documents {
-       match /users/{userId} {
-         allow read, write: if request.auth != null && request.auth.uid == userId;
-       }
-       match /quizAttempts/{attemptId} {
-         allow read, write: if request.auth != null;
-       }
-       match /helpRequests/{requestId} {
-         allow create: if request.auth != null;
-         allow read, update: if request.auth != null;
-       }
-     }
-   }
-   ```
-
-5. **Set up Firebase Storage**
-   - Go to "Storage" > "Get started"
-   - Start in test mode for development
-   - Set up Storage rules:
-   ```
-   rules_version = '2';
-   service firebase.storage {
-     match /b/{bucket}/o {
-       match /help-screenshots/{userId}/{fileName} {
-         allow read, write: if request.auth != null && request.auth.uid == userId;
-       }
-     }
-   }
-   ```
-
-6. **Get Firebase Configuration**
-   - Go to Project Settings (gear icon)
-   - Scroll down to "Your apps"
-   - Click "Web" icon (</>) to add a web app
-   - Register your app with a nickname
-   - Copy the Firebase configuration object
-
-### Installation
-
-1. **Clone or download the repository**
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**
-
-   Create a `.env.local` file in the root directory:
-   ```env
-   NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key_here
-   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
-   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
-   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-   NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
-   ```
-
-4. **Run the development server**
-   ```bash
-   npm run dev
-   ```
-
-5. **Open your browser**
-
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-## Building for Production
-
-```bash
-npm run build
-npm start
-```
-
-## Features Breakdown
-
-### Landing Page (/)
-- Hero section with animated stars
-- "Start Learning" call-to-action
-- Feature cards showcasing key benefits
-
-### Authentication (/login)
-- Email/password registration and login
-- Google sign-in integration
-- Form validation with error messages
-- Smooth animations
-
-### Class Selection (/class-select)
-- Choose between Class 7 or Class 8
-- Colorful animated cards
-- Progress saved to Firestore
-
-### Lessons (/lessons)
-- Browse available lessons
-- "Prepositions of Place - Level 1" is unlocked
-- Future lessons shown as locked
-
-### Quiz (/quiz)
-- 2 interactive drag-and-drop questions
-- Visual table with drop zones (on, in, under, beside, above)
-- Cute ball character to drag
-- Immediate feedback with animations
-- Progress tracking (Question X of 2)
-- Score counter
-
-### Results (/results)
-- Final score with percentage
-- Confetti animation for scores ≥ 70%
-- Encouraging messages based on performance
-- Review of all answers
-- Options: Next Lesson, Watch Videos, or Try Again
-- Quiz attempt saved to Firestore
-
-### Videos (/videos)
-- Embedded YouTube videos about prepositions
-- Responsive video players
-- Option to retry quiz after watching
-
-### Help (/help)
-- Contact form with message textarea
-- Screenshot upload capability
-- Form validation
-- Submissions saved to Firestore
-- Success confirmation animation
-
-## Color Palette
-
-- **Bright Red**: #FF3B5C
-- **Sunny Yellow**: #FFEB3B
-- **Sky Blue**: #40C4FF
-- **Lime Green**: #4ADE80
-
-## Fonts
-
-- **Primary**: Comic Neue (Google Fonts)
-- **Secondary**: Bubblegum Sans (Google Fonts)
-
-## State Management
-
-### Auth Store (Zustand)
-- User authentication state
-- Loading states
-- Login/logout actions
-
-### Quiz Store (Zustand)
-- Current question index
-- User answers
-- Score tracking
-- Quiz completion state
-
-## Firebase Collections
-
-### users
-```typescript
-{
-  uid: string
-  email: string
-  displayName: string
-  photoURL: string | null
-  selectedClass: 7 | 8
-  createdAt: Date
-}
-```
-
-### quizAttempts
-```typescript
-{
-  userId: string
-  score: number
-  correctAnswers: number
-  totalQuestions: number
-  answers: Answer[]
-  timestamp: Date
-  classLevel: 7 | 8
-}
-```
-
-### helpRequests
-```typescript
-{
-  userId: string
-  userName: string
-  userEmail: string
-  message: string
-  screenshotUrl?: string
-  status: "pending" | "resolved"
-  timestamp: Date
-}
-```
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## Development Tips
-
-- The app uses Next.js 15 App Router
-- All pages are client-side rendered with "use client" directive
-- Firebase is initialized once and reused across the app
-- Animations are performance-optimized with Framer Motion
-- Drag and drop uses @dnd-kit for better touch support
-
-## Contributing
-
-This is an educational project. Feel free to fork and customize for your needs!
-
-## License
-
-ISC
-
-## Support
-
-For questions or issues, use the Help form within the application or contact the development team.
 
 ---
 
-Built with ❤️ for young learners
+## ✨ What is AI-Based Foundational Learning?
+
+An **intelligent, adaptive platform** designed to help students master **foundational English grammar** (Prepositions, Articles, Tenses, Verbs, Nouns, Adjectives) through:
+
+- Interactive adaptive quizzes
+- Real-time performance-based learning paths
+- AI-powered explanations and hints (Google Gemini)
+- Gamified student experience with confetti celebrations
+- Comprehensive teacher/admin dashboard for progress tracking
+
+Built with a clean **Flask + MongoDB** backend and dual modern frontends — one for teachers (React) and one delightful gamified experience for students (Vite + TypeScript).
+
+---
+
+## 🌟 Key Features
+
+- **Adaptive Quiz Engine** — Automatically selects questions based on difficulty and learner performance using weighted scoring
+- **Smart Next-Step Logic** — Rule-based adaptive policy decides whether to advance, simplify, or provide extra support
+- **Rich Question Bank** — Pre-seeded JSON banks for multiple grammar topics (easy/moderate/hard levels)
+- **AI Assistant** — Google Generative AI integrated directly in the student interface for instant hints and explanations
+- **Progress Analytics** — Detailed topic-wise accuracy, attempt history, and visual charts (Recharts)
+- **Dual Dashboards**:
+  - **Student UI** — Fun, responsive, animated experience with Zustand state + Motion + Confetti
+  - **Teacher UI** — Clean admin panel for monitoring students, help requests, and analytics
+- **Help & Support Workflow** — Students can request help; teachers can respond
+- **Secure JWT Authentication** — Role-based access (student/teacher)
+- **Fully Responsive & Modern UI** — Tailwind CSS v4, Lucide icons, smooth animations
+
+<grok-card data-id="d753dc" data-type="image_card" data-plain-type="render_searched_image"  data-arg-image_id="E81hD"  data-arg-size="LARGE" ></grok-card>
+
+
+<grok-card data-id="093955" data-type="image_card" data-plain-type="render_searched_image"  data-arg-image_id="3VeI4"  data-arg-size="LARGE" ></grok-card>
+
+
+---
+
+## 🛠 Tech Stack
+
+| Layer              | Technologies |
+|--------------------|--------------|
+| **Backend**        | Python + Flask + Flask-CORS + PyMongo + PyJWT + python-dotenv |
+| **Database**       | MongoDB (collections: users, lessons, quizzes, attempts, learner_profile, help_requests, question_bank) |
+| **AI**             | Google Generative AI (`@google/genai`) + Custom adaptive policy |
+| **Teacher Frontend** | React 19 (Create React App) + React Router + Axios + Recharts |
+| **Student Frontend** | Vite + React 19 + **TypeScript** + Tailwind CSS v4 + Zustand + Framer Motion + Canvas Confetti |
+| **Other**          | MongoDB aggregation for random questions, environment config, CORS |
+
+---
+
+## 📁 Project Structure
+
+```bash
+AI-based-Foundational-Learning/
+├── backend/                  # Flask API
+│   ├── ai/question_generator/question_bank/   # JSON files (prepositions, tenses, etc.)
+│   ├── routes/               # auth, quiz, student, teacher, help
+│   ├── services/             # adaptive_policy, quiz_service, profile_service
+│   ├── app.py
+│   ├── db.py
+│   ├── seed.py / import_question_bank.py
+│   └── requirements.txt
+├── frontend/                 # Teacher/Admin React dashboard (CRA)
+├── user_frontend/            # Student Vite + TypeScript app (gamified)
+├── .env.example
+└── README.md
+
+
+🚀 Quick Start (Ready to Run)
+Prerequisites
+
+Node.js 18+
+Python 3.10+
+MongoDB (local or MongoDB Atlas)
+Google AI Studio API key (for Gemini in student frontend)
+
+
+1. Backend
+Bashcd backend
+pip install -r requirements.txt
+
+# Copy and configure environment
+cp .env.example .env
+# Add your MONGO_URI and JWT_SECRET
+
+python setup_db.py          # Initialize collections (if needed)
+python seed.py              # Seed question banks
+# OR
+python import_question_bank.py
+
+python app.py               # Starts at http://localhost:5000
+Test it: Visit http://localhost:5000/api/health
+2. Teacher/Admin Frontend
+Bashcd frontend
+npm install
+npm start                   # Runs at http://localhost:3000
+3. Student Frontend (Recommended UI)
+Bashcd user_frontend
+npm install
+
+# Copy environment file and add Google Gemini API key if needed
+cp .env.example .env
+
+npm run dev                 # Vite dev server (usually http://localhost:5173)
+
+📊 How Adaptive Learning Works
+
+Student starts a quiz on a grammar topic
+Questions are sampled from MongoDB using $sample with difficulty levels
+Answers are scored with weighted logic
+Adaptive Policy decides next step:
+Strong performance → Advance to next lesson
+Average → Simplified quiz
+Needs help → Show AI hints + support options
+
+Profile and analytics are automatically updated
+
+techuz.comGamification in Education- Guide to Apply Gamification in Learning Apps
