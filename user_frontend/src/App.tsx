@@ -2633,95 +2633,97 @@ const LessonContentPage = ({ lessonId, onContinue, onBack }: { lessonId: string,
 };
 
 const LoginPage = ({ assets }: { assets: any }) => {
- const [mode, setMode] = useState<'login' | 'register' | 'verify' | 'forgot' | 'reset'>('login');
+  const [mode, setMode] = useState<'login' | 'register' | 'forgot' | 'reset'>('login');
   const [showAuth, setShowAuth] = useState(false);
   const [showAuthOptions, setShowAuthOptions] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [className, setClassName] = useState('');
- const [otp, setOtp] = useState('');
-const [newPassword, setNewPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [resetToken, setResetToken] = useState('');
 
   const login = useStore((state) => state.login);
   const register = useStore((state) => state.register);
-const verifyEmail = useStore((state) => state.verifyEmail);
-const resendVerificationOtp = useStore((state) => state.resendVerificationOtp);
-const forgotPassword = useStore((state) => state.forgotPassword);
-const resetPassword = useStore((state) => state.resetPassword);
+  const forgotPassword = useStore((state) => state.forgotPassword);
+  const resetPassword = useStore((state) => state.resetPassword);
+
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tokenFromUrl = params.get("resetToken");
+    const emailFromUrl = params.get("email");
+
+    if (tokenFromUrl && emailFromUrl) {
+      setResetToken(tokenFromUrl);
+      setEmail(emailFromUrl);
+      setMode("reset");
+      setShowAuth(true);
+      setShowAuthOptions(false);
+    }
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (mode === 'register') {
-    if (!name || !email || !password || !className) {
+    if (mode === 'register') {
+      if (!name || !email || !password || !className) {
+        alert("Please fill all fields");
+        return;
+      }
+
+      const result = await register(name, email, password, className);
+      if (!result) return;
+      return;
+    }
+
+    if (mode === 'forgot') {
+      if (!email) {
+        alert("Please enter your email");
+        return;
+      }
+
+      const result = await forgotPassword(email);
+      if (!result) return;
+
+      alert("Password reset link sent. Please check your email.");
+      setMode('login');
+      return;
+    }
+
+    if (mode === 'reset') {
+      if (!email || !resetToken || !newPassword) {
+        alert("Missing reset details");
+        return;
+      }
+
+      const result = await resetPassword(email, resetToken, newPassword);
+      if (!result) return;
+
+      setMode('login');
+      setNewPassword('');
+      setResetToken('');
+      const cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
+      return;
+    }
+
+    if (!email || !password) {
       alert("Please fill all fields");
       return;
     }
 
-    const result = await register(name, email, password, className);
+    const result = await login(email, password, className);
+
     if (!result) return;
 
-    alert(result.message || "Registration successful. Please verify your email.");
-    setMode('verify');
-    return;
-  }
+    const role = result.user.role;
 
-  if (mode === 'verify') {
-    if (!email || !otp) {
-      alert("Please enter email and OTP");
-      return;
+    if (role === "teacher") {
+      window.location.href = `https://ai-based-foundational-learning-hu6m.vercel.app/dashboard?token=${result.token}`;
+    } else {
+      console.log("Student logged in");
     }
-
-    const result = await verifyEmail(email, otp);
-    if (!result) return;
-
-    alert("Email verified successfully");
-    return;
-  }
-
-  if (mode === 'forgot') {
-    if (!email) {
-      alert("Please enter your email");
-      return;
-    }
-
-    const result = await forgotPassword(email);
-    if (!result) return;
-
-    setMode('reset');
-    return;
-  }
-
-  if (mode === 'reset') {
-    if (!email || !otp || !newPassword) {
-      alert("Please fill all fields");
-      return;
-    }
-
-    const result = await resetPassword(email, otp, newPassword);
-    if (!result) return;
-
-    setMode('login');
-    setPassword('');
-    setOtp('');
-    setNewPassword('');
-    return;
-  }
-
-  if (!email || !password) {
-    alert("Please fill all fields");
-    return;
-  }
-
-  const result = await login(email, password, className);
-  if (!result) return;
-
-  const role = result.user.role;
-
-  if (role === "teacher") {
-    window.location.href = `https://ai-based-foundational-learning-hu6m.vercel.app/dashboard?token=${result.token}`;
-  }
-};
+  };
 
   return (
     <div className="min-h-screen w-full bg-white relative overflow-x-hidden flex flex-col">
@@ -2746,7 +2748,6 @@ const resetPassword = useStore((state) => state.resetPassword);
           className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full blur-[120px]"
         />
         
-        {/* Floating Particles */}
         {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
@@ -2770,9 +2771,7 @@ const resetPassword = useStore((state) => state.resetPassword);
         ))}
       </div>
 
-      {/* Main Content */}
       <main className="flex-grow flex flex-col items-center justify-center pt-24 pb-12 px-6 relative">
-        {/* Background Elements */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none text-stone-100">
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-teal-100/30 rounded-full blur-[120px]" />
           <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-orange-100/30 rounded-full blur-[120px]" />
@@ -2812,13 +2811,12 @@ const resetPassword = useStore((state) => state.resetPassword);
                 >
                   <GrammaChu reaction="happy" />
                 </motion.div>
-                {/* Decorative Rings */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border-2 border-dashed border-teal-200 rounded-full animate-[spin_20s_linear_infinite]" />
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 border border-stone-100 rounded-full" />
               </div>
 
               <button 
-                onClick={() => setShowAuthOptions(true)} // ← UPDATED 2026: Show options overlay instead of direct register
+                onClick={() => setShowAuthOptions(true)}
                 className="group relative px-12 py-6 bg-[#FFCC70] text-teal-900 font-black text-xl rounded-3xl shadow-2xl shadow-orange-200 hover:bg-[#ffd68a] hover:-translate-y-1 transition-all flex items-center gap-4 active:scale-95"
               >
                 Start Your Adventure
@@ -2834,7 +2832,15 @@ const resetPassword = useStore((state) => state.resetPassword);
               className="w-full max-w-md bg-white p-10 rounded-[48px] shadow-2xl border-2 border-stone-50 relative z-10"
             >
               <button 
-                onClick={() => setShowAuth(false)}
+                onClick={() => {
+                  setShowAuth(false);
+                  setMode('login');
+                  setEmail('');
+                  setPassword('');
+                  setName('');
+                  setClassName('');
+                  setNewPassword('');
+                }}
                 className="absolute top-6 left-6 p-2 text-stone-400 hover:text-stone-600 transition-colors"
               >
                 <ChevronLeft size={24} />
@@ -2842,240 +2848,219 @@ const resetPassword = useStore((state) => state.resetPassword);
 
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-serif italic mb-2 text-teal-900">
-  {mode === 'login' && 'Welcome Back!'}
-  {mode === 'register' && 'Join the Adventure'}
-  {mode === 'verify' && 'Verify Your Email'}
-  {mode === 'forgot' && 'Forgot Password'}
-  {mode === 'reset' && 'Reset Password'}
-</h2>
-
-<p className="text-stone-500 font-medium text-sm">
-  {mode === 'login' && 'Continue your journey to mastery.'}
-  {mode === 'register' && 'Create your account to start learning.'}
-  {mode === 'verify' && 'Enter the OTP sent to your email.'}
-  {mode === 'forgot' && 'We will send a reset OTP to your email.'}
-  {mode === 'reset' && 'Enter OTP and choose a new password.'}
-</p>
+                  {mode === 'login' && 'Welcome Back!'}
+                  {mode === 'register' && 'Join the Adventure'}
+                  {mode === 'forgot' && 'Forgot Password'}
+                  {mode === 'reset' && 'Reset Password'}
+                </h2>
+                <p className="text-stone-500 font-medium text-sm">
+                  {mode === 'login' && 'Continue your journey to mastery.'}
+                  {mode === 'register' && 'Create your account to start learning.'}
+                  {mode === 'forgot' && 'We will send a password reset link to your email.'}
+                  {mode === 'reset' && 'Enter your new password below.'}
+                </p>
               </div>
 
-             <form onSubmit={handleSubmit} className="space-y-5">
-  <AnimatePresence mode="wait">
-    {mode === 'register' && (
-      <div className="space-y-5">
-        <motion.div
-          key="name"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          className="text-left overflow-hidden"
-        >
-          <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
-            What should we call you?
-          </label>
-          <div className="relative">
-            <User size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
-              placeholder="Enter your name"
-              required={mode === 'register'}
-            />
-          </div>
-        </motion.div>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <AnimatePresence mode="wait">
+                  {mode === 'register' && (
+                    <div className="space-y-5">
+                      <motion.div
+                        key="name"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="text-left overflow-hidden"
+                      >
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
+                          What should we call you?
+                        </label>
+                        <div className="relative">
+                          <User size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
+                          <input 
+                            type="text" 
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
+                            placeholder="Enter your name"
+                            required={mode === 'register'}
+                          />
+                        </div>
+                      </motion.div>
 
-        <motion.div
-          key="class"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          className="text-left overflow-hidden"
-        >
-          <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
-            Class 🏫
-          </label>
-          <div className="relative">
-            <GraduationCap size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
-            <select
-              value={className}
-              onChange={(e) => setClassName(e.target.value)}
-              className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink appearance-none cursor-pointer"
-              required={mode === 'register'}
-            >
-              <option value="" disabled>Select Class</option>
-              <option value="Class 1">Class 1</option>
-              <option value="Class 2">Class 2</option>
-              <option value="Class 3">Class 3</option>
-              <option value="Class 4">Class 4</option>
-              <option value="Class 5">Class 5</option>
-            </select>
-            <ChevronDown size={16} className="absolute right-5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
-          </div>
-        </motion.div>
-      </div>
-    )}
-  </AnimatePresence>
+                      <motion.div
+                        key="class"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="text-left overflow-hidden"
+                      >
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
+                          Class 🏫
+                        </label>
+                        <div className="relative">
+                          <GraduationCap size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
+                          <select
+                            value={className}
+                            onChange={(e) => setClassName(e.target.value)}
+                            className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink appearance-none cursor-pointer"
+                            required={mode === 'register'}
+                          >
+                            <option value="" disabled>Select Class</option>
+                            <option value="Class 1">Class 1</option>
+                            <option value="Class 2">Class 2</option>
+                            <option value="Class 3">Class 3</option>
+                            <option value="Class 4">Class 4</option>
+                            <option value="Class 5">Class 5</option>
+                          </select>
+                          <ChevronDown size={16} className="absolute right-5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
+                        </div>
+                      </motion.div>
+                    </div>
+                  )}
+                </AnimatePresence>
 
-  <div className="space-y-5">
-    <div className="text-left">
-      <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
-        Email Address
-      </label>
-      <div className="relative">
-        <Mail size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
-          placeholder="your@email.com"
-          required
-        />
-      </div>
-    </div>
+                <div className="space-y-5">
+                  <div className="text-left">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
+                      Email Address
+                    </label>
+                    <div className="relative">
+                      <Mail size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
+                      <input 
+                        type="email" 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
+                        placeholder="your@email.com"
+                        required
+                        disabled={mode === 'reset'}
+                      />
+                    </div>
+                  </div>
 
-    {(mode === 'login' || mode === 'register') && (
-      <div className="text-left">
-        <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
-          Secret Password
-        </label>
-        <div className="relative">
-          <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
-            placeholder="••••••••"
-            required
-          />
-        </div>
-      </div>
-    )}
+                  {(mode === 'login' || mode === 'register') && (
+                    <div className="text-left">
+                      <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
+                        Secret Password
+                      </label>
+                      <div className="relative">
+                        <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
+                        <input 
+                          type="password" 
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
+                          placeholder="••••••••"
+                          required
+                        />
+                      </div>
+                    </div>
+                  )}
 
-    {(mode === 'verify' || mode === 'reset') && (
-      <div className="text-left">
-        <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
-          OTP
-        </label>
-        <div className="relative">
-          <Mail size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
-          <input
-            type="text"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
-            placeholder="Enter OTP"
-            required
-          />
-        </div>
-      </div>
-    )}
+                  {mode === 'reset' && (
+                    <div className="text-left">
+                      <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
+                        New Password
+                      </label>
+                      <div className="relative">
+                        <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
+                        <input 
+                          type="password" 
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
+                          className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
+                          placeholder="Enter new password"
+                          required
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
 
-    {mode === 'reset' && (
-      <div className="text-left">
-        <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
-          New Password
-        </label>
-        <div className="relative">
-          <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
-          <input
-            type="password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
-            placeholder="Enter new password"
-            required
-          />
-        </div>
-      </div>
-    )}
-  </div>
+                <button 
+                  type="submit"
+                  className="w-full bg-[#FFCC70] text-teal-900 font-black py-5 rounded-2xl shadow-lg hover:bg-[#ffd68a] transition-all flex items-center justify-center gap-2 group btn-plushy mt-4"
+                >
+                  {mode === 'login' && 'Continue Journey'}
+                  {mode === 'register' && 'Begin Adventure'}
+                  {mode === 'forgot' && 'Send Reset Link'}
+                  {mode === 'reset' && 'Reset Password'}
+                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </button>
 
-  <button
-    type="submit"
-    className="w-full bg-[#FFCC70] text-teal-900 font-black py-5 rounded-2xl shadow-lg hover:bg-[#ffd68a] transition-all flex items-center justify-center gap-2 group btn-plushy mt-4"
-  >
-    {mode === 'login' && 'Continue Journey'}
-    {mode === 'register' && 'Begin Adventure'}
-    {mode === 'verify' && 'Verify Email'}
-    {mode === 'forgot' && 'Send Reset OTP'}
-    {mode === 'reset' && 'Reset Password'}
-    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-  </button>
+                {mode === 'login' && (
+                  <div className="text-center">
+                    <button
+                      type="button"
+                      onClick={() => setMode('forgot')}
+                      className="text-sm text-teal-700 font-bold hover:underline"
+                    >
+                      Forgot Password?
+                    </button>
+                  </div>
+                )}
 
-  <div className="flex flex-col gap-3 mt-2 text-center">
-    {mode === 'login' && (
-      <button
-        type="button"
-        onClick={() => setMode('forgot')}
-        className="text-sm text-teal-700 font-bold hover:underline"
-      >
-        Forgot Password?
-      </button>
-    )}
+                <div className="relative py-4">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-stone-300/50"></div>
+                  </div>
+                </div>
+              </form>
 
-    {mode === 'verify' && (
-      <button
-        type="button"
-        onClick={async () => {
-          if (!email) {
-            alert("Enter your email first");
-            return;
-          }
-          await resendVerificationOtp(email);
-        }}
-        className="text-sm text-teal-700 font-bold hover:underline"
-      >
-        Resend OTP
-      </button>
-    )}
-  </div>
-</form>
+              <p className="mt-8 text-sm text-stone-500 font-medium text-center">
+                {mode === 'login' && (
+                  <>
+                    New to GrammarPal?{" "}
+                    <button 
+                      onClick={() => setMode('register')}
+                      className="text-teal-700 font-bold hover:underline"
+                    >
+                      Register here
+                    </button>
+                  </>
+                )}
 
-<p className="mt-8 text-sm text-stone-500 font-medium text-center">
-  {mode === 'login' && (
-    <>
-      New to GrammarPal?{" "}
-      <button
-        onClick={() => setMode('register')}
-        className="text-teal-700 font-bold hover:underline"
-      >
-        Register here
-      </button>
-    </>
-  )}
+                {mode === 'register' && (
+                  <>
+                    Already have an account?{" "}
+                    <button 
+                      onClick={() => setMode('login')}
+                      className="text-teal-700 font-bold hover:underline"
+                    >
+                      Login here
+                    </button>
+                  </>
+                )}
 
-  {mode === 'register' && (
-    <>
-      Already have an account?{" "}
-      <button
-        onClick={() => setMode('login')}
-        className="text-teal-700 font-bold hover:underline"
-      >
-        Login here
-      </button>
-    </>
-  )}
+                {mode === 'forgot' && (
+                  <>
+                    Back to{" "}
+                    <button 
+                      onClick={() => setMode('login')}
+                      className="text-teal-700 font-bold hover:underline"
+                    >
+                      Login
+                    </button>
+                  </>
+                )}
 
-  {(mode === 'verify' || mode === 'forgot' || mode === 'reset') && (
-    <>
-      Back to{" "}
-      <button
-        onClick={() => setMode('login')}
-        className="text-teal-700 font-bold hover:underline"
-      >
-        Login
-      </button>
-    </>
-  )}
-</p>
+                {mode === 'reset' && (
+                  <>
+                    Password updated? Go to{" "}
+                    <button 
+                      onClick={() => setMode('login')}
+                      className="text-teal-700 font-bold hover:underline"
+                    >
+                      Login
+                    </button>
+                  </>
+                )}
+              </p>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Auth Options Overlay ← UPDATED 2026 */}
         <AnimatePresence>
           {showAuthOptions && !showAuth && (
             <motion.div 
@@ -3126,14 +3111,12 @@ const resetPassword = useStore((state) => state.resetPassword);
         </AnimatePresence>
       </main>
 
-      {/* Footer */}
       <footer className="p-8 text-center text-stone-400 text-[10px] font-bold uppercase tracking-[0.2em] z-10">
         © 2026 GrammarPal Educational Adventures
       </footer>
     </div>
   );
 };
-
 const Navbar = ({ user, onLogout, onBack, onDashboard, showBack, onHelp, onProfile }: { user: any, onLogout: () => void, onBack?: () => void, onDashboard?: () => void, showBack?: boolean, onHelp?: () => void, onProfile?: () => void }) => {  return (
     <nav className="fixed top-0 left-0 right-0 z-[100] bg-white/80 backdrop-blur-md border-b border-stone-100">
       <div className="px-8 py-4 flex justify-between items-center max-w-7xl mx-auto w-full">
