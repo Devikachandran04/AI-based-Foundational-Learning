@@ -3617,10 +3617,33 @@ const LearnerProfilePage = ({ onClose }: { onClose: () => void }) => {
               <span>Email</span>
               <span className="font-medium text-right break-all">{student.email || "-"}</span>
             </div>
-            <div className="flex justify-between gap-4">
-              <span>Lessons Completed</span>
-              <span className="font-medium text-right">{student.lessons_completed || 0}</span>
-            </div>
+            <div className="mt-4">
+  <span className="block mb-2 font-medium">Lessons Completed</span>
+
+  {student.completed_lessons_details && student.completed_lessons_details.length > 0 ? (
+    <div className="flex flex-col gap-2">
+      {student.completed_lessons_details.map((lesson: any, index: number) => (
+        <div
+          key={index}
+          className="flex justify-between items-center bg-white rounded-xl px-4 py-3 border border-stone-200"
+        >
+          <span>{lesson.lesson_title}</span>
+          <span
+            className={`px-3 py-1 rounded-full text-xs font-bold ${
+              lesson.quiz_type === "mixed"
+                ? "bg-green-100 text-green-700"
+                : "bg-orange-100 text-orange-700"
+            }`}
+          >
+            {lesson.quiz_label}
+          </span>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <p className="text-stone-600">No lessons completed</p>
+  )}
+</div>
           </div>
         </div>
 

@@ -67,7 +67,6 @@ function LearnerProfile() {
 
   return (
     <div className="profile-page">
-      {/* top bar */}
       <header className="profile-topbar">
         <div className="profile-topbar-left">
           <button className="circle-back-btn" onClick={() => navigate(-1)}>
@@ -87,7 +86,6 @@ function LearnerProfile() {
         </div>
       </header>
 
-      {/* main content */}
       <div className="profile-shell">
         <div className="profile-box">
           <h1 className="profile-title">Learner Profile</h1>
@@ -113,14 +111,43 @@ function LearnerProfile() {
               </div>
 
               <div className="info-row">
-                <span>Lessons Completed</span>
+                <span>Total Lessons Completed</span>
                 <span>{student.lessons_completed || 0}</span>
+              </div>
+
+              <div className="completed-lessons-block">
+                <h4 className="mini-section-title">Lessons Completed</h4>
+
+                {student.completed_lessons_details &&
+                student.completed_lessons_details.length > 0 ? (
+                  <div className="completed-lesson-list">
+                    {student.completed_lessons_details.map((lesson, index) => (
+                      <div key={index} className="completed-lesson-item">
+                        <span className="completed-lesson-name">
+                          {lesson.lesson_title}
+                        </span>
+
+                        <span
+                          className={`completion-badge ${
+                            lesson.quiz_type === "mixed"
+                              ? "main-badge"
+                              : "simplified-badge"
+                          }`}
+                        >
+                          {lesson.quiz_label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="no-weak-topics">No lessons completed</p>
+                )}
               </div>
             </div>
 
             {/* Attempts */}
             <div className="profile-card">
-              <h3 className="section-title">Attempts</h3>
+              <h3 className="section-title">Successful Attempts</h3>
 
               <div className="attempt-row">
                 <span>Basic</span>
