@@ -2633,52 +2633,95 @@ const LessonContentPage = ({ lessonId, onContinue, onBack }: { lessonId: string,
 };
 
 const LoginPage = ({ assets }: { assets: any }) => {
-  const [mode, setMode] = useState<'login' | 'register'>('login');
+ const [mode, setMode] = useState<'login' | 'register' | 'verify' | 'forgot' | 'reset'>('login');
   const [showAuth, setShowAuth] = useState(false);
   const [showAuthOptions, setShowAuthOptions] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [className, setClassName] = useState('');
+ const [otp, setOtp] = useState('');
+const [newPassword, setNewPassword] = useState('');
 
   const login = useStore((state) => state.login);
   const register = useStore((state) => state.register);
-
+const verifyEmail = useStore((state) => state.verifyEmail);
+const resendVerificationOtp = useStore((state) => state.resendVerificationOtp);
+const forgotPassword = useStore((state) => state.forgotPassword);
+const resetPassword = useStore((state) => state.resetPassword);
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (mode === 'register') {
-      if (!name || !email || !password || !className) {
-        alert("Please fill all fields");
-        return;
-      }
-
-      const result = await register(name, email, password, className);
-
-      if (!result) return;
-
-      console.log("Student registered successfully");
-      return;
-    }
-
-    // login part remains same
-    if (!email || !password) {
+  if (mode === 'register') {
+    if (!name || !email || !password || !className) {
       alert("Please fill all fields");
       return;
     }
 
-    const result = await login(email, password, className);
-
+    const result = await register(name, email, password, className);
     if (!result) return;
 
-    const role = result.user.role;
+    alert(result.message || "Registration successful. Please verify your email.");
+    setMode('verify');
+    return;
+  }
 
-    if (role === "teacher") {
-      window.location.href = `https://ai-based-foundational-learning-hu6m.vercel.app/dashboard?token=${result.token}`;
-    } else {
-      console.log("Student logged in");
+  if (mode === 'verify') {
+    if (!email || !otp) {
+      alert("Please enter email and OTP");
+      return;
     }
-  };
+
+    const result = await verifyEmail(email, otp);
+    if (!result) return;
+
+    alert("Email verified successfully");
+    return;
+  }
+
+  if (mode === 'forgot') {
+    if (!email) {
+      alert("Please enter your email");
+      return;
+    }
+
+    const result = await forgotPassword(email);
+    if (!result) return;
+
+    setMode('reset');
+    return;
+  }
+
+  if (mode === 'reset') {
+    if (!email || !otp || !newPassword) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    const result = await resetPassword(email, otp, newPassword);
+    if (!result) return;
+
+    setMode('login');
+    setPassword('');
+    setOtp('');
+    setNewPassword('');
+    return;
+  }
+
+  if (!email || !password) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  const result = await login(email, password, className);
+  if (!result) return;
+
+  const role = result.user.role;
+
+  if (role === "teacher") {
+    window.location.href = `https://ai-based-foundational-learning-hu6m.vercel.app/dashboard?token=${result.token}`;
+  }
+};
 
   return (
     <div className="min-h-screen w-full bg-white relative overflow-x-hidden flex flex-col">
@@ -2799,127 +2842,235 @@ const LoginPage = ({ assets }: { assets: any }) => {
 
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-serif italic mb-2 text-teal-900">
-                  {mode === 'login' ? 'Welcome Back!' : 'Join the Adventure'}
-                </h2>
-                <p className="text-stone-500 font-medium text-sm">
-                  {mode === 'login' ? 'Continue your journey to mastery.' : 'Create your account to start learning.'}
-                </p>
+  {mode === 'login' && 'Welcome Back!'}
+  {mode === 'register' && 'Join the Adventure'}
+  {mode === 'verify' && 'Verify Your Email'}
+  {mode === 'forgot' && 'Forgot Password'}
+  {mode === 'reset' && 'Reset Password'}
+</h2>
+
+<p className="text-stone-500 font-medium text-sm">
+  {mode === 'login' && 'Continue your journey to mastery.'}
+  {mode === 'register' && 'Create your account to start learning.'}
+  {mode === 'verify' && 'Enter the OTP sent to your email.'}
+  {mode === 'forgot' && 'We will send a reset OTP to your email.'}
+  {mode === 'reset' && 'Enter OTP and choose a new password.'}
+</p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <AnimatePresence mode="wait">
-                  {mode === 'register' && (
-                    <div className="space-y-5">
-                      <motion.div
-                        key="name"
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="text-left overflow-hidden"
-                      >
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">What should we call you?</label>
-                        <div className="relative">
-                          <User size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
-                          <input 
-                            type="text" 
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
-                            placeholder="Enter your name"
-                            required={mode === 'register'}
-                          />
-                        </div>
-                      </motion.div>
+             <form onSubmit={handleSubmit} className="space-y-5">
+  <AnimatePresence mode="wait">
+    {mode === 'register' && (
+      <div className="space-y-5">
+        <motion.div
+          key="name"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          className="text-left overflow-hidden"
+        >
+          <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
+            What should we call you?
+          </label>
+          <div className="relative">
+            <User size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
+              placeholder="Enter your name"
+              required={mode === 'register'}
+            />
+          </div>
+        </motion.div>
 
-                      <motion.div
-                        key="class"
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="text-left overflow-hidden"
-                      >
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">Class 🏫</label>
-                        <div className="relative">
-                          <GraduationCap size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
-                          <select
-  value={className}
-  onChange={(e) => setClassName(e.target.value)}
-  className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink appearance-none cursor-pointer"
-  required={mode === 'register'}
->
-  <option value="" disabled>Select Class</option>
-  <option value="Class 1">Class 1</option>
-  <option value="Class 2">Class 2</option>
-  <option value="Class 3">Class 3</option>
-  <option value="Class 4">Class 4</option>
-  <option value="Class 5">Class 5</option>
-</select>
-                          <ChevronDown size={16} className="absolute right-5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
-                        </div>
-                      </motion.div>
-                    </div>
-                  )}
-                </AnimatePresence>
+        <motion.div
+          key="class"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          className="text-left overflow-hidden"
+        >
+          <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
+            Class 🏫
+          </label>
+          <div className="relative">
+            <GraduationCap size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
+            <select
+              value={className}
+              onChange={(e) => setClassName(e.target.value)}
+              className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink appearance-none cursor-pointer"
+              required={mode === 'register'}
+            >
+              <option value="" disabled>Select Class</option>
+              <option value="Class 1">Class 1</option>
+              <option value="Class 2">Class 2</option>
+              <option value="Class 3">Class 3</option>
+              <option value="Class 4">Class 4</option>
+              <option value="Class 5">Class 5</option>
+            </select>
+            <ChevronDown size={16} className="absolute right-5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
+          </div>
+        </motion.div>
+      </div>
+    )}
+  </AnimatePresence>
 
-                <div className="space-y-5">
-                  <div className="text-left">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">Email Address</label>
-                    <div className="relative">
-                      <Mail size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
-                      <input 
-                        type="email" 
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
-                        placeholder="your@email.com"
-                        required
-                      />
-                    </div>
-                  </div>
+  <div className="space-y-5">
+    <div className="text-left">
+      <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
+        Email Address
+      </label>
+      <div className="relative">
+        <Mail size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
+          placeholder="your@email.com"
+          required
+        />
+      </div>
+    </div>
 
-                  <div className="text-left">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">Secret Password</label>
-                    <div className="relative">
-                      <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
-                      <input 
-                        type="password" 
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
-                        placeholder="••••••••"
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
+    {(mode === 'login' || mode === 'register') && (
+      <div className="text-left">
+        <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
+          Secret Password
+        </label>
+        <div className="relative">
+          <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
+            placeholder="••••••••"
+            required
+          />
+        </div>
+      </div>
+    )}
 
-                <button 
-                  type="submit"
-                  className="w-full bg-[#FFCC70] text-teal-900 font-black py-5 rounded-2xl shadow-lg hover:bg-[#ffd68a] transition-all flex items-center justify-center gap-2 group btn-plushy mt-4"
-                >
-                  {mode === 'login' ? 'Continue Journey' : 'Begin Adventure'}
-                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                </button>
+    {(mode === 'verify' || mode === 'reset') && (
+      <div className="text-left">
+        <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
+          OTP
+        </label>
+        <div className="relative">
+          <Mail size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
+          <input
+            type="text"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+            className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
+            placeholder="Enter OTP"
+            required
+          />
+        </div>
+      </div>
+    )}
 
-                <div className="relative py-4">
-                  <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-stone-300/50"></div>
-                  </div>
-                  
-                </div>
+    {mode === 'reset' && (
+      <div className="text-left">
+        <label className="text-[10px] font-bold uppercase tracking-widest text-stone-500 ml-1 mb-2 block">
+          New Password
+        </label>
+        <div className="relative">
+          <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400" />
+          <input
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            className="w-full pl-14 pr-6 py-4 rounded-2xl bg-stone-50 border-2 border-transparent focus:border-teal-600/20 focus:bg-white transition-all outline-none font-medium text-ink"
+            placeholder="Enter new password"
+            required
+          />
+        </div>
+      </div>
+    )}
+  </div>
 
-                
-              </form>
+  <button
+    type="submit"
+    className="w-full bg-[#FFCC70] text-teal-900 font-black py-5 rounded-2xl shadow-lg hover:bg-[#ffd68a] transition-all flex items-center justify-center gap-2 group btn-plushy mt-4"
+  >
+    {mode === 'login' && 'Continue Journey'}
+    {mode === 'register' && 'Begin Adventure'}
+    {mode === 'verify' && 'Verify Email'}
+    {mode === 'forgot' && 'Send Reset OTP'}
+    {mode === 'reset' && 'Reset Password'}
+    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+  </button>
 
-              <p className="mt-8 text-sm text-stone-500 font-medium text-center">
-                {mode === 'login' ? "New to GrammarPal? " : "Already have an account? "}
-                <button 
-                  onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
-                  className="text-teal-700 font-bold hover:underline"
-                >
-                  {mode === 'login' ? "Register here" : "Login here"}
-                </button>
-              </p>
+  <div className="flex flex-col gap-3 mt-2 text-center">
+    {mode === 'login' && (
+      <button
+        type="button"
+        onClick={() => setMode('forgot')}
+        className="text-sm text-teal-700 font-bold hover:underline"
+      >
+        Forgot Password?
+      </button>
+    )}
+
+    {mode === 'verify' && (
+      <button
+        type="button"
+        onClick={async () => {
+          if (!email) {
+            alert("Enter your email first");
+            return;
+          }
+          await resendVerificationOtp(email);
+        }}
+        className="text-sm text-teal-700 font-bold hover:underline"
+      >
+        Resend OTP
+      </button>
+    )}
+  </div>
+</form>
+
+<p className="mt-8 text-sm text-stone-500 font-medium text-center">
+  {mode === 'login' && (
+    <>
+      New to GrammarPal?{" "}
+      <button
+        onClick={() => setMode('register')}
+        className="text-teal-700 font-bold hover:underline"
+      >
+        Register here
+      </button>
+    </>
+  )}
+
+  {mode === 'register' && (
+    <>
+      Already have an account?{" "}
+      <button
+        onClick={() => setMode('login')}
+        className="text-teal-700 font-bold hover:underline"
+      >
+        Login here
+      </button>
+    </>
+  )}
+
+  {(mode === 'verify' || mode === 'forgot' || mode === 'reset') && (
+    <>
+      Back to{" "}
+      <button
+        onClick={() => setMode('login')}
+        className="text-teal-700 font-bold hover:underline"
+      >
+        Login
+      </button>
+    </>
+  )}
+</p>
             </motion.div>
           )}
         </AnimatePresence>

@@ -16,11 +16,17 @@ interface AppState {
 
   login: (username: string, password: string, className: string) => Promise<any>;
   register: (name: string, email: string, password: string, className: string) => Promise<any>;
+  verifyEmail: (email: string, otp: string) => Promise<any>;
+  resendVerificationOtp: (email: string) => Promise<any>;
+  forgotPassword: (email: string) => Promise<any>;
+  resetPassword: (email: string, otp: string, newPassword: string) => Promise<any>;
 
   logout: () => void;
   setLesson: (lesson: string) => void;
   setScore: (score: number) => void;
 }
+
+const BASE_URL = "https://ai-based-foundational-learning-production.up.railway.app";
 
 export const useStore = create<AppState>()(
   persist(
@@ -31,19 +37,16 @@ export const useStore = create<AppState>()(
 
       login: async (username: string, password: string, className: string) => {
         try {
-          const res = await fetch(
-            "https://ai-based-foundational-learning-production.up.railway.app/api/auth/login",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                email: username,
-                password: password,
-              }),
-            }
-          );
+          const res = await fetch(`${BASE_URL}/api/auth/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: username,
+              password: password,
+            }),
+          });
 
           const data = await res.json();
 
@@ -80,26 +83,48 @@ export const useStore = create<AppState>()(
 
       register: async (name: string, email: string, password: string, className: string) => {
         try {
-          const res = await fetch(
-            "https://ai-based-foundational-learning-production.up.railway.app/api/auth/register",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                name,
-                email,
-                password,
-                class: className
-              }),
-            }
-          );
+          const res = await fetch(`${BASE_URL}/api/auth/register`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name,
+              email,
+              password,
+              class: className,
+            }),
+          });
 
           const data = await res.json();
 
           if (!res.ok) {
             alert(data.error || "Registration failed");
+            return null;
+          }
+
+          return data;
+        } catch (err) {
+          console.error("Registration failed", err);
+          alert("Registration failed");
+          return null;
+        }
+      },
+
+      verifyEmail: async (email: string, otp: string) => {
+        try {
+          const res = await fetch(`${BASE_URL}/api/auth/verify-email`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, otp }),
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            alert(data.error || "Verification failed");
             return null;
           }
 
@@ -109,7 +134,7 @@ export const useStore = create<AppState>()(
             user: {
               id: data.user.id,
               username: data.user.name,
-              class: data.user.class || className,
+              class: data.user.class || "",
               role: data.user.role,
               isLoggedIn: true,
             },
@@ -117,8 +142,90 @@ export const useStore = create<AppState>()(
 
           return data;
         } catch (err) {
-          console.error("Registration failed", err);
-          alert("Registration failed");
+          console.error("Verification failed", err);
+          alert("Verification failed");
+          return null;
+        }
+      },
+
+      resendVerificationOtp: async (email: string) => {
+        try {
+          const res = await fetch(`${BASE_URL}/api/auth/resend-verification-otp`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email }),
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            alert(data.error || "Failed to resend OTP");
+            return null;
+          }
+
+          alert(data.message || "OTP resent");
+          return data;
+        } catch (err) {
+          console.error("Resend OTP failed", err);
+          alert("Failed to resend OTP");
+          return null;
+        }
+      },
+
+      forgotPassword: async (email: string) => {
+        try {
+          const res = await fetch(`${BASE_URL}/api/auth/forgot-password`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email }),
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            alert(data.error || "Failed to send reset OTP");
+            return null;
+          }
+
+          alert(data.message || "Reset OTP sent");
+          return data;
+        } catch (err) {
+          console.error("Forgot password failed", err);
+          alert("Forgot password failed");
+          return null;
+        }
+      },
+
+      resetPassword: async (email: string, otp: string, newPassword: string) => {
+        try {
+          const res = await fetch(`${BASE_URL}/api/auth/reset-password`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email,
+              otp,
+              new_password: newPassword,
+            }),
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            alert(data.error || "Failed to reset password");
+            return null;
+          }
+
+          alert(data.message || "Password reset successful");
+          return data;
+        } catch (err) {
+          console.error("Reset password failed", err);
+          alert("Reset password failed");
           return null;
         }
       },
