@@ -82,3 +82,55 @@ AI-based-Foundational-Learning/
 ├── user_frontend/            # Student Vite + TypeScript app (gamified)
 ├── .env.example
 └── README.md
+
+
+🚀 Quick Start (Ready to Run)
+Prerequisites
+
+Node.js 18+
+Python 3.10+
+MongoDB (local or MongoDB Atlas)
+Google AI Studio API key (for Gemini in student frontend)
+
+
+1. Backend
+Bashcd backend
+pip install -r requirements.txt
+
+# Copy and configure environment
+cp .env.example .env
+# Add your MONGO_URI and JWT_SECRET
+
+python setup_db.py          # Initialize collections (if needed)
+python seed.py              # Seed question banks
+# OR
+python import_question_bank.py
+
+python app.py               # Starts at http://localhost:5000
+Test it: Visit http://localhost:5000/api/health
+2. Teacher/Admin Frontend
+Bashcd frontend
+npm install
+npm start                   # Runs at http://localhost:3000
+3. Student Frontend (Recommended UI)
+Bashcd user_frontend
+npm install
+
+# Copy environment file and add Google Gemini API key if needed
+cp .env.example .env
+
+npm run dev                 # Vite dev server (usually http://localhost:5173)
+
+📊 How Adaptive Learning Works
+
+Student starts a quiz on a grammar topic
+Questions are sampled from MongoDB using $sample with difficulty levels
+Answers are scored with weighted logic
+Adaptive Policy decides next step:
+Strong performance → Advance to next lesson
+Average → Simplified quiz
+Needs help → Show AI hints + support options
+
+Profile and analytics are automatically updated
+
+techuz.comGamification in Education- Guide to Apply Gamification in Learning Apps
