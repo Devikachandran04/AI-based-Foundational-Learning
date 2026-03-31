@@ -1,50 +1,88 @@
-.completed-lessons-block {
-  margin-top: 18px;
+.profile-page {
+  padding: 30px;
+  background: #f4f7fb;
+  min-height: 100vh;
 }
 
-.mini-section-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: #176b87;
-  margin-bottom: 12px;
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
 }
 
-.completed-lesson-list {
+.back-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.profile-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.lesson-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.completed-lesson-item {
+.lesson-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
 }
 
-.completed-lesson-name {
-  color: #374151;
-  font-weight: 500;
-}
-
-.completion-badge {
-  padding: 6px 10px;
+.badge {
+  padding: 5px 10px;
   border-radius: 999px;
   font-size: 12px;
-  font-weight: 700;
-  white-space: nowrap;
+  font-weight: bold;
 }
 
-.main-badge {
+.badge.main {
   background: #dcfce7;
   color: #15803d;
 }
 
-.simplified-badge {
+.badge.simple {
   background: #ffedd5;
   color: #c2410c;
+}
+
+.weak-list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.weak-tag {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 6px 10px;
+  border-radius: 8px;
 }
