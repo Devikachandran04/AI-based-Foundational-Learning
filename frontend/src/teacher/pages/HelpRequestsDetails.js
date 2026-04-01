@@ -60,10 +60,10 @@ function HelpRequestsDetails() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      alert("Reply sent successfully");
       setSelectedRequest(null);
       setReply("");
       fetchHelpRequests(token);
+      alert("Reply sent successfully");
     } catch (err) {
       console.error("Error sending reply:", err);
       alert("Failed to send reply");
@@ -98,10 +98,35 @@ function HelpRequestsDetails() {
             {helpRequests.length > 0 ? (
               helpRequests.map((r, i) => (
                 <tr key={r.id || i}>
-                  <td>{r.student_name || r.name || "Unknown Student"}</td>
+                  <td>
+                    {r.student_id ? (
+                      <Link
+                        to="/learner-profile"
+                        state={{ studentId: r.student_id }}
+                        style={{
+                          textDecoration: "none",
+                          color: "#2563eb",
+                          fontWeight: 600,
+                          cursor: "pointer",
+                        }}
+                      >
+                        {r.student_name || "Unknown Student"}
+                      </Link>
+                    ) : (
+                      <span>{r.student_name || "Unknown Student"}</span>
+                    )}
+                  </td>
                   <td>{r.topic || "General"}</td>
                   <td>{r.message || "No message"}</td>
-                  <td>{r.status || "pending"}</td>
+                  <td>
+                    <span
+                      className={`risk-badge ${
+                        r.status === "answered" ? "low" : "medium"
+                      }`}
+                    >
+                      {r.status || "pending"}
+                    </span>
+                  </td>
                   <td>
                     <button
                       className="small-btn"
@@ -122,32 +147,85 @@ function HelpRequestsDetails() {
       </div>
 
       {selectedRequest && (
-        <div className="student-popup">
-          <h4>Reply to {selectedRequest.student_name}</h4>
-          <p style={{ marginBottom: "10px", color: "#444" }}>
-            <strong>Student doubt:</strong> {selectedRequest.message}
-          </p>
+        <div className="reply-overlay">
+          <div className="reply-modal">
+            <div className="reply-modal-header">
+              <div>
+                <h3>Reply to Student</h3>
+                <p>
+                  {selectedRequest.student_id ? (
+                    <Link
+                      to="/learner-profile"
+                      state={{ studentId: selectedRequest.student_id }}
+                      style={{
+                        textDecoration: "none",
+                        color: "#2563eb",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {selectedRequest.student_name}
+                    </Link>
+                  ) : (
+                    selectedRequest.student_name
+                  )}
+                </p>
+              </div>
 
-          <textarea
-            value={reply}
-            onChange={(e) => setReply(e.target.value)}
-            placeholder="Type your reply..."
-            rows={4}
-          />
+              <button
+                className="reply-close-btn"
+                onClick={() => {
+                  setSelectedRequest(null);
+                  setReply("");
+                }}
+              >
+                ✕
+              </button>
+            </div>
 
-          <div style={{ marginTop: "12px", display: "flex", gap: "10px" }}>
-            <button className="small-btn" onClick={sendReply} disabled={sending}>
-              {sending ? "Sending..." : "Send Reply"}
-            </button>
-            <button
-              className="small-btn"
-              onClick={() => {
-                setSelectedRequest(null);
-                setReply("");
-              }}
-            >
-              Cancel
-            </button>
+            <div className="reply-chat-box">
+              <div className="chat-bubble student-bubble">
+                <span className="chat-label">Student</span>
+                <p>{selectedRequest.message}</p>
+              </div>
+
+              {selectedRequest.reply && (
+                <div className="chat-bubble teacher-bubble">
+                  <span className="chat-label">Previous Reply</span>
+                  <p>{selectedRequest.reply}</p>
+                </div>
+              )}
+            </div>
+
+            <div className="reply-input-section">
+              <label className="reply-label">Your Reply</label>
+              <textarea
+                value={reply}
+                onChange={(e) => setReply(e.target.value)}
+                placeholder="Type your reply here..."
+                rows={5}
+                className="reply-textarea"
+              />
+            </div>
+
+            <div className="reply-actions">
+              <button
+                className="cancel-btn"
+                onClick={() => {
+                  setSelectedRequest(null);
+                  setReply("");
+                }}
+              >
+                Cancel
+              </button>
+
+              <button
+                className="send-btn"
+                onClick={sendReply}
+                disabled={sending}
+              >
+                {sending ? "Sending..." : "Send Reply"}
+              </button>
+            </div>
           </div>
         </div>
       )}

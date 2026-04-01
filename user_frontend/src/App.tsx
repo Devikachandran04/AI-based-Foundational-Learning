@@ -82,9 +82,9 @@ const LESSON_CONTENT: Record<string, LessonContentData> = {
     body: "A noun is a word that names a person, place, thing, or idea. Everything you see around you has a name, and that name is a noun! Without nouns, we wouldn't know what to call anything.",
     examples: ["Pikachu (Person)", "School (Place)", "Pokéball (Thing)", "Happiness (Idea)"],
     videos: [
-      { title: "What is a Noun?", id: "8W_q699p690" },
+      { title: "What is a Noun?", id: "9cu7C07pNbA" },
       { title: "Noun Song for Kids", id: "qcXy6_Mqe54" },
-      { title: "Common and Proper Nouns", id: "L9W5aR6p690" }
+      { title: "Common and Proper Nouns", id: "tquecIG-Pws" }
     ]
   },
   verbs: {
@@ -95,8 +95,8 @@ const LESSON_CONTENT: Record<string, LessonContentData> = {
     examples: ["Run", "Jump", "Think", "Speak"],
     videos: [
       { title: "Action Verbs", id: "ineCCpqpZrM" },
-      { title: "The Verb Song", id: "j3S3S3S3S3S" },
-      { title: "Helping Verbs", id: "W7W7W7W7W7W" }
+      { title: "The Verb Song", id: "lXQNmY5vQ44" },
+      { title: "Helping Verbs", id: "ESKrs05nrAY" }
     ]
   },
   tenses: {
@@ -106,9 +106,9 @@ const LESSON_CONTENT: Record<string, LessonContentData> = {
     body: "Tenses tell us when an action happens. We use the Past Tense for things that already happened, the Present Tense for things happening now, and the Future Tense for things that will happen later.",
     examples: ["I walked (Past)", "I walk (Present)", "I will walk (Future)"],
     videos: [
-      { title: "Past, Present, Future", id: "9W9W9W9W9W9" },
-      { title: "Tense Rules", id: "8W8W8W8W8W8" },
-      { title: "Tense Examples", id: "7W7W7W7W7W7" }
+      { title: "Past, Present, Future", id: "jBUklI7YlYQ" },
+      { title: "Tense Rules", id: "NkuzcXPpPSA" },
+      { title: "Tense Examples", id: "tyMuM-2e5NA" }
     ]
   },
   articles: {
@@ -118,9 +118,9 @@ const LESSON_CONTENT: Record<string, LessonContentData> = {
     body: "Articles are small words that come before nouns. 'The' is used for specific things, while 'A' and 'An' are used for general things. Remember: use 'An' before words that start with a vowel sound!",
     examples: ["The Sun", "A book", "An apple", "An hour"],
     videos: [
-      { title: "A, An, The", id: "6W6W6W6W6W6" },
-      { title: "Article Rules", id: "5W5W5W5W5W5" },
-      { title: "Article Quiz", id: "4W4W4W4W4W4" }
+      { title: "A, An, The", id: "drTyYqbz6Xk" },
+      { title: "Article Rules", id: "RDkx4J__-QY?" },
+      { title: "Article Quiz", id: "o2WTRLH0dT8" }
     ]
   },
   prepositions: {
@@ -131,8 +131,8 @@ const LESSON_CONTENT: Record<string, LessonContentData> = {
     examples: ["The ball is IN the box.", "Pikachu is ON the table.", "The cat is UNDER the chair."],
     videos: [
       { title: "Prepositions for Kids", id: "xyMrLQ4ZI-4" },
-      { title: "On, In, Under Song", id: "8F0NYBBK7as" },
-      { title: "Where is it?", id: "j3S3S3S3S3S" }
+      { title: "Position Words", id: "_VK-kXkXTBc" },
+      { title: "Preposition of words", id: "VSn-7QmnJr8" }
     ]
   },
   adjectives: {
@@ -142,9 +142,9 @@ const LESSON_CONTENT: Record<string, LessonContentData> = {
     body: "Adjectives are words that describe nouns! They tell us more about people, places, and things. They can describe color, size, shape, and even how something feels or tastes.",
     examples: ["The RED apple", "A BIG elephant", "The HAPPY boy", "A SWEET candy"],
     videos: [
-      { title: "What is an Adjective?", id: "949W9W9W9W9" },
-      { title: "Adjective Song", id: "848W8W8W8W8" },
-      { title: "Describing Words", id: "747W7W7W7W7" }
+      { title: "What is an Adjective?", id: "GTymHwSzp7A" },
+      { title: "Adjective Song", id: "9UUgfdUAmEA" },
+      { title: "Describing Words", id: "4f3H12YNlxo" }
     ]
   }
 };
