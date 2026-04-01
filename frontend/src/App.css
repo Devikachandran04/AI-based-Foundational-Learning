@@ -541,7 +541,7 @@ background:#e0a94f;
 .reply-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.35);
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
