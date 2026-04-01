@@ -79,7 +79,7 @@ const LESSON_CONTENT: Record<string, LessonContentData> = {
     title: "Nouns",
     description: "The Naming Words",
     image: "https://picsum.photos/seed/nouns/800/450",
-    body: "A noun is a word that names a person, place, thing, or idea. Everything you see around you has a name, and that name is a noun! Without nouns, we wouldn't know what to call anything.",
+    body: "A noun is a word used to name a person, place, thing, or idea. It is one of the most important parts of speech in English grammar and is used to identify and describe objects or concepts in a sentence.",
     examples: ["Pikachu (Person)", "School (Place)", "Pokéball (Thing)", "Happiness (Idea)"],
     videos: [
       { title: "What is a Noun?", id: "9cu7C07pNbA" },
