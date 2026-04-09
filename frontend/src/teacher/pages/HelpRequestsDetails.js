@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -15,18 +21,18 @@ function HelpRequestsDetails() {
   const [search, setSearch] = useState("");
   const chatEndRef = useRef(null);
 
-  const BASE_URL = "https://ai-based-foundational-learning-production.up.railway.app";
+  const BASE_URL =
+    "https://ai-based-foundational-learning-production.up.railway.app";
 
   const getThreadId = (item) => item?.id || item?._id || null;
 
   useEffect(() => {
     const t =
-      localStorage.getItem("teacher_token") ||
-      localStorage.getItem("token");
+      localStorage.getItem("teacher_token") || localStorage.getItem("token");
     setToken(t);
   }, []);
 
-  const normalizeMessages = (request) => {
+  const normalizeMessages = useCallback((request) => {
     if (
       request?.messages &&
       Array.isArray(request.messages) &&
@@ -56,9 +62,9 @@ function HelpRequestsDetails() {
     }
 
     return msgs;
-  };
+  }, []);
 
-  const sortByLatest = (items) => {
+  const sortByLatest = useCallback((items) => {
     return [...items].sort((a, b) => {
       const aTime = new Date(
         a.latest_time || a.updated_at || a.created_at || 0
@@ -68,105 +74,114 @@ function HelpRequestsDetails() {
       ).getTime();
       return bTime - aTime;
     });
-  };
+  }, []);
 
-  const groupChatsByStudent = (threads) => {
-    const grouped = {};
+  const groupChatsByStudent = useCallback(
+    (threads) => {
+      const grouped = {};
 
-    threads.forEach((thread) => {
-      const studentKey =
-        thread.student_id ||
-        thread.user_id ||
-        thread.student_email ||
-        thread.student_name ||
-        "unknown-student";
+      threads.forEach((thread) => {
+        const studentKey =
+          thread.student_id ||
+          thread.user_id ||
+          thread.student_email ||
+          thread.student_name ||
+          "unknown-student";
 
-      const currentMessages = normalizeMessages(thread);
+        const currentMessages = normalizeMessages(thread);
 
-      if (!grouped[studentKey]) {
-        grouped[studentKey] = {
-          ...thread,
-          groupedThreads: [thread],
-          messages: [...currentMessages].sort(
+        if (!grouped[studentKey]) {
+          grouped[studentKey] = {
+            ...thread,
+            groupedThreads: [thread],
+            messages: [...currentMessages].sort(
+              (a, b) =>
+                new Date(a.timestamp || 0).getTime() -
+                new Date(b.timestamp || 0).getTime()
+            ),
+            latest_time: thread.updated_at || thread.created_at,
+            title: thread.title || thread.message || "New doubt",
+          };
+        } else {
+          grouped[studentKey].groupedThreads.push(thread);
+
+          grouped[studentKey].messages = [
+            ...(grouped[studentKey].messages || []),
+            ...currentMessages,
+          ].sort(
             (a, b) =>
               new Date(a.timestamp || 0).getTime() -
               new Date(b.timestamp || 0).getTime()
-          ),
-          latest_time: thread.updated_at || thread.created_at,
-          title: thread.title || thread.message || "New doubt",
-        };
-      } else {
-        grouped[studentKey].groupedThreads.push(thread);
+          );
 
-        grouped[studentKey].messages = [
-          ...(grouped[studentKey].messages || []),
-          ...currentMessages,
-        ].sort(
+          const threadTime = new Date(
+            thread.updated_at || thread.created_at || 0
+          ).getTime();
+          const savedTime = new Date(
+            grouped[studentKey].latest_time || 0
+          ).getTime();
+
+          if (threadTime > savedTime) {
+            grouped[studentKey].latest_time =
+              thread.updated_at || thread.created_at;
+            grouped[studentKey].title =
+              thread.title || thread.message || "New doubt";
+          }
+        }
+      });
+
+      const finalGrouped = Object.values(grouped).map((chat) => {
+        const sortedMessages = [...(chat.messages || [])].sort(
           (a, b) =>
             new Date(a.timestamp || 0).getTime() -
             new Date(b.timestamp || 0).getTime()
         );
 
-        const threadTime = new Date(
-          thread.updated_at || thread.created_at || 0
-        ).getTime();
-        const savedTime = new Date(
-          grouped[studentKey].latest_time || 0
-        ).getTime();
+        const lastMessage = sortedMessages[sortedMessages.length - 1];
 
-        if (threadTime > savedTime) {
-          grouped[studentKey].latest_time =
-            thread.updated_at || thread.created_at;
-          grouped[studentKey].title =
-            thread.title || thread.message || "New doubt";
-        }
-      }
-    });
-
-    const finalGrouped = Object.values(grouped).map((chat) => {
-      const sortedMessages = [...(chat.messages || [])].sort(
-        (a, b) =>
-          new Date(a.timestamp || 0).getTime() -
-          new Date(b.timestamp || 0).getTime()
-      );
-
-      const lastMessage = sortedMessages[sortedMessages.length - 1];
-
-      return {
-        ...chat,
-        messages: sortedMessages,
-        status: lastMessage?.sender === "teacher" ? "answered" : "pending",
-      };
-    });
-
-    return sortByLatest(finalGrouped);
-  };
-
-  const fetchHelpRequests = async (authToken) => {
-    try {
-      setLoadingThreads(true);
-
-      const res = await axios.get(`${BASE_URL}/api/help/all`, {
-        headers: { Authorization: `Bearer ${authToken}` },
+        return {
+          ...chat,
+          messages: sortedMessages,
+          status: lastMessage?.sender === "teacher" ? "answered" : "pending",
+        };
       });
 
-      const allThreads = sortByLatest(res.data?.all_doubts || []);
-      setHelpRequests(allThreads);
-    } catch (err) {
-      console.error("Error fetching help requests:", err?.response?.data || err.message);
-    } finally {
-      setLoadingThreads(false);
-    }
-  };
+      return sortByLatest(finalGrouped);
+    },
+    [normalizeMessages, sortByLatest]
+  );
+
+  const fetchHelpRequests = useCallback(
+    async (authToken) => {
+      try {
+        setLoadingThreads(true);
+
+        const res = await axios.get(`${BASE_URL}/api/help/all`, {
+          headers: { Authorization: `Bearer ${authToken}` },
+        });
+
+        const allThreads = sortByLatest(res.data?.all_doubts || []);
+        setHelpRequests(allThreads);
+      } catch (err) {
+        console.error(
+          "Error fetching help requests:",
+          err?.response?.data || err.message
+        );
+      } finally {
+        setLoadingThreads(false);
+      }
+    },
+    [sortByLatest]
+  );
 
   useEffect(() => {
     if (!token) return;
     fetchHelpRequests(token);
-  }, [token]);
+  }, [token, fetchHelpRequests]);
 
   const groupedRequests = useMemo(() => {
     return groupChatsByStudent(helpRequests);
-  }, [helpRequests]);
+  }, [helpRequests, groupChatsByStudent]);
 
   useEffect(() => {
     if (!selectedRequest && groupedRequests.length > 0) {
@@ -193,7 +208,7 @@ function HelpRequestsDetails() {
         setThreadMessages(updatedSelected.messages || []);
       }
     }
-  }, [groupedRequests]);
+  }, [groupedRequests, selectedRequest]);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -207,8 +222,11 @@ function HelpRequestsDetails() {
       const studentName = (r.student_name || r.name || "").toLowerCase();
       const studentEmail = (r.student_email || "").toLowerCase();
       const title = (r.title || "").toLowerCase();
-      const lastText =
-        (r.messages?.[r.messages.length - 1]?.text || r.message || "").toLowerCase();
+      const lastText = (
+        r.messages?.[r.messages.length - 1]?.text ||
+        r.message ||
+        ""
+      ).toLowerCase();
 
       return (
         studentName.includes(q) ||
@@ -219,7 +237,7 @@ function HelpRequestsDetails() {
     });
   }, [groupedRequests, search]);
 
-  const openThread = (requestItem) => {
+  const openThread = useCallback((requestItem) => {
     setLoadingChat(true);
     setSelectedRequest(requestItem);
     setThreadMessages(requestItem.messages || []);
@@ -229,20 +247,26 @@ function HelpRequestsDetails() {
     setTimeout(() => {
       setLoadingChat(false);
     }, 150);
-  };
+  }, []);
 
-  const refreshSelectedThread = async (authToken) => {
-    try {
-      const allRes = await axios.get(`${BASE_URL}/api/help/all`, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      });
+  const refreshSelectedThread = useCallback(
+    async (authToken) => {
+      try {
+        const allRes = await axios.get(`${BASE_URL}/api/help/all`, {
+          headers: { Authorization: `Bearer ${authToken}` },
+        });
 
-      const allThreads = sortByLatest(allRes.data?.all_doubts || []);
-      setHelpRequests(allThreads);
-    } catch (err) {
-      console.error("Error refreshing selected chat:", err?.response?.data || err.message);
-    }
-  };
+        const allThreads = sortByLatest(allRes.data?.all_doubts || []);
+        setHelpRequests(allThreads);
+      } catch (err) {
+        console.error(
+          "Error refreshing selected chat:",
+          err?.response?.data || err.message
+        );
+      }
+    },
+    [sortByLatest]
+  );
 
   const sendReply = async () => {
     if (!selectedRequest || !token) return;
@@ -256,7 +280,9 @@ function HelpRequestsDetails() {
     try {
       setSending(true);
 
-      const optimisticImage = selectedImage ? URL.createObjectURL(selectedImage) : null;
+      const optimisticImage = selectedImage
+        ? URL.createObjectURL(selectedImage)
+        : null;
 
       const optimisticMessage = {
         sender: "teacher",
@@ -268,8 +294,9 @@ function HelpRequestsDetails() {
       setThreadMessages((prev) => [...prev, optimisticMessage]);
 
       const latestThread =
-  selectedRequest.groupedThreads?.[selectedRequest.groupedThreads.length - 1] ||
-  selectedRequest;
+        selectedRequest.groupedThreads?.[
+          selectedRequest.groupedThreads.length - 1
+        ] || selectedRequest;
 
       const selectedId = getThreadId(latestThread);
 
@@ -283,49 +310,59 @@ function HelpRequestsDetails() {
         formData.append("image", selectedImage);
       }
 
-      const messageRes = await fetch(`${BASE_URL}/api/help/message/${selectedId}`, {
-  method: "POST",
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-  body: formData,
-});
+      const messageRes = await fetch(
+        `${BASE_URL}/api/help/message/${selectedId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
 
-const messageData = await messageRes.json();
+      const messageData = await messageRes.json();
 
-if (!messageRes.ok) {
-  console.error("Primary reply route failed:", messageData);
+      if (!messageRes.ok) {
+        console.error("Primary reply route failed:", messageData);
 
-  if (selectedImage) {
-    throw new Error(messageData?.error || "Failed to send image reply");
-  }
+        if (selectedImage) {
+          throw new Error(messageData?.error || "Failed to send image reply");
+        }
 
-  const fallbackRes = await fetch(`${BASE_URL}/api/help/reply/${selectedId}`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ reply: trimmedReply }),
-  });
+        const fallbackRes = await fetch(
+          `${BASE_URL}/api/help/reply/${selectedId}`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ reply: trimmedReply }),
+          }
+        );
 
-  const fallbackData = await fallbackRes.json();
+        const fallbackData = await fallbackRes.json();
 
-  if (!fallbackRes.ok) {
-    throw new Error(fallbackData?.error || "Failed to send reply");
-  }
-}
+        if (!fallbackRes.ok) {
+          throw new Error(fallbackData?.error || "Failed to send reply");
+        }
+      }
+
       setReply("");
       setSelectedImage(null);
       await refreshSelectedThread(token);
     } catch (err) {
-      console.error("Error sending reply:", err?.response?.data || err.message);
+      console.error(
+        "Error sending reply:",
+        err?.response?.data || err.message
+      );
       await refreshSelectedThread(token);
       alert(
         err?.response?.data?.error ||
-        err?.response?.data?.message ||
-        err?.message ||
-        "Failed to send reply"
+          err?.response?.data?.message ||
+          err?.message ||
+          "Failed to send reply"
       );
     } finally {
       setSending(false);
@@ -448,7 +485,9 @@ if (!messageRes.ok) {
                     style={{
                       width: "100%",
                       textAlign: "left",
-                      border: isActive ? "2px solid #e9b458" : "1px solid #e7dcc1",
+                      border: isActive
+                        ? "2px solid #e9b458"
+                        : "1px solid #e7dcc1",
                       background: isActive ? "#fff7e8" : "#ffffff",
                       borderRadius: "14px",
                       padding: "14px",
@@ -569,7 +608,13 @@ if (!messageRes.ok) {
                   <h3 style={{ margin: 0, color: "#4a3b1f" }}>
                     {selectedRequest.student_name || "Student"}
                   </h3>
-                  <p style={{ margin: "5px 0 0", color: "#7a6a4d", fontSize: "14px" }}>
+                  <p
+                    style={{
+                      margin: "5px 0 0",
+                      color: "#7a6a4d",
+                      fontSize: "14px",
+                    }}
+                  >
                     {selectedRequest.student_email || ""}
                   </p>
                 </div>
@@ -581,12 +626,18 @@ if (!messageRes.ok) {
                     padding: "6px 12px",
                     borderRadius: "999px",
                     background:
-                      selectedRequest.status === "answered" ? "#dff3df" : "#ffe6c7",
+                      selectedRequest.status === "answered"
+                        ? "#dff3df"
+                        : "#ffe6c7",
                     color:
-                      selectedRequest.status === "answered" ? "#2f7a37" : "#9a5b00",
+                      selectedRequest.status === "answered"
+                        ? "#2f7a37"
+                        : "#9a5b00",
                   }}
                 >
-                  {selectedRequest.status === "answered" ? "Answered" : "Unanswered"}
+                  {selectedRequest.status === "answered"
+                    ? "Answered"
+                    : "Unanswered"}
                 </span>
               </div>
 
@@ -636,12 +687,18 @@ if (!messageRes.ok) {
                         </div>
 
                         {msg.text ? (
-                          <div style={{ whiteSpace: "pre-wrap" }}>{msg.text}</div>
+                          <div style={{ whiteSpace: "pre-wrap" }}>
+                            {msg.text}
+                          </div>
                         ) : null}
 
                         {msg.image ? (
                           <img
-                            src={msg.image.startsWith("blob:") ? msg.image : `${BASE_URL}${msg.image}`}
+                            src={
+                              msg.image.startsWith("blob:")
+                                ? msg.image
+                                : `${BASE_URL}${msg.image}`
+                            }
                             alt="chat attachment"
                             style={{
                               maxWidth: "220px",
@@ -704,7 +761,14 @@ if (!messageRes.ok) {
                     flexWrap: "wrap",
                   }}
                 >
-                  <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "10px",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                    }}
+                  >
                     <label
                       style={{
                         background: "#fff",
@@ -721,7 +785,9 @@ if (!messageRes.ok) {
                         type="file"
                         accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
                         style={{ display: "none" }}
-                        onChange={(e) => setSelectedImage(e.target.files?.[0] || null)}
+                        onChange={(e) =>
+                          setSelectedImage(e.target.files?.[0] || null)
+                        }
                       />
                     </label>
 
