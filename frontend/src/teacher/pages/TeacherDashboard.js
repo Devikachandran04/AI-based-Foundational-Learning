@@ -13,7 +13,7 @@ function TeacherDashboard() {
 
   const [lowScoreCount, setLowScoreCount] = useState(0);
   const [weakCount, setWeakCount] = useState(0);
-  const [helpCount, setHelpCount] = useState(0);
+  //const [helpCount, setHelpCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

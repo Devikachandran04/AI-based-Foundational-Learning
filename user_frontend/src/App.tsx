@@ -3340,11 +3340,18 @@ const HomeScreen = ({ assets, loading, error, onRetry, onSelectLesson }: { asset
   );
 };
 
-const HelpModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+const HelpModal = ({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(false);
   const [thread, setThread] = useState<any | null>(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const chatEndRef = React.useRef<HTMLDivElement | null>(null);
 
   const BASE_URL = "https://ai-based-foundational-learning-production.up.railway.app";
@@ -3422,11 +3429,14 @@ const HelpModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
     try {
       setLoading(true);
       const token = getToken();
+      if (!token) {
+        setThread(null);
+        return;
+      }
 
       const res = await fetch(`${BASE_URL}/api/help/my`, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
@@ -3453,82 +3463,83 @@ const HelpModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
     }
   };
 
-  const handleSend = async () => {
-  if (!message.trim()) return;
-
-  const textToSend = message.trim();
-
-  try {
-    setSending(true);
-    const token = getToken();
-
-    const res = await fetch(`${BASE_URL}/api/help/submit`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ message: textToSend }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      console.error(data.error || "Failed to send message");
-      return;
-    }
-
-    setThread((prev: any) => {
-      const oldMessages = normalizeMessages(prev);
-      const newThreadId = data.help_id || data.id || data._id;
-
-      return {
-        ...(prev || {}),
-        id: newThreadId || prev?.id || prev?._id,
-        _id: newThreadId || prev?.id || prev?._id,
-        status: "pending",
-        groupedThreads: prev?.groupedThreads || [],
-        messages: [
-          ...oldMessages,
-          {
-            sender: "student",
-            text: textToSend,
-            image: null,
-            timestamp: new Date().toISOString(),
-          },
-        ],
-      };
-    });
-
-    setMessage("");
-
-    setTimeout(() => {
-      fetchMyChat();
-    }, 500);
-  } catch (error) {
-    console.error("Send chat error:", error);
-  } finally {
-    setSending(false);
-  }
-};
-  React.useEffect(() => {
+  useEffect(() => {
     if (isOpen) {
       fetchMyChat();
+    } else {
+      setMessage("");
+      setSelectedImage(null);
+      setThread(null);
     }
   }, [isOpen]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [thread]);
 
-  const formatTime = (value: string) => {
+  const formatTime = (value: any) => {
     if (!value) return "";
     const d = new Date(value);
     if (Number.isNaN(d.getTime())) return "";
     return d.toLocaleString();
   };
 
-  const messages = React.useMemo(() => normalizeMessages(thread), [thread]);
+  const handleSend = async () => {
+    const trimmed = message.trim();
+
+    if (!trimmed && !selectedImage) {
+      alert("Please type a message or attach an image");
+      return;
+    }
+
+    try {
+      setSending(true);
+      const token = getToken();
+
+      if (!token) {
+        alert("Please login again");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("message", trimmed);
+      if (selectedImage) {
+        formData.append("image", selectedImage);
+      }
+
+      let endpoint = `${BASE_URL}/api/help/submit`;
+
+      if (thread?.id) {
+        const latestThread =
+          thread.groupedThreads?.[thread.groupedThreads.length - 1] || thread;
+        const latestId = latestThread?.id || latestThread?._id || thread?.id;
+        endpoint = `${BASE_URL}/api/help/message/${latestId}`;
+      }
+
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data?.error || "Failed to send message");
+      }
+
+      setMessage("");
+      setSelectedImage(null);
+      await fetchMyChat();
+    } catch (error: any) {
+      console.error("Send chat error:", error);
+      alert(error?.message || "Failed to send message");
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -3537,63 +3548,51 @@ const HelpModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
-          onClick={onClose}
+          className="fixed inset-0 z-[200] bg-black/40 backdrop-blur-sm flex items-center justify-center p-4"
         >
           <motion.div
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className="relative w-full max-w-4xl bg-[#FFF6E5] rounded-[32px] shadow-2xl overflow-hidden border-8 border-[#C89B6D]/20 h-[85vh] flex flex-col"
-            onClick={(e) => e.stopPropagation()}
+            initial={{ y: 40, opacity: 0, scale: 0.96 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: 20, opacity: 0, scale: 0.98 }}
+            className="w-full max-w-3xl h-[85vh] bg-[#fffaf0] rounded-[32px] shadow-2xl border border-[#f1dfb5] overflow-hidden flex flex-col"
           >
-            <div className="absolute inset-0 border-[12px] border-[#C89B6D]/10 pointer-events-none rounded-[24px]" />
-
-            <div className="p-6 flex justify-between items-center bg-white/50 border-b border-[#C89B6D]/10 relative">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-pikachu/20 rounded-full flex items-center justify-center">
-                  <Leaf size={24} className="text-[#A7D8F0]" />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-serif italic text-[#202124]">Help Corner</h2>
-                  <p className="text-sm text-stone-500 font-medium">
-                    Continue your conversation with the teacher
-                  </p>
-                </div>
+            <div className="px-6 py-5 border-b border-[#C89B6D]/15 bg-white/80 flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-serif italic text-teal-900">
+                  Help Corner
+                </h2>
+                <p className="text-xs text-stone-500 font-medium mt-1">
+                  Ask your doubt and continue the conversation here.
+                </p>
               </div>
 
-              <div className="flex items-center gap-3">
-                <span
-                  className={`text-xs font-bold px-3 py-1 rounded-full ${
-                    thread?.status === "answered"
-                      ? "bg-green-100 text-green-700"
-                      : "bg-amber-100 text-amber-700"
-                  }`}
-                >
-                  {thread?.status === "answered" ? "Answered" : "Unanswered"}
-                </span>
-
-                <button
-                  onClick={onClose}
-                  className="w-11 h-11 shrink-0 bg-rose-500 text-white rounded-full shadow-lg hover:bg-rose-600 hover:scale-105 transition-all flex items-center justify-center z-50 border-4 border-white"
-                  aria-label="Close"
-                >
-                  <X size={22} strokeWidth={3} />
-                </button>
-              </div>
+              <button
+                onClick={() => {
+                  setMessage("");
+                  setSelectedImage(null);
+                  onClose();
+                }}
+                className="w-10 h-10 rounded-full bg-stone-100 hover:bg-stone-200 flex items-center justify-center text-stone-600"
+              >
+                <X size={18} />
+              </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-[#FFF9EF]">
+            <div className="flex-1 overflow-y-auto px-5 py-5 space-y-4 bg-[#fff8ea]">
               {loading ? (
                 <p className="text-stone-500">Loading chat...</p>
-              ) : !thread || messages.length === 0 ? (
-                <p className="text-stone-500">Start the conversation by sending your first doubt.</p>
+              ) : !thread?.messages?.length ? (
+                <div className="text-center text-stone-500 py-10">
+                  No doubts yet. Start a chat with your teacher.
+                </div>
               ) : (
-                messages.map((msg: any, index: number) => (
+                thread.messages.map((msg: any, idx: number) => (
                   <div
-                    key={index}
+                    key={idx}
                     className={`flex ${
-                      msg.sender === "student" ? "justify-end" : "justify-start"
+                      msg.sender === "student"
+                        ? "justify-end"
+                        : "justify-start"
                     }`}
                   >
                     <div
@@ -3636,12 +3635,30 @@ const HelpModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
                 <textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Type your doubt or continue this chat..."
+                  placeholder="Type your doubt or continue this chat."
                   className="w-full h-24 p-4 bg-white rounded-2xl border-2 border-[#C89B6D]/10 focus:border-pikachu/50 outline-none transition-all resize-none font-medium text-ink placeholder:text-muted/50"
                 />
 
                 <div className="flex items-center justify-between gap-3 flex-wrap">
-                  
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <label className="py-3 px-5 bg-white border border-[#e8d4a7] text-stone-700 rounded-2xl font-bold cursor-pointer hover:bg-stone-50 transition-all">
+                      Attach Image
+                      <input
+                        type="file"
+                        accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
+                        className="hidden"
+                        onChange={(e) =>
+                          setSelectedImage(e.target.files?.[0] || null)
+                        }
+                      />
+                    </label>
+
+                    {selectedImage ? (
+                      <span className="text-xs text-stone-600 font-medium">
+                        {selectedImage.name}
+                      </span>
+                    ) : null}
+                  </div>
 
                   <button
                     onClick={handleSend}
@@ -3660,7 +3677,6 @@ const HelpModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
     </AnimatePresence>
   );
 };
-
 // --- Main App ---
 
 const MODULE_ORDER = ['nouns', 'verbs', 'tenses', 'articles', 'prepositions', 'adjectives']; // ← UPDATED 2026: Defined module sequence
@@ -3837,7 +3853,14 @@ export default function App() {
   //}, [user?.isLoggedIn]);
 
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
-
+  const handleLogout = () => {
+  setIsHelpModalOpen(false);
+  setMessage("");
+  setLesson("");
+  setView("lesson");
+  setNavigationHistory([]);
+  logout();
+};
   // Track navigation history
   React.useEffect(() => {
     if (!user?.isLoggedIn) {
@@ -3962,7 +3985,7 @@ export default function App() {
       {user?.isLoggedIn && (
         <Navbar 
   user={user} 
-  onLogout={logout} 
+  onLogout={handleLogout} 
   onBack={handleGlobalBack}
   onDashboard={handleGoToDashboard}
   showBack={!!currentLesson || isHelpModalOpen || view === 'profile'}
