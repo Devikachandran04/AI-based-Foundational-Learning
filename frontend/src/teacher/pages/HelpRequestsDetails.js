@@ -24,7 +24,19 @@ function HelpRequestsDetails() {
 
   const BASE_URL =
     "https://ai-based-foundational-learning-production.up.railway.app";
+  const getImageUrl = (imagePath) => {
+  if (!imagePath) return "";
 
+  if (imagePath.startsWith("blob:")) return imagePath;
+  if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
+    return imagePath;
+  }
+  if (imagePath.startsWith("/")) {
+    return `${BASE_URL}${imagePath}`;
+  }
+
+  return `${BASE_URL}/${imagePath}`;
+};
   const getThreadId = (item) => item?.id || item?._id || null;
 
   useEffect(() => {
@@ -694,30 +706,24 @@ function HelpRequestsDetails() {
                         ) : null}
 
                         {msg.image ? (
-                          <img
-                            src={
-                              msg.image.startsWith("blob:")
-                                ? msg.image
-                                : `${BASE_URL}${msg.image}`
-                            }
-                            alt="chat attachment"
-                            onClick={() =>
-                              setPreviewImage(
-                                msg.image.startsWith("blob:")
-                                  ? msg.image
-                                  : `${BASE_URL}${msg.image}`
-                              )
-                            }
-                            style={{
-                              maxWidth: "220px",
-                              maxHeight: "220px",
-                              borderRadius: "10px",
-                              marginTop: "8px",
-                              cursor: "pointer",
-                              objectFit: "cover",
-                            }}
-                          />
-                        ) : null}
+  <img
+    src={getImageUrl(msg.image)}
+    alt="chat attachment"
+    onClick={() => setPreviewImage(getImageUrl(msg.image))}
+    style={{
+      maxWidth: "220px",
+      maxHeight: "220px",
+      borderRadius: "10px",
+      marginTop: "8px",
+      cursor: "pointer",
+      objectFit: "cover",
+    }}
+    onError={(e) => {
+      console.error("Failed to load image:", msg.image);
+      e.target.style.display = "none";
+    }}
+  />
+) : null}
 
                         <div
                           style={{

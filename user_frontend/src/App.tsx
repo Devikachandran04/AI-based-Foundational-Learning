@@ -3356,7 +3356,19 @@ const HelpModal = ({
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const BASE_URL = "https://ai-based-foundational-learning-production.up.railway.app";
+  const getImageUrl = (imagePath: string) => {
+  if (!imagePath) return "";
 
+  if (imagePath.startsWith("blob:")) return imagePath;
+  if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
+    return imagePath;
+  }
+  if (imagePath.startsWith("/")) {
+    return `${BASE_URL}${imagePath}`;
+  }
+
+  return `${BASE_URL}/${imagePath}`;
+};
   const getToken = () => localStorage.getItem("token");
 
   const normalizeMessages = (threadData: any) => {
@@ -3617,20 +3629,13 @@ const HelpModal = ({
 
                       {msg.image && (
   <img
-    src={
-      msg.image.startsWith("blob:")
-        ? msg.image
-        : `${BASE_URL}${msg.image}`
-    }
+    src={getImageUrl(msg.image)}
     alt="attachment"
-    onClick={() =>
-      setPreviewImage(
-        msg.image.startsWith("blob:")
-          ? msg.image
-          : `${BASE_URL}${msg.image}`
-      )
-    }
+    onClick={() => setPreviewImage(getImageUrl(msg.image))}
     className="mt-2 max-w-[220px] max-h-[220px] rounded-xl cursor-pointer object-cover"
+    onError={(e) => {
+      console.error("Image failed to load:", msg.image, getImageUrl(msg.image));
+    }}
   />
 )}
 
