@@ -684,7 +684,7 @@ function HelpRequestsDetails() {
                             textTransform: "uppercase",
                           }}
                         >
-                          {msg.sender === "teacher" ? "Teacher" : "Student"}
+                          {msg.sender === "teacher" ? "Admin" : "Student"}
                         </div>
 
                         {msg.text ? (

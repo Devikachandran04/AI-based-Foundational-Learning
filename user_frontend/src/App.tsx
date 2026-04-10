@@ -3606,7 +3606,7 @@ const HelpModal = ({
                       }`}
                     >
                       <div className="text-[11px] font-bold mb-1 text-stone-600 uppercase">
-                        {msg.sender === "student" ? "You" : "Teacher"}
+                        {msg.sender === "student" ? "You" : "Admin"}
                       </div>
 
                       {msg.text ? (
