@@ -2986,7 +2986,26 @@ const [message, setMessage] = useState('');
   );
 };
 
-const Navbar = ({ user, onLogout, onBack, onDashboard, showBack, onHelp, onProfile }: { user: any, onLogout: () => void, onBack?: () => void, onDashboard?: () => void, showBack?: boolean, onHelp?: () => void, onProfile?: () => void }) => {  return (
+const Navbar = ({
+  user,
+  onLogout,
+  onBack,
+  onDashboard,
+  showBack,
+  onHelp,
+  onProfile,
+  hasUnreadHelp,
+}: {
+  user: any,
+  onLogout: () => void,
+  onBack?: () => void,
+  onDashboard?: () => void,
+  showBack?: boolean,
+  onHelp?: () => void,
+  onProfile?: () => void,
+  hasUnreadHelp?: boolean,
+}) => {
+  return (
     <nav className="fixed top-0 left-0 right-0 z-[100] bg-white/80 backdrop-blur-md border-b border-stone-100">
       <div className="px-8 py-4 flex justify-between items-center max-w-7xl mx-auto w-full">
         <div className="flex items-center gap-4 sm:gap-8">
@@ -3011,36 +3030,38 @@ const Navbar = ({ user, onLogout, onBack, onDashboard, showBack, onHelp, onProfi
           </div>
 
           {showBack && onDashboard && (
-  <button 
-    onClick={onDashboard}
-    className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-stone-100 shadow-sm hover:bg-stone-50 transition-all text-muted hover:text-ink font-bold text-[10px] uppercase tracking-widest btn-plushy"
-  >
-    Back to Dashboard
-  </button>
-)}
-          
+            <button 
+              onClick={onDashboard}
+              className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-stone-100 shadow-sm hover:bg-stone-50 transition-all text-muted hover:text-ink font-bold text-[10px] uppercase tracking-widest btn-plushy"
+            >
+              Back to Dashboard
+            </button>
+          )}
         </div>
 
         <div className="flex items-center gap-4 sm:gap-6">
           <div className="text-right hidden sm:block">
-  <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-0.5">
-    {user?.class}
-  </p>
-  <button
-    onClick={onProfile}
-    className="font-serif text-lg italic text-teal-900 leading-none hover:underline"
-  >
-    {user?.username}
-  </button>
-</div>
+            <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-0.5">
+              {user?.class}
+            </p>
+            <button
+              onClick={onProfile}
+              className="font-serif text-lg italic text-teal-900 leading-none hover:underline"
+            >
+              {user?.username}
+            </button>
+          </div>
 
           {/* NEED HELP? Leaf - FIXED 2026 */}
           <button 
             onClick={onHelp}
             className="flex flex-col items-center gap-1 group active:scale-95"
           >
-            <div className="p-2.5 bg-[#A7D8F0] text-white rounded-full shadow-md hover:shadow-[#A7D8F0]/40 transition-all">
+            <div className="relative p-2.5 bg-[#A7D8F0] text-white rounded-full shadow-md hover:shadow-[#A7D8F0]/40 transition-all">
               <Leaf size={20} className="fill-current" />
+              {hasUnreadHelp && (
+                <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
+              )}
             </div>
             <span className="text-[9px] font-black text-teal-800 uppercase tracking-widest opacity-70 group-hover:opacity-100 transition-opacity">
               Help 
