@@ -14,6 +14,7 @@ function HelpRequestsDetails() {
   const [threadMessages, setThreadMessages] = useState([]);
   const [reply, setReply] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
   const [token, setToken] = useState(null);
   const [sending, setSending] = useState(false);
   const [loadingThreads, setLoadingThreads] = useState(true);
@@ -700,10 +701,20 @@ function HelpRequestsDetails() {
                                 : `${BASE_URL}${msg.image}`
                             }
                             alt="chat attachment"
+                            onClick={() =>
+                              setPreviewImage(
+                                msg.image.startsWith("blob:")
+                                  ? msg.image
+                                  : `${BASE_URL}${msg.image}`
+                              )
+                            }
                             style={{
                               maxWidth: "220px",
+                              maxHeight: "220px",
                               borderRadius: "10px",
                               marginTop: "8px",
+                              cursor: "pointer",
+                              objectFit: "cover",
                             }}
                           />
                         ) : null}
@@ -820,6 +831,7 @@ function HelpRequestsDetails() {
                         setThreadMessages([]);
                         setReply("");
                         setSelectedImage(null);
+                        setPreviewImage(null);
                       }}
                       style={{
                         background: "#d9c9a7",
@@ -840,6 +852,34 @@ function HelpRequestsDetails() {
           )}
         </div>
       </div>
+
+      {previewImage && (
+        <div
+          onClick={() => setPreviewImage(null)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.8)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+            padding: "20px",
+          }}
+        >
+          <img
+            src={previewImage}
+            alt="Preview"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxWidth: "90vw",
+              maxHeight: "90vh",
+              borderRadius: "14px",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }

@@ -3353,6 +3353,7 @@ const HelpModal = ({
   const [thread, setThread] = useState<any | null>(null);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const chatEndRef = React.useRef<HTMLDivElement | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const BASE_URL = "https://ai-based-foundational-learning-production.up.railway.app";
 
@@ -3464,14 +3465,15 @@ const HelpModal = ({
   };
 
   useEffect(() => {
-    if (isOpen) {
-      fetchMyChat();
-    } else {
-      setMessage("");
-      setSelectedImage(null);
-      setThread(null);
-    }
-  }, [isOpen]);
+  if (isOpen) {
+    fetchMyChat();
+  } else {
+    setMessage("");
+    setSelectedImage(null);
+    setPreviewImage(null);
+    setThread(null);
+  }
+}, [isOpen]);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -3568,10 +3570,11 @@ const HelpModal = ({
 
               <button
                 onClick={() => {
-                  setMessage("");
-                  setSelectedImage(null);
-                  onClose();
-                }}
+  setMessage("");
+  setSelectedImage(null);
+  setPreviewImage(null);
+  onClose();
+}}
                 className="w-10 h-10 rounded-full bg-stone-100 hover:bg-stone-200 flex items-center justify-center text-stone-600"
               >
                 <X size={18} />
@@ -3612,13 +3615,24 @@ const HelpModal = ({
                         </p>
                       ) : null}
 
-                      {msg.image ? (
-                        <img
-                          src={`${BASE_URL}${msg.image}`}
-                          alt="attachment"
-                          className="mt-2 max-w-[220px] rounded-xl"
-                        />
-                      ) : null}
+                      {msg.image && (
+  <img
+    src={
+      msg.image.startsWith("blob:")
+        ? msg.image
+        : `${BASE_URL}${msg.image}`
+    }
+    alt="attachment"
+    onClick={() =>
+      setPreviewImage(
+        msg.image.startsWith("blob:")
+          ? msg.image
+          : `${BASE_URL}${msg.image}`
+      )
+    }
+    className="mt-2 max-w-[220px] max-h-[220px] rounded-xl cursor-pointer object-cover"
+  />
+)}
 
                       <div className="text-[11px] text-stone-500 mt-2">
                         {formatTime(msg.timestamp)}
@@ -3671,6 +3685,22 @@ const HelpModal = ({
                 </div>
               </div>
             </div>
+            </div> {/* End of chat modal content */}
+
+{/* 👉 IMAGE PREVIEW MODAL */}
+{previewImage && (
+  <div
+    className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center p-4"
+    onClick={() => setPreviewImage(null)}
+  >
+    <img
+      src={previewImage}
+      alt="Preview"
+      onClick={(e) => e.stopPropagation()}
+      className="max-w-[90vw] max-h-[90vh] rounded-2xl shadow-2xl"
+    />
+  </div>
+)}
           </motion.div>
         </motion.div>
       )}
