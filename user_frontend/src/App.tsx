@@ -3043,7 +3043,7 @@ const Navbar = ({ user, onLogout, onBack, onDashboard, showBack, onHelp, onProfi
               <Leaf size={20} className="fill-current" />
             </div>
             <span className="text-[9px] font-black text-teal-800 uppercase tracking-widest opacity-70 group-hover:opacity-100 transition-opacity">
-              Help Corner
+              Help 
             </span>
           </button>
 
@@ -3876,9 +3876,9 @@ export default function App() {
   const [isCourseComplete, setIsCourseComplete] = useState(false); 
   const [message, setMessage] = useState('');
   const handleGoToDashboard = () => {
-  setLesson('');
-  setView('lesson');
-};
+    setLesson('');
+    setView('lesson');
+  };
   const setScore = useStore((state) => state.setScore);
 
  // React.useEffect(() => {
@@ -3888,14 +3888,66 @@ export default function App() {
   //}, [user?.isLoggedIn]);
 
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
+  const [hasUnreadHelp, setHasUnreadHelp] = useState(false);
+
+  const BASE_URL =
+    "https://ai-based-foundational-learning-production.up.railway.app";
+
   const handleLogout = () => {
-  setIsHelpModalOpen(false);
-  setMessage("");
-  setLesson("");
-  setView("lesson");
-  setNavigationHistory([]);
-  logout();
-};
+    setIsHelpModalOpen(false);
+    setMessage("");
+    setLesson("");
+    setView("lesson");
+    setNavigationHistory([]);
+    logout();
+  };
+
+  const checkUnreadHelp = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const res = await fetch(`${BASE_URL}/api/help/my`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+      const doubts = data.my_doubts || [];
+
+      if (doubts.length === 0) {
+        setHasUnreadHelp(false);
+        return;
+      }
+
+      const latestThread = doubts[0];
+      const messages = latestThread.messages || [];
+      const lastMessage = messages[messages.length - 1];
+
+      setHasUnreadHelp(lastMessage?.sender === "teacher");
+    } catch (error) {
+      console.error("Error checking unread help messages:", error);
+    }
+  };
+
+  const handleOpenHelp = () => {
+    setIsHelpModalOpen(true);
+    setHasUnreadHelp(false);
+  };
+
+  useEffect(() => {
+    if (!user?.isLoggedIn) {
+      setHasUnreadHelp(false);
+      return;
+    }
+
+    checkUnreadHelp();
+    const interval = setInterval(checkUnreadHelp, 30000);
+
+    return () => clearInterval(interval);
+  }, [user?.isLoggedIn]);
+
   // Track navigation history
   React.useEffect(() => {
     if (!user?.isLoggedIn) {
@@ -3929,27 +3981,27 @@ export default function App() {
   }, [view, currentLesson, user?.isLoggedIn]);
 
   const handleGlobalBack = () => {
-  if (isHelpModalOpen) {
-    setIsHelpModalOpen(false);
-    return;
-  }
+    if (isHelpModalOpen) {
+      setIsHelpModalOpen(false);
+      return;
+    }
 
-  if (view === 'profile') {
-    setView('lesson');
-    return;
-  }
+    if (view === 'profile') {
+      setView('lesson');
+      return;
+    }
 
-  if (navigationHistory.length <= 1) {
-    setLesson('');
-    setView('lesson');
-    setNavigationHistory([]);
-    return;
-  }
+    if (navigationHistory.length <= 1) {
+      setLesson('');
+      setView('lesson');
+      setNavigationHistory([]);
+      return;
+    }
 
-  const prev = navigationHistory[navigationHistory.length - 2];
-  setLesson(prev.lesson);
-  setView(prev.view as any);
-};
+    const prev = navigationHistory[navigationHistory.length - 2];
+    setLesson(prev.lesson);
+    setView(prev.view as any);
+  };
 
   const handleBackToDashboard = () => {
     setLesson('');
@@ -3966,37 +4018,38 @@ export default function App() {
   };
 
   const handleQuizComplete = (percentage: number, backendResult?: any) => {
-  if (!backendResult) {
-    setLesson('');
-    setView('lesson');
-    return;
-  }
+    if (!backendResult) {
+      setLesson('');
+      setView('lesson');
+      return;
+    }
 
-  if (backendResult.decision === "NEXT_LESSON") {
-    setScore(Math.round(percentage));
-    setLesson('');
-    setView('lesson');
-  } else if (backendResult.decision === "GO_SIMPLIFIED_QUIZ") {
-    setView('simpler_quiz');
-  } else {
-    setView('video');
-  }
-};
+    if (backendResult.decision === "NEXT_LESSON") {
+      setScore(Math.round(percentage));
+      setLesson('');
+      setView('lesson');
+    } else if (backendResult.decision === "GO_SIMPLIFIED_QUIZ") {
+      setView('simpler_quiz');
+    } else {
+      setView('video');
+    }
+  };
 
   const handleSimplerQuizComplete = (percentage: number, backendResult?: any) => {
-  if (!backendResult) {
-    setView('video');
-    return;
-  }
+    if (!backendResult) {
+      setView('video');
+      return;
+    }
 
-  if (backendResult.decision === "NEXT_LESSON") {
-    setScore(Math.round(percentage));
-    setLesson('');
-    setView('lesson');
-  } else {
-    setView('video');
-  }
-};
+    if (backendResult.decision === "NEXT_LESSON") {
+      setScore(Math.round(percentage));
+      setLesson('');
+      setView('lesson');
+    } else {
+      setView('video');
+    }
+  };
+
   const handleNextModule = () => {
     const currentIndex = MODULE_ORDER.indexOf(currentLesson || '');
     if (currentIndex !== -1 && currentIndex < MODULE_ORDER.length - 1) {
@@ -4019,14 +4072,15 @@ export default function App() {
 
       {user?.isLoggedIn && (
         <Navbar 
-  user={user} 
-  onLogout={handleLogout} 
-  onBack={handleGlobalBack}
-  onDashboard={handleGoToDashboard}
-  showBack={!!currentLesson || isHelpModalOpen || view === 'profile'}
-  onHelp={() => setIsHelpModalOpen(true)}
-  onProfile={() => setView('profile')}
-/>
+          user={user} 
+          onLogout={handleLogout} 
+          onBack={handleGlobalBack}
+          onDashboard={handleGoToDashboard}
+          showBack={!!currentLesson || isHelpModalOpen || view === 'profile'}
+          onHelp={handleOpenHelp}
+          onProfile={() => setView('profile')}
+          hasUnreadHelp={hasUnreadHelp}
+        />
       )}
       <AnimatePresence mode="wait">
         {!user?.isLoggedIn ? (
