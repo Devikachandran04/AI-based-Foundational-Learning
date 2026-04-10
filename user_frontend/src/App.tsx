@@ -3685,7 +3685,7 @@ const HelpModal = ({
                 </div>
               </div>
             </div>
-            </div> {/* End of chat modal content */}
+          
 
 {/* 👉 IMAGE PREVIEW MODAL */}
 {previewImage && (
