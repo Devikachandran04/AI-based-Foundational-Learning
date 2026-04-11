@@ -1,82 +1,63 @@
+
+
 [
-  {
-    "id": "tb1",
-    "question": "She ___ to school daily.",
-    "options": ["go", "goes", "going", "gone"],
-    "answer": "goes",
-    "topic": "tenses",
-    "difficulty": "basic"
-  },
-  {
-    "id": "tb2",
-    "question": "They ___ playing.",
-    "options": ["is", "are", "was", "be"],
-    "answer": "are",
-    "topic": "tenses",
-    "difficulty": "basic"
-  },
-  {
-    "id": "tb3",
-    "question": "He ___ a letter now.",
-    "options": ["write", "writes", "is writing", "wrote"],
-    "answer": "is writing",
-    "topic": "tenses",
-    "difficulty": "basic"
-  },
-  {
-    "id": "tb4",
-    "question": "I ___ milk every morning.",
-    "options": ["drink", "drinks", "drank", "drinking"],
-    "answer": "drink",
-    "topic": "tenses",
-    "difficulty": "basic"
-  },
-  {
-    "id": "tb5",
-    "question": "We ___ in the park now.",
-    "options": ["play", "plays", "are playing", "played"],
-    "answer": "are playing",
-    "topic": "tenses",
-    "difficulty": "basic"
-  },
-  {
-    "id": "tb6",
-    "question": "The dog ___ loudly.",
-    "options": ["bark", "barks", "barked", "barking"],
-    "answer": "barks",
-    "topic": "tenses",
-    "difficulty": "basic"
-  },
-  {
-    "id": "tb7",
-    "question": "She ___ TV at the moment.",
-    "options": ["watch", "watches", "is watching", "watched"],
-    "answer": "is watching",
-    "topic": "tenses",
-    "difficulty": "basic"
-  },
-  {
-    "id": "tb8",
-    "question": "He ___ cricket on Sundays.",
-    "options": ["play", "plays", "played", "playing"],
-    "answer": "plays",
-    "topic": "tenses",
-    "difficulty": "basic"
-  },
-  {
-    "id": "tb9",
-    "question": "I ___ my homework now.",
-    "options": ["do", "does", "am doing", "did"],
-    "answer": "am doing",
-    "topic": "tenses",
-    "difficulty": "basic"
-  },
-  {
-    "id": "tb10",
-    "question": "They ___ to the market every week.",
-    "options": ["go", "goes", "went", "going"],
-    "answer": "go",
-    "topic": "tenses",
-    "difficulty": "basic"
-  }
+  {"id":"tb1","question":"Choose the correct verb: She ___ to school daily.","options":["go","goes","went","going"],"answer":"goes","topic":"tenses","difficulty":"basic"},
+  {"id":"tb2","question":"Choose the correct verb: I ___ my homework yesterday.","options":["do","did","does","doing"],"answer":"did","topic":"tenses","difficulty":"basic"},
+  {"id":"tb3","question":"Choose the correct verb: They ___ to the park tomorrow.","options":["go","went","will go","going"],"answer":"will go","topic":"tenses","difficulty":"basic"},
+  {"id":"tb4","question":"Identify the tense: She plays tennis.","options":["Present","Past","Future","Continuous"],"answer":"Present","topic":"tenses","difficulty":"basic"},
+  {"id":"tb5","question":"Identify the tense: He ate food.","options":["Present","Past","Future","Continuous"],"answer":"Past","topic":"tenses","difficulty":"basic"},
+
+  {"id":"tb6","question":"Identify the tense: They will travel.","options":["Present","Past","Future","Perfect"],"answer":"Future","topic":"tenses","difficulty":"basic"},
+  {"id":"tb7","question":"Choose the correct verb: He ___ a book now.","options":["read","reads","is reading","readed"],"answer":"is reading","topic":"tenses","difficulty":"basic"},
+  {"id":"tb8","question":"Choose the correct verb: She ___ TV now.","options":["watch","watches","is watching","watched"],"answer":"is watching","topic":"tenses","difficulty":"basic"},
+  {"id":"tb9","question":"Choose the correct verb: We ___ playing now.","options":["is","are","am","be"],"answer":"are","topic":"tenses","difficulty":"basic"},
+  {"id":"tb10","question":"Choose the correct verb: I ___ eating.","options":["is","are","am","be"],"answer":"am","topic":"tenses","difficulty":"basic"},
+
+  {"id":"tb11","question":"Choose the correct verb: She ___ to the market yesterday.","options":["go","went","goes","going"],"answer":"went","topic":"tenses","difficulty":"basic"},
+  {"id":"tb12","question":"Choose the correct verb: He ___ cricket every day.","options":["play","plays","played","playing"],"answer":"plays","topic":"tenses","difficulty":"basic"},
+  {"id":"tb13","question":"Choose the correct verb: They ___ lunch now.","options":["eat","eats","are eating","ate"],"answer":"are eating","topic":"tenses","difficulty":"basic"},
+  {"id":"tb14","question":"Choose the correct verb: I ___ to school every day.","options":["go","goes","went","going"],"answer":"go","topic":"tenses","difficulty":"basic"},
+  {"id":"tb15","question":"Choose the correct verb: He ___ his work yesterday.","options":["finish","finished","finishes","finishing"],"answer":"finished","topic":"tenses","difficulty":"basic"},
+
+  {"id":"tb16","question":"Identify the tense: She is singing.","options":["Present Continuous","Past","Future","Present"],"answer":"Present Continuous","topic":"tenses","difficulty":"basic"},
+  {"id":"tb17","question":"Identify the tense: They were playing.","options":["Past Continuous","Present","Future","Perfect"],"answer":"Past Continuous","topic":"tenses","difficulty":"basic"},
+  {"id":"tb18","question":"Identify the tense: He is running.","options":["Present Continuous","Past","Future","Perfect"],"answer":"Present Continuous","topic":"tenses","difficulty":"basic"},
+  {"id":"tb19","question":"Identify the tense: I was reading.","options":["Past Continuous","Present","Future","Perfect"],"answer":"Past Continuous","topic":"tenses","difficulty":"basic"},
+  {"id":"tb20","question":"Identify the tense: They are dancing.","options":["Present Continuous","Past","Future","Perfect"],"answer":"Present Continuous","topic":"tenses","difficulty":"basic"},
+
+  {"id":"tb21","question":"Choose the correct verb: She ___ already finished.","options":["has","have","had","having"],"answer":"has","topic":"tenses","difficulty":"basic"},
+  {"id":"tb22","question":"Choose the correct verb: I ___ seen that movie.","options":["has","have","had","having"],"answer":"have","topic":"tenses","difficulty":"basic"},
+  {"id":"tb23","question":"Choose the correct verb: He ___ gone home.","options":["has","have","had","having"],"answer":"has","topic":"tenses","difficulty":"basic"},
+  {"id":"tb24","question":"Choose the correct verb: They ___ completed the task.","options":["has","have","had","having"],"answer":"have","topic":"tenses","difficulty":"basic"},
+  {"id":"tb25","question":"Choose the correct verb: We ___ done our work.","options":["has","have","had","having"],"answer":"have","topic":"tenses","difficulty":"basic"},
+
+  {"id":"tb26","question":"Identify the tense: She has eaten.","options":["Present Perfect","Past","Future","Continuous"],"answer":"Present Perfect","topic":"tenses","difficulty":"basic"},
+  {"id":"tb27","question":"Identify the tense: I have finished.","options":["Present Perfect","Past","Future","Continuous"],"answer":"Present Perfect","topic":"tenses","difficulty":"basic"},
+  {"id":"tb28","question":"Identify the tense: He has written a letter.","options":["Present Perfect","Past","Future","Continuous"],"answer":"Present Perfect","topic":"tenses","difficulty":"basic"},
+  {"id":"tb29","question":"Identify the tense: They have gone.","options":["Present Perfect","Past","Future","Continuous"],"answer":"Present Perfect","topic":"tenses","difficulty":"basic"},
+  {"id":"tb30","question":"Identify the tense: We have seen it.","options":["Present Perfect","Past","Future","Continuous"],"answer":"Present Perfect","topic":"tenses","difficulty":"basic"},
+
+  {"id":"tb31","question":"Choose the correct verb: She ___ tomorrow.","options":["come","came","will come","coming"],"answer":"will come","topic":"tenses","difficulty":"basic"},
+  {"id":"tb32","question":"Choose the correct verb: I ___ visit my friend.","options":["will","went","go","going"],"answer":"will","topic":"tenses","difficulty":"basic"},
+  {"id":"tb33","question":"Choose the correct verb: They ___ travel next week.","options":["will","went","go","going"],"answer":"will","topic":"tenses","difficulty":"basic"},
+  {"id":"tb34","question":"Choose the correct verb: He ___ call you.","options":["will","went","go","going"],"answer":"will","topic":"tenses","difficulty":"basic"},
+  {"id":"tb35","question":"Choose the correct verb: We ___ meet soon.","options":["will","went","go","going"],"answer":"will","topic":"tenses","difficulty":"basic"},
+
+  {"id":"tb36","question":"Choose the correct verb: She ___ not coming.","options":["is","are","am","be"],"answer":"is","topic":"tenses","difficulty":"basic"},
+  {"id":"tb37","question":"Choose the correct verb: They ___ not ready.","options":["is","are","am","be"],"answer":"are","topic":"tenses","difficulty":"basic"},
+  {"id":"tb38","question":"Choose the correct verb: I ___ not feeling well.","options":["is","are","am","be"],"answer":"am","topic":"tenses","difficulty":"basic"},
+  {"id":"tb39","question":"Choose the correct verb: He ___ not playing.","options":["is","are","am","be"],"answer":"is","topic":"tenses","difficulty":"basic"},
+  {"id":"tb40","question":"Choose the correct verb: We ___ not going.","options":["is","are","am","be"],"answer":"are","topic":"tenses","difficulty":"basic"},
+
+  {"id":"tb41","question":"Choose the correct verb: The boy ___ fast.","options":["run","runs","running","ran"],"answer":"runs","topic":"tenses","difficulty":"basic"},
+  {"id":"tb42","question":"Choose the correct verb: The girls ___ loudly.","options":["sing","sings","singing","sang"],"answer":"sing","topic":"tenses","difficulty":"basic"},
+  {"id":"tb43","question":"Choose the correct verb: The dog ___ loudly.","options":["bark","barks","barking","barked"],"answer":"barks","topic":"tenses","difficulty":"basic"},
+  {"id":"tb44","question":"Choose the correct verb: The birds ___ high.","options":["fly","flies","flying","flew"],"answer":"fly","topic":"tenses","difficulty":"basic"},
+  {"id":"tb45","question":"Choose the correct verb: The teacher ___ well.","options":["teach","teaches","teaching","taught"],"answer":"teaches","topic":"tenses","difficulty":"basic"},
+
+  {"id":"tb46","question":"Identify the tense: She will go.","options":["Future","Past","Present","Continuous"],"answer":"Future","topic":"tenses","difficulty":"basic"},
+  {"id":"tb47","question":"Identify the tense: I am reading.","options":["Present Continuous","Past","Future","Perfect"],"answer":"Present Continuous","topic":"tenses","difficulty":"basic"},
+  {"id":"tb48","question":"Identify the tense: He went home.","options":["Past","Present","Future","Continuous"],"answer":"Past","topic":"tenses","difficulty":"basic"},
+  {"id":"tb49","question":"Identify the tense: They play daily.","options":["Present","Past","Future","Continuous"],"answer":"Present","topic":"tenses","difficulty":"basic"},
+  {"id":"tb50","question":"Identify the tense: We are learning.","options":["Present Continuous","Past","Future","Perfect"],"answer":"Present Continuous","topic":"tenses","difficulty":"basic"}
 ]

@@ -78,5 +78,325 @@
     "answer": "was singing",
     "topic": "tenses",
     "difficulty": "moderate"
+  },
+  {
+    "id": "tm11",
+    "question": "They ___ in the garden now.",
+    "options": ["play", "played", "are playing", "plays"],
+    "answer": "are playing",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm12",
+    "question": "She ___ her work already.",
+    "options": ["finish", "finished", "has finished", "finishing"],
+    "answer": "has finished",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm13",
+    "question": "I ___ to the market tomorrow.",
+    "options": ["go", "went", "will go", "going"],
+    "answer": "will go",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm14",
+    "question": "He usually ___ early.",
+    "options": ["wake", "wakes", "woke", "waking"],
+    "answer": "wakes",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm15",
+    "question": "They ___ the movie last night.",
+    "options": ["watch", "watched", "watching", "watches"],
+    "answer": "watched",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm16",
+    "question": "She ___ a letter now.",
+    "options": ["write", "writes", "is writing", "wrote"],
+    "answer": "is writing",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm17",
+    "question": "We ___ the project by next week.",
+    "options": ["complete", "completed", "will complete", "completing"],
+    "answer": "will complete",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm18",
+    "question": "He ___ football every Sunday.",
+    "options": ["play", "plays", "played", "playing"],
+    "answer": "plays",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm19",
+    "question": "I ___ this book before.",
+    "options": ["read", "reads", "have read", "reading"],
+    "answer": "have read",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm20",
+    "question": "She ___ when the bell rang.",
+    "options": ["sleep", "slept", "was sleeping", "sleeping"],
+    "answer": "was sleeping",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm21",
+    "question": "They ___ their homework now.",
+    "options": ["do", "did", "are doing", "done"],
+    "answer": "are doing",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm22",
+    "question": "He ___ to school every day.",
+    "options": ["go", "goes", "went", "gone"],
+    "answer": "goes",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm23",
+    "question": "We ___ the match yesterday.",
+    "options": ["win", "won", "wins", "winning"],
+    "answer": "won",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm24",
+    "question": "She ___ dinner now.",
+    "options": ["cook", "cooks", "is cooking", "cooked"],
+    "answer": "is cooking",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm25",
+    "question": "They ___ to Delhi next week.",
+    "options": ["travel", "traveled", "will travel", "traveling"],
+    "answer": "will travel",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm26",
+    "question": "I ___ my keys yesterday.",
+    "options": ["lose", "lost", "loses", "losing"],
+    "answer": "lost",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm27",
+    "question": "He ___ his work since morning.",
+    "options": ["does", "did", "has been doing", "doing"],
+    "answer": "has been doing",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm28",
+    "question": "She ___ the door before leaving.",
+    "options": ["lock", "locked", "had locked", "locking"],
+    "answer": "had locked",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm29",
+    "question": "We ___ the results tomorrow.",
+    "options": ["announce", "announced", "will announce", "announcing"],
+    "answer": "will announce",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm30",
+    "question": "He ___ the truth just now.",
+    "options": ["tells", "told", "has told", "telling"],
+    "answer": "has told",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm31",
+    "question": "They ___ the work when we arrived.",
+    "options": ["finish", "finished", "were finishing", "finishing"],
+    "answer": "were finishing",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm32",
+    "question": "She ___ the news yesterday.",
+    "options": ["hear", "heard", "hears", "hearing"],
+    "answer": "heard",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm33",
+    "question": "I ___ him for five years.",
+    "options": ["know", "knew", "have known", "knowing"],
+    "answer": "have known",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm34",
+    "question": "She ___ English fluently.",
+    "options": ["speak", "speaks", "spoke", "speaking"],
+    "answer": "speaks",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm35",
+    "question": "He ___ the letter tomorrow.",
+    "options": ["send", "sent", "will send", "sending"],
+    "answer": "will send",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm36",
+    "question": "They ___ cricket when it started to rain.",
+    "options": ["play", "played", "were playing", "playing"],
+    "answer": "were playing",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm37",
+    "question": "She ___ her breakfast already.",
+    "options": ["eat", "ate", "has eaten", "eating"],
+    "answer": "has eaten",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm38",
+    "question": "I ___ a new bicycle last year.",
+    "options": ["buy", "bought", "buys", "buying"],
+    "answer": "bought",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm39",
+    "question": "He ___ to the office now.",
+    "options": ["go", "goes", "is going", "went"],
+    "answer": "is going",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm40",
+    "question": "We ___ this place before.",
+    "options": ["visit", "visited", "have visited", "visiting"],
+    "answer": "have visited",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm41",
+    "question": "She ___ her friend at the party yesterday.",
+    "options": ["meet", "met", "meets", "meeting"],
+    "answer": "met",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm42",
+    "question": "They ___ a new house next year.",
+    "options": ["build", "built", "will build", "building"],
+    "answer": "will build",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm43",
+    "question": "He ___ a book now.",
+    "options": ["read", "reads", "is reading", "readed"],
+    "answer": "is reading",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm44",
+    "question": "She ___ her bag before leaving home.",
+    "options": ["pack", "packed", "had packed", "packing"],
+    "answer": "had packed",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm45",
+    "question": "We ___ our homework now.",
+    "options": ["do", "did", "are doing", "done"],
+    "answer": "are doing",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm46",
+    "question": "He ___ the exam successfully.",
+    "options": ["pass", "passed", "has passed", "passing"],
+    "answer": "has passed",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm47",
+    "question": "They ___ to the zoo last Sunday.",
+    "options": ["go", "went", "goes", "going"],
+    "answer": "went",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm48",
+    "question": "She ___ when the teacher called her.",
+    "options": ["sleep", "slept", "was sleeping", "sleeping"],
+    "answer": "was sleeping",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm49",
+    "question": "I ___ my work by tomorrow.",
+    "options": ["finish", "finished", "will finish", "finishing"],
+    "answer": "will finish",
+    "topic": "tenses",
+    "difficulty": "moderate"
+  },
+  {
+    "id": "tm50",
+    "question": "She ___ her project before the deadline.",
+    "options": ["complete", "completed", "has completed", "completing"],
+    "answer": "has completed",
+    "topic": "tenses",
+    "difficulty": "moderate"
   }
 ]

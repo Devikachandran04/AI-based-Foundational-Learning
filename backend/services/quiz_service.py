@@ -21,15 +21,15 @@ def _get_attempt_no(user_id: str, lesson_id: str) -> int:
 
 def _pick_questions(lesson_id: str, quiz_mode: str):
     """
-    mixed      -> 2 basic + 2 moderate + 2 advanced
-    simplified -> 4 basic + 2 moderate
+    mixed      -> 3 basic + 4 moderate + 3 advanced (10 questions)
+    simplified -> 5 basic + 5 moderate (10 questions)
     """
 
     if quiz_mode == "simplified":
-        plan = [("basic", 4), ("moderate", 2)]
+        plan = [("basic", 5), ("moderate", 5)]
         quiz_type = "simplified"
     else:
-        plan = [("basic", 2), ("moderate", 2), ("advanced", 2)]
+        plan = [("basic", 3), ("moderate", 4), ("advanced", 3)]
         quiz_type = "mixed"
 
     picked = []
@@ -49,6 +49,13 @@ def _pick_questions(lesson_id: str, quiz_mode: str):
             },
             {"$sample": {"size": count}}
         ]))
+
+        # Ensure enough questions exist
+        if len(questions) < count:
+            raise ValueError(
+                f"Not enough {difficulty} questions for lesson {lesson_id}. "
+                f"Required: {count}, Found: {len(questions)}"
+            )
 
         picked.extend(questions)
         difficulty_breakdown[difficulty] += len(questions)

@@ -1,82 +1,61 @@
 [
-  {
-    "id": "vm1",
-    "question": "Choose correct: She ___ to school.",
-    "options": ["go", "goes", "gone", "going"],
-    "answer": "goes",
-    "topic": "verbs",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "vm2",
-    "question": "Select the past tense.",
-    "options": ["played", "play", "playing", "plays"],
-    "answer": "played",
-    "topic": "verbs",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "vm3",
-    "question": "Choose the helping verb.",
-    "options": ["is", "run", "blue", "book"],
-    "answer": "is",
-    "topic": "verbs",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "vm4",
-    "question": "Fill in: They ___ happy.",
-    "options": ["are", "is", "was", "be"],
-    "answer": "are",
-    "topic": "verbs",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "vm5",
-    "question": "Identify the helping verb: She is reading.",
-    "options": ["She", "is", "reading", "none"],
-    "answer": "is",
-    "topic": "verbs",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "vm6",
-    "question": "Which sentence contains a modal verb?",
-    "options": ["She can swim.", "He runs fast.", "They play daily.", "We ate rice."],
-    "answer": "She can swim.",
-    "topic": "verbs",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "vm7",
-    "question": "Select the correct verb: He ___ every day.",
-    "options": ["walk", "walks", "walking", "walked"],
-    "answer": "walks",
-    "topic": "verbs",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "vm8",
-    "question": "Choose the past form of 'go'.",
-    "options": ["go", "goes", "went", "gone"],
-    "answer": "went",
-    "topic": "verbs",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "vm9",
-    "question": "Fill in: I ___ my homework yesterday.",
-    "options": ["do", "did", "done", "does"],
-    "answer": "did",
-    "topic": "verbs",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "vm10",
-    "question": "Choose the correct verb: We ___ football now.",
-    "options": ["play", "plays", "are playing", "played"],
-    "answer": "are playing",
-    "topic": "verbs",
-    "difficulty": "moderate"
-  }
+  {"id":"vm1","question":"Choose the correct verb: She ___ to school daily.","options":["go","goes","gone","going"],"answer":"goes","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm2","question":"Choose the correct verb: They ___ football every day.","options":["plays","play","played","playing"],"answer":"play","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm3","question":"Choose the correct verb: He ___ a book now.","options":["read","reads","is reading","reading"],"answer":"is reading","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm4","question":"Choose the correct verb: I ___ my homework yesterday.","options":["do","did","does","doing"],"answer":"did","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm5","question":"Choose the correct verb: She ___ a song now.","options":["sing","sings","is singing","sang"],"answer":"is singing","topic":"verbs","difficulty":"moderate"},
+
+  {"id":"vm6","question":"Choose the correct verb: We ___ TV now.","options":["watch","watches","are watching","watched"],"answer":"are watching","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm7","question":"Choose the correct verb: He ___ his work yesterday.","options":["finish","finished","finishes","finishing"],"answer":"finished","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm8","question":"Choose the correct verb: They ___ to the park tomorrow.","options":["go","went","will go","going"],"answer":"will go","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm9","question":"Choose the correct verb: She ___ already finished her work.","options":["has","have","had","having"],"answer":"has","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm10","question":"Choose the correct verb: I ___ seen that movie.","options":["has","have","had","having"],"answer":"have","topic":"verbs","difficulty":"moderate"},
+
+  {"id":"vm11","question":"Choose the correct verb: He ___ playing cricket.","options":["is","are","am","be"],"answer":"is","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm12","question":"Choose the correct verb: They ___ happy.","options":["is","are","am","be"],"answer":"are","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm13","question":"Choose the correct verb: I ___ ready.","options":["is","are","am","be"],"answer":"am","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm14","question":"Choose the correct verb: She ___ tired.","options":["is","are","am","be"],"answer":"is","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm15","question":"Choose the correct verb: We ___ friends.","options":["is","are","am","be"],"answer":"are","topic":"verbs","difficulty":"moderate"},
+
+  {"id":"vm16","question":"Choose the correct verb: He ___ eating lunch.","options":["is","are","am","be"],"answer":"is","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm17","question":"Choose the correct verb: They ___ studying.","options":["is","are","am","be"],"answer":"are","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm18","question":"Choose the correct verb: I ___ writing a letter.","options":["is","are","am","be"],"answer":"am","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm19","question":"Choose the correct verb: She ___ cooking dinner.","options":["is","are","am","be"],"answer":"is","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm20","question":"Choose the correct verb: We ___ going home.","options":["is","are","am","be"],"answer":"are","topic":"verbs","difficulty":"moderate"},
+
+  {"id":"vm21","question":"Choose the correct verb: The boy ___ playing.","options":["is","are","am","be"],"answer":"is","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm22","question":"Choose the correct verb: The girls ___ singing.","options":["is","are","am","be"],"answer":"are","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm23","question":"Choose the correct verb: The dog ___ barking.","options":["is","are","am","be"],"answer":"is","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm24","question":"Choose the correct verb: The birds ___ flying.","options":["is","are","am","be"],"answer":"are","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm25","question":"Choose the correct verb: The teacher ___ teaching.","options":["is","are","am","be"],"answer":"is","topic":"verbs","difficulty":"moderate"},
+
+  {"id":"vm26","question":"Choose the correct verb: He ___ a letter yesterday.","options":["write","writes","wrote","writing"],"answer":"wrote","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm27","question":"Choose the correct verb: She ___ a cake yesterday.","options":["make","makes","made","making"],"answer":"made","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm28","question":"Choose the correct verb: They ___ the match yesterday.","options":["win","wins","won","winning"],"answer":"won","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm29","question":"Choose the correct verb: I ___ a movie last night.","options":["see","sees","saw","seeing"],"answer":"saw","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm30","question":"Choose the correct verb: He ___ late yesterday.","options":["come","comes","came","coming"],"answer":"came","topic":"verbs","difficulty":"moderate"},
+
+  {"id":"vm31","question":"Choose the correct verb: She ___ finished her work.","options":["has","have","had","having"],"answer":"has","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm32","question":"Choose the correct verb: They ___ completed the task.","options":["has","have","had","having"],"answer":"have","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm33","question":"Choose the correct verb: I ___ eaten my lunch.","options":["has","have","had","having"],"answer":"have","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm34","question":"Choose the correct verb: He ___ gone home.","options":["has","have","had","having"],"answer":"has","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm35","question":"Choose the correct verb: We ___ done our homework.","options":["has","have","had","having"],"answer":"have","topic":"verbs","difficulty":"moderate"},
+
+  {"id":"vm36","question":"Choose the correct verb: She ___ to the market tomorrow.","options":["go","went","will go","going"],"answer":"will go","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm37","question":"Choose the correct verb: I ___ visit my friend tomorrow.","options":["go","went","will","going"],"answer":"will","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm38","question":"Choose the correct verb: They ___ travel next week.","options":["will","went","go","going"],"answer":"will","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm39","question":"Choose the correct verb: He ___ call you later.","options":["will","went","go","going"],"answer":"will","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm40","question":"Choose the correct verb: We ___ meet tomorrow.","options":["will","went","go","going"],"answer":"will","topic":"verbs","difficulty":"moderate"},
+
+  {"id":"vm41","question":"Choose the correct verb: She ___ not coming today.","options":["is","are","am","be"],"answer":"is","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm42","question":"Choose the correct verb: They ___ not ready.","options":["is","are","am","be"],"answer":"are","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm43","question":"Choose the correct verb: I ___ not feeling well.","options":["is","are","am","be"],"answer":"am","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm44","question":"Choose the correct verb: He ___ not playing.","options":["is","are","am","be"],"answer":"is","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm45","question":"Choose the correct verb: We ___ not going.","options":["is","are","am","be"],"answer":"are","topic":"verbs","difficulty":"moderate"},
+
+  {"id":"vm46","question":"Choose the correct verb: The boy ___ fast.","options":["run","runs","running","ran"],"answer":"runs","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm47","question":"Choose the correct verb: The girls ___ loudly.","options":["sing","sings","singing","sang"],"answer":"sing","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm48","question":"Choose the correct verb: The dog ___ loudly.","options":["bark","barks","barking","barked"],"answer":"barks","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm49","question":"Choose the correct verb: The birds ___ high.","options":["fly","flies","flying","flew"],"answer":"fly","topic":"verbs","difficulty":"moderate"},
+  {"id":"vm50","question":"Choose the correct verb: The teacher ___ well.","options":["teach","teaches","teaching","taught"],"answer":"teaches","topic":"verbs","difficulty":"moderate"}
 ]

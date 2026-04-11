@@ -78,5 +78,325 @@
     "answer": "swim",
     "topic": "verbs",
     "difficulty": "basic"
+  },
+  {
+    "id": "vb11",
+    "question": "Identify the verb: Birds fly in the sky.",
+    "options": ["Birds", "fly", "sky", "the"],
+    "answer": "fly",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb12",
+    "question": "Find the verb: The dog barks loudly.",
+    "options": ["dog", "barks", "loudly", "the"],
+    "answer": "barks",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb13",
+    "question": "Choose the action word.",
+    "options": ["read", "book", "quiet", "blue"],
+    "answer": "read",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb14",
+    "question": "Identify the verb: She sings beautifully.",
+    "options": ["She", "sings", "beautifully", "none"],
+    "answer": "sings",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb15",
+    "question": "Which word is a verb?",
+    "options": ["eat", "apple", "red", "round"],
+    "answer": "eat",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb16",
+    "question": "Find the verb: He runs fast.",
+    "options": ["He", "runs", "fast", "none"],
+    "answer": "runs",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb17",
+    "question": "Choose the verb.",
+    "options": ["talk", "voice", "sweet", "kind"],
+    "answer": "talk",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb18",
+    "question": "Identify the verb: They laugh loudly.",
+    "options": ["They", "laugh", "loudly", "none"],
+    "answer": "laugh",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb19",
+    "question": "Which word shows action?",
+    "options": ["climb", "tree", "tall", "green"],
+    "answer": "climb",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb20",
+    "question": "Find the verb: The boy kicks the ball.",
+    "options": ["boy", "kicks", "ball", "the"],
+    "answer": "kicks",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb21",
+    "question": "Identify the verb: The girl draws a picture.",
+    "options": ["girl", "draws", "picture", "a"],
+    "answer": "draws",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb22",
+    "question": "Choose the verb.",
+    "options": ["drink", "water", "clear", "cold"],
+    "answer": "drink",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb23",
+    "question": "Find the verb: He opens the door.",
+    "options": ["He", "opens", "door", "the"],
+    "answer": "opens",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb24",
+    "question": "Identify the verb: She closes the window.",
+    "options": ["She", "closes", "window", "the"],
+    "answer": "closes",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb25",
+    "question": "Which word is a verb?",
+    "options": ["walk", "road", "long", "wide"],
+    "answer": "walk",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb26",
+    "question": "Find the verb: The sun rises in the east.",
+    "options": ["sun", "rises", "east", "the"],
+    "answer": "rises",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb27",
+    "question": "Identify the verb: The wind blows gently.",
+    "options": ["wind", "blows", "gently", "the"],
+    "answer": "blows",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb28",
+    "question": "Choose the action word.",
+    "options": ["throw", "ball", "round", "small"],
+    "answer": "throw",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb29",
+    "question": "Find the verb: She washes her hands.",
+    "options": ["She", "washes", "hands", "her"],
+    "answer": "washes",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb30",
+    "question": "Identify the verb: He cleans the room.",
+    "options": ["He", "cleans", "room", "the"],
+    "answer": "cleans",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb31",
+    "question": "Which word is a verb?",
+    "options": ["drive", "car", "fast", "red"],
+    "answer": "drive",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb32",
+    "question": "Find the verb: The teacher explains the lesson.",
+    "options": ["teacher", "explains", "lesson", "the"],
+    "answer": "explains",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb33",
+    "question": "Identify the verb: Students study hard.",
+    "options": ["Students", "study", "hard", "none"],
+    "answer": "study",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb34",
+    "question": "Choose the verb.",
+    "options": ["listen", "music", "sweet", "soft"],
+    "answer": "listen",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb35",
+    "question": "Find the verb: He watches television.",
+    "options": ["He", "watches", "television", "none"],
+    "answer": "watches",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb36",
+    "question": "Identify the verb: She reads a story.",
+    "options": ["She", "reads", "story", "a"],
+    "answer": "reads",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb37",
+    "question": "Which word shows action?",
+    "options": ["build", "house", "strong", "big"],
+    "answer": "build",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb38",
+    "question": "Find the verb: They help their parents.",
+    "options": ["They", "help", "parents", "their"],
+    "answer": "help",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb39",
+    "question": "Identify the verb: The child sleeps peacefully.",
+    "options": ["child", "sleeps", "peacefully", "the"],
+    "answer": "sleeps",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb40",
+    "question": "Choose the verb.",
+    "options": ["cook", "food", "hot", "tasty"],
+    "answer": "cook",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb41",
+    "question": "Find the verb: She paints a picture.",
+    "options": ["She", "paints", "picture", "a"],
+    "answer": "paints",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb42",
+    "question": "Identify the verb: He throws the ball.",
+    "options": ["He", "throws", "ball", "the"],
+    "answer": "throws",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb43",
+    "question": "Which word is a verb?",
+    "options": ["write", "letter", "long", "white"],
+    "answer": "write",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb44",
+    "question": "Find the verb: The bell rings loudly.",
+    "options": ["bell", "rings", "loudly", "the"],
+    "answer": "rings",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb45",
+    "question": "Identify the verb: The horse runs fast.",
+    "options": ["horse", "runs", "fast", "the"],
+    "answer": "runs",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb46",
+    "question": "Choose the verb.",
+    "options": ["dance", "stage", "bright", "wide"],
+    "answer": "dance",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb47",
+    "question": "Find the verb: She smiles happily.",
+    "options": ["She", "smiles", "happily", "none"],
+    "answer": "smiles",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb48",
+    "question": "Identify the verb: He climbs the mountain.",
+    "options": ["He", "climbs", "mountain", "the"],
+    "answer": "climbs",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb49",
+    "question": "Which word shows action?",
+    "options": ["kick", "ball", "round", "small"],
+    "answer": "kick",
+    "topic": "verbs",
+    "difficulty": "basic"
+  },
+  {
+    "id": "vb50",
+    "question": "Find the verb: They march proudly.",
+    "options": ["They", "march", "proudly", "none"],
+    "answer": "march",
+    "topic": "verbs",
+    "difficulty": "basic"
   }
 ]

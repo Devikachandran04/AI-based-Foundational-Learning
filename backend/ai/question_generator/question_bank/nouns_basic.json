@@ -1,82 +1,60 @@
 [
-  {
-    "id": "nb1",
-    "question": "Which word is a noun?",
-    "options": ["apple", "run", "fast", "blue"],
-    "answer": "apple",
-    "topic": "nouns",
-    "difficulty": "basic"
-  },
-  {
-    "id": "nb2",
-    "question": "Which word names a person?",
-    "options": ["teacher", "run", "fast", "blue"],
-    "answer": "teacher",
-    "topic": "nouns",
-    "difficulty": "basic"
-  },
-  {
-    "id": "nb3",
-    "question": "Which word names a place?",
-    "options": ["school", "jump", "slow", "quick"],
-    "answer": "school",
-    "topic": "nouns",
-    "difficulty": "basic"
-  },
-  {
-    "id": "nb4",
-    "question": "Which word names an animal?",
-    "options": ["dog", "run", "fast", "happy"],
-    "answer": "dog",
-    "topic": "nouns",
-    "difficulty": "basic"
-  },
-  {
-    "id": "nb5",
-    "question": "Find the noun.",
-    "options": ["book", "read", "slowly", "tall"],
-    "answer": "book",
-    "topic": "nouns",
-    "difficulty": "basic"
-  },
-  {
-    "id": "nb6",
-    "question": "Which is a naming word?",
-    "options": ["car", "run", "quickly", "soft"],
-    "answer": "car",
-    "topic": "nouns",
-    "difficulty": "basic"
-  },
-  {
-    "id": "nb7",
-    "question": "Which word is a noun?",
-    "options": ["tree", "jump", "blue", "fast"],
-    "answer": "tree",
-    "topic": "nouns",
-    "difficulty": "basic"
-  },
-  {
-    "id": "nb8",
-    "question": "Which word names a thing?",
-    "options": ["ball", "play", "run", "quick"],
-    "answer": "ball",
-    "topic": "nouns",
-    "difficulty": "basic"
-  },
-  {
-    "id": "nb9",
-    "question": "Find the noun.",
-    "options": ["house", "walk", "fast", "happy"],
-    "answer": "house",
-    "topic": "nouns",
-    "difficulty": "basic"
-  },
-  {
-    "id": "nb10",
-    "question": "Which is a noun?",
-    "options": ["cat", "run", "quick", "blue"],
-    "answer": "cat",
-    "topic": "nouns",
-    "difficulty": "basic"
-  }
+  {"id":"nb1","question":"Identify the noun: The cat is sleeping.","options":["The","Cat","Is","Sleeping"],"answer":"Cat","topic":"nouns","difficulty":"basic"},
+  {"id":"nb2","question":"Which word is a noun?","options":["Apple","Run","Fast","Blue"],"answer":"Apple","topic":"nouns","difficulty":"basic"},
+  {"id":"nb3","question":"Which word names a person?","options":["Teacher","Run","Quick","Blue"],"answer":"Teacher","topic":"nouns","difficulty":"basic"},
+  {"id":"nb4","question":"Which word names a place?","options":["School","Run","Fast","Tall"],"answer":"School","topic":"nouns","difficulty":"basic"},
+  {"id":"nb5","question":"Which word names an animal?","options":["Dog","Jump","Quick","Happy"],"answer":"Dog","topic":"nouns","difficulty":"basic"},
+  {"id":"nb6","question":"Find the noun.","options":["Book","Read","Slowly","Tall"],"answer":"Book","topic":"nouns","difficulty":"basic"},
+  {"id":"nb7","question":"Which is a naming word?","options":["Car","Run","Quickly","Soft"],"answer":"Car","topic":"nouns","difficulty":"basic"},
+  {"id":"nb8","question":"Which word names a thing?","options":["Ball","Play","Run","Quick"],"answer":"Ball","topic":"nouns","difficulty":"basic"},
+  {"id":"nb9","question":"Find the noun.","options":["House","Walk","Fast","Happy"],"answer":"House","topic":"nouns","difficulty":"basic"},
+  {"id":"nb10","question":"Which is a noun?","options":["Cat","Run","Quick","Blue"],"answer":"Cat","topic":"nouns","difficulty":"basic"},
+
+  {"id":"nb11","question":"Identify the noun: The water is cold.","options":["Water","Is","Cold","The"],"answer":"Water","topic":"nouns","difficulty":"basic"},
+  {"id":"nb12","question":"Which is a place?","options":["Teacher","London","Eat","Blue"],"answer":"London","topic":"nouns","difficulty":"basic"},
+  {"id":"nb13","question":"Which is a thing?","options":["Run","Pencil","Happy","Fast"],"answer":"Pencil","topic":"nouns","difficulty":"basic"},
+  {"id":"nb14","question":"Which is an animal?","options":["Tiger","Forest","Hungry","Roar"],"answer":"Tiger","topic":"nouns","difficulty":"basic"},
+  {"id":"nb15","question":"Which is a food item?","options":["Potato","Eat","Cook","Jump"],"answer":"Potato","topic":"nouns","difficulty":"basic"},
+
+  {"id":"nb16","question":"Identify the noun: Happiness is important.","options":["Happiness","Is","Important","Very"],"answer":"Happiness","topic":"nouns","difficulty":"basic"},
+  {"id":"nb17","question":"Which word names a person?","options":["Doctor","Hospital","Medicine","Sick"],"answer":"Doctor","topic":"nouns","difficulty":"basic"},
+  {"id":"nb18","question":"Which word names a place?","options":["City","Run","Blue","Quick"],"answer":"City","topic":"nouns","difficulty":"basic"},
+  {"id":"nb19","question":"Which word names an object?","options":["Chair","Sit","Fast","Tall"],"answer":"Chair","topic":"nouns","difficulty":"basic"},
+  {"id":"nb20","question":"Which is a noun?","options":["Tree","Climb","Green","Tall"],"answer":"Tree","topic":"nouns","difficulty":"basic"},
+
+  {"id":"nb21","question":"Identify the noun: The flowers are red.","options":["Flowers","Red","Are","Beautiful"],"answer":"Flowers","topic":"nouns","difficulty":"basic"},
+  {"id":"nb22","question":"Which is a common noun?","options":["Apple","iPhone","Steve Jobs","California"],"answer":"Apple","topic":"nouns","difficulty":"basic"},
+  {"id":"nb23","question":"Which word names a person?","options":["Baker","Bread","Made","The"],"answer":"Baker","topic":"nouns","difficulty":"basic"},
+  {"id":"nb24","question":"Which is a material noun?","options":["Gold","Ring","Jewelry","Shop"],"answer":"Gold","topic":"nouns","difficulty":"basic"},
+  {"id":"nb25","question":"Which is a noun?","options":["Table","Sit","Under","Quick"],"answer":"Table","topic":"nouns","difficulty":"basic"},
+
+  {"id":"nb26","question":"Identify the noun: Paris is beautiful.","options":["Paris","City","Beautiful","Is"],"answer":"Paris","topic":"nouns","difficulty":"basic"},
+  {"id":"nb27","question":"Which word names a place?","options":["River","Run","Fast","Quick"],"answer":"River","topic":"nouns","difficulty":"basic"},
+  {"id":"nb28","question":"Which word names a thing?","options":["Book","Read","Fast","Quick"],"answer":"Book","topic":"nouns","difficulty":"basic"},
+  {"id":"nb29","question":"Which is a noun?","options":["Pen","Write","Fast","Quick"],"answer":"Pen","topic":"nouns","difficulty":"basic"},
+  {"id":"nb30","question":"Which word names an animal?","options":["Lion","Run","Fast","Quick"],"answer":"Lion","topic":"nouns","difficulty":"basic"},
+
+  {"id":"nb31","question":"Identify the noun: The sun shines.","options":["Sun","Shines","Bright","The"],"answer":"Sun","topic":"nouns","difficulty":"basic"},
+  {"id":"nb32","question":"Which is a noun?","options":["Moon","Shine","Bright","Quick"],"answer":"Moon","topic":"nouns","difficulty":"basic"},
+  {"id":"nb33","question":"Which word names a place?","options":["Beach","Swim","Fast","Quick"],"answer":"Beach","topic":"nouns","difficulty":"basic"},
+  {"id":"nb34","question":"Which word names a thing?","options":["Bottle","Drink","Fast","Quick"],"answer":"Bottle","topic":"nouns","difficulty":"basic"},
+  {"id":"nb35","question":"Which is a noun?","options":["Phone","Call","Fast","Quick"],"answer":"Phone","topic":"nouns","difficulty":"basic"},
+
+  {"id":"nb36","question":"Identify the noun: Birds fly.","options":["Birds","Fly","Fast","High"],"answer":"Birds","topic":"nouns","difficulty":"basic"},
+  {"id":"nb37","question":"Which word names an animal?","options":["Elephant","Walk","Fast","Quick"],"answer":"Elephant","topic":"nouns","difficulty":"basic"},
+  {"id":"nb38","question":"Which word names a person?","options":["Student","Study","Fast","Quick"],"answer":"Student","topic":"nouns","difficulty":"basic"},
+  {"id":"nb39","question":"Which is a noun?","options":["Teacher","Teach","Fast","Quick"],"answer":"Teacher","topic":"nouns","difficulty":"basic"},
+  {"id":"nb40","question":"Which word names a thing?","options":["Laptop","Work","Fast","Quick"],"answer":"Laptop","topic":"nouns","difficulty":"basic"},
+
+  {"id":"nb41","question":"Identify the noun: The boy runs.","options":["Boy","Runs","Fast","Quick"],"answer":"Boy","topic":"nouns","difficulty":"basic"},
+  {"id":"nb42","question":"Which is a noun?","options":["Girl","Run","Fast","Quick"],"answer":"Girl","topic":"nouns","difficulty":"basic"},
+  {"id":"nb43","question":"Which word names a place?","options":["Park","Play","Fast","Quick"],"answer":"Park","topic":"nouns","difficulty":"basic"},
+  {"id":"nb44","question":"Which word names a thing?","options":["Bag","Carry","Fast","Quick"],"answer":"Bag","topic":"nouns","difficulty":"basic"},
+  {"id":"nb45","question":"Which is a noun?","options":["Shoes","Wear","Fast","Quick"],"answer":"Shoes","topic":"nouns","difficulty":"basic"},
+
+  {"id":"nb46","question":"Identify the noun: The car is fast.","options":["Car","Is","Fast","Very"],"answer":"Car","topic":"nouns","difficulty":"basic"},
+  {"id":"nb47","question":"Which word names a thing?","options":["Bike","Ride","Fast","Quick"],"answer":"Bike","topic":"nouns","difficulty":"basic"},
+  {"id":"nb48","question":"Which is a noun?","options":["Train","Run","Fast","Quick"],"answer":"Train","topic":"nouns","difficulty":"basic"},
+  {"id":"nb49","question":"Which word names a place?","options":["Station","Wait","Fast","Quick"],"answer":"Station","topic":"nouns","difficulty":"basic"},
+  {"id":"nb50","question":"Which is a noun?","options":["Bus","Travel","Fast","Quick"],"answer":"Bus","topic":"nouns","difficulty":"basic"}
 ]

@@ -1,82 +1,62 @@
+
 [
-  {
-    "id": "nm1",
-    "question": "Identify the noun: The cat slept peacefully.",
-    "options": ["cat", "slept", "peacefully", "the"],
-    "answer": "cat",
-    "topic": "nouns",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "nm2",
-    "question": "Which word is a noun?",
-    "options": ["run", "happiness", "quickly", "blue"],
-    "answer": "happiness",
-    "topic": "nouns",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "nm3",
-    "question": "Choose the proper noun.",
-    "options": ["city", "India", "river", "teacher"],
-    "answer": "India",
-    "topic": "nouns",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "nm4",
-    "question": "Identify the noun: She bought a dress.",
-    "options": ["she", "bought", "dress", "a"],
-    "answer": "dress",
-    "topic": "nouns",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "nm5",
-    "question": "Which is an abstract noun?",
-    "options": ["freedom", "dog", "chair", "table"],
-    "answer": "freedom",
-    "topic": "nouns",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "nm6",
-    "question": "Choose the collective noun.",
-    "options": ["team", "boy", "run", "fast"],
-    "answer": "team",
-    "topic": "nouns",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "nm7",
-    "question": "Identify the noun: Students are studying.",
-    "options": ["students", "are", "studying", "none"],
-    "answer": "students",
-    "topic": "nouns",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "nm8",
-    "question": "Which is a common noun?",
-    "options": ["London", "river", "Monday", "Amazon"],
-    "answer": "river",
-    "topic": "nouns",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "nm9",
-    "question": "Identify the noun: He showed courage.",
-    "options": ["he", "showed", "courage", "none"],
-    "answer": "courage",
-    "topic": "nouns",
-    "difficulty": "moderate"
-  },
-  {
-    "id": "nm10",
-    "question": "Which is a concrete noun?",
-    "options": ["chair", "honesty", "love", "bravery"],
-    "answer": "chair",
-    "topic": "nouns",
-    "difficulty": "moderate"
-  }
+  {"id":"nm1","question":"What is the plural of Bus?","options":["Buses","Buss","Busies","Bus"],"answer":"Buses","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm2","question":"Plural of Knife?","options":["Knifes","Knives","Knife","Knifees"],"answer":"Knives","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm3","question":"Plural of Baby?","options":["Babies","Babys","Babyes","Babys"],"answer":"Babies","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm4","question":"Plural of Leaf?","options":["Leafs","Leaves","Leafes","Leaf"],"answer":"Leaves","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm5","question":"Plural of Toy?","options":["Toies","Toys","Toyes","Tois"],"answer":"Toys","topic":"nouns","difficulty":"moderate"},
+
+  {"id":"nm6","question":"Plural of Box?","options":["Boxs","Boxes","Boxies","Box"],"answer":"Boxes","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm7","question":"Plural of Church?","options":["Churchs","Churches","Churchies","Church"],"answer":"Churches","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm8","question":"Plural of City?","options":["Citys","Cities","Citiees","Citis"],"answer":"Cities","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm9","question":"Plural of Fox?","options":["Foxs","Foxes","Foxies","Fox"],"answer":"Foxes","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm10","question":"Plural of Watch?","options":["Watchs","Watches","Watchies","Watch"],"answer":"Watches","topic":"nouns","difficulty":"moderate"},
+
+  {"id":"nm11","question":"Plural of Tooth?","options":["Tooths","Teeth","Toothes","Teeths"],"answer":"Teeth","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm12","question":"Plural of Man?","options":["Mans","Mens","Men","Manes"],"answer":"Men","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm13","question":"Plural of Woman?","options":["Womans","Womens","Women","Womanes"],"answer":"Women","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm14","question":"Plural of Child?","options":["Childs","Childes","Children","Childrens"],"answer":"Children","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm15","question":"Plural of Foot?","options":["Foots","Feets","Feet","Footes"],"answer":"Feet","topic":"nouns","difficulty":"moderate"},
+
+  {"id":"nm16","question":"Identify the proper noun: We visited the Taj Mahal.","options":["Visited","The","Taj Mahal","We"],"answer":"Taj Mahal","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm17","question":"Which is a proper noun?","options":["Boy","Girl","Rahul","Child"],"answer":"Rahul","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm18","question":"Which is a proper noun?","options":["City","Country","Paris","Village"],"answer":"Paris","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm19","question":"Which is a proper noun?","options":["River","Nile","Lake","Water"],"answer":"Nile","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm20","question":"Which is a proper noun?","options":["Planet","Mars","Star","Galaxy"],"answer":"Mars","topic":"nouns","difficulty":"moderate"},
+
+  {"id":"nm21","question":"Identify the common noun: John lives in a big house.","options":["John","Lives","House","Big"],"answer":"House","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm22","question":"Which is a common noun?","options":["India","City","Ganga","Delhi"],"answer":"City","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm23","question":"Which is a common noun?","options":["Amazon","River","Nile","Ganga"],"answer":"River","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm24","question":"Which is a common noun?","options":["Ravi","Boy","Rahul","Aman"],"answer":"Boy","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm25","question":"Which is a common noun?","options":["Apple","iPhone","Samsung","Dell"],"answer":"Apple","topic":"nouns","difficulty":"moderate"},
+
+  {"id":"nm26","question":"Female of Actor?","options":["Actress","Actor","Action","Act"],"answer":"Actress","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm27","question":"Male of Queen?","options":["Prince","King","Lord","Sir"],"answer":"King","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm28","question":"Female of Lion?","options":["Lioness","Lion","Lione","Lioner"],"answer":"Lioness","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm29","question":"Female of Tiger?","options":["Tigeress","Tigress","Tiger","Tigere"],"answer":"Tigress","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm30","question":"Male of Actress?","options":["Actor","Act","Action","Acter"],"answer":"Actor","topic":"nouns","difficulty":"moderate"},
+
+  {"id":"nm31","question":"Identify the noun: The flowers are red.","options":["Flowers","Red","Are","Beautiful"],"answer":"Flowers","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm32","question":"Identify the noun: The baker made bread.","options":["Baker","Made","Bread","The"],"answer":"Baker","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm33","question":"Identify the noun: Music is sweet.","options":["Music","Is","Sweet","Very"],"answer":"Music","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm34","question":"Identify the noun: The iron is strong.","options":["Iron","Strong","Is","Very"],"answer":"Iron","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm35","question":"Identify the noun: Birds fly high.","options":["Birds","Fly","High","Very"],"answer":"Birds","topic":"nouns","difficulty":"moderate"},
+
+  {"id":"nm36","question":"Which is a material noun?","options":["Gold","Ring","Shop","Jewelry"],"answer":"Gold","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm37","question":"Which is a material noun?","options":["Silver","Chain","Wear","Shop"],"answer":"Silver","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm38","question":"Which is a material noun?","options":["Wood","Chair","Sit","Table"],"answer":"Wood","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm39","question":"Which is a material noun?","options":["Cotton","Shirt","Wear","Soft"],"answer":"Cotton","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm40","question":"Which is a material noun?","options":["Iron","Strong","Metal","Heavy"],"answer":"Iron","topic":"nouns","difficulty":"moderate"},
+
+  {"id":"nm41","question":"Plural of Glass?","options":["Glasss","Glasses","Glassies","Glass"],"answer":"Glasses","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm42","question":"Plural of Class?","options":["Classs","Classes","Classies","Class"],"answer":"Classes","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm43","question":"Plural of Brush?","options":["Brushs","Brushes","Brushies","Brush"],"answer":"Brushes","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm44","question":"Plural of Dish?","options":["Dishs","Dishes","Dishies","Dish"],"answer":"Dishes","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm45","question":"Plural of Match?","options":["Matchs","Matches","Matchies","Match"],"answer":"Matches","topic":"nouns","difficulty":"moderate"},
+
+  {"id":"nm46","question":"Which is a noun?","options":["Pilot","Plane","Fly","Quick"],"answer":"Pilot","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm47","question":"Which is a noun?","options":["Player","Play","Fast","Quick"],"answer":"Player","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm48","question":"Which is a noun?","options":["Farmer","Farm","Grow","Quick"],"answer":"Farmer","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm49","question":"Which is a noun?","options":["Driver","Drive","Fast","Quick"],"answer":"Driver","topic":"nouns","difficulty":"moderate"},
+  {"id":"nm50","question":"Which is a noun?","options":["Singer","Sing","Fast","Quick"],"answer":"Singer","topic":"nouns","difficulty":"moderate"}
 ]

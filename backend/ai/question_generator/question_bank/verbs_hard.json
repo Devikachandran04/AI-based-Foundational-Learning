@@ -1,50 +1,61 @@
 [
-  {
-    "id": "vh1",
-    "question": "Choose the correct form: They ___ finished their work.",
-    "options": ["has", "have", "had", "having"],
-    "answer": "have",
-    "topic": "verbs",
-    "difficulty": "hard"
-  },
-  {
-    "id": "vh2",
-    "question": "Identify the infinitive verb.",
-    "options": ["to run", "running", "ran", "runs"],
-    "answer": "to run",
-    "topic": "verbs",
-    "difficulty": "hard"
-  },
-  {
-    "id": "vh3",
-    "question": "Select the correct verb agreement: Neither of the boys ___ present.",
-    "options": ["are", "were", "is", "be"],
-    "answer": "is",
-    "topic": "verbs",
-    "difficulty": "hard"
-  },
-  {
-    "id": "vh4",
-    "question": "Choose the correct form: She ___ living here for five years.",
-    "options": ["has been", "have been", "had", "is"],
-    "answer": "has been",
-    "topic": "verbs",
-    "difficulty": "hard"
-  },
-  {
-    "id": "vh5",
-    "question": "Identify the participle form.",
-    "options": ["broken", "broke", "break", "breaks"],
-    "answer": "broken",
-    "topic": "verbs",
-    "difficulty": "hard"
-  },
-  {
-    "id": "vh6",
-    "question": "Choose the correct verb: If I ___ rich, I would travel the world.",
-    "options": ["am", "was", "were", "be"],
-    "answer": "were",
-    "topic": "verbs",
-    "difficulty": "hard"
-  }
+  {"id":"vh1","question":"Choose the correct verb: If she ___ hard, she will pass.","options":["study","studies","studied","studying"],"answer":"studies","topic":"verbs","difficulty":"hard"},
+  {"id":"vh2","question":"Choose the correct verb: If I ___ rich, I would travel the world.","options":["am","was","were","be"],"answer":"were","topic":"verbs","difficulty":"hard"},
+  {"id":"vh3","question":"Choose the correct verb: If they ___ earlier, they would have caught the train.","options":["leave","left","had left","leaving"],"answer":"had left","topic":"verbs","difficulty":"hard"},
+  {"id":"vh4","question":"Choose the correct verb: She ___ have completed the work by now.","options":["can","may","must","could"],"answer":"must","topic":"verbs","difficulty":"hard"},
+  {"id":"vh5","question":"Choose the correct verb: You ___ respect your elders.","options":["should","can","may","might"],"answer":"should","topic":"verbs","difficulty":"hard"},
+
+  {"id":"vh6","question":"Choose the correct verb: He ___ swim very well.","options":["can","should","must","might"],"answer":"can","topic":"verbs","difficulty":"hard"},
+  {"id":"vh7","question":"Choose the correct verb: We ___ leave now or we will miss the bus.","options":["must","can","may","might"],"answer":"must","topic":"verbs","difficulty":"hard"},
+  {"id":"vh8","question":"Choose the correct verb: She ___ be at home now.","options":["must","can","might","should"],"answer":"might","topic":"verbs","difficulty":"hard"},
+  {"id":"vh9","question":"Choose the correct verb: ___ I come in?","options":["Can","Must","Should","Might"],"answer":"Can","topic":"verbs","difficulty":"hard"},
+  {"id":"vh10","question":"Choose the correct verb: You ___ not speak loudly here.","options":["must","can","should","might"],"answer":"must","topic":"verbs","difficulty":"hard"},
+
+  {"id":"vh11","question":"Identify the error: He do not like coffee.","options":["He","Do","Not","Like"],"answer":"Do","topic":"verbs","difficulty":"hard"},
+  {"id":"vh12","question":"Choose the correct form: He ___ not like coffee.","options":["does","do","did","doing"],"answer":"does","topic":"verbs","difficulty":"hard"},
+  {"id":"vh13","question":"Identify the error: She have finished her work.","options":["She","Have","Finished","Work"],"answer":"Have","topic":"verbs","difficulty":"hard"},
+  {"id":"vh14","question":"Choose the correct form: She ___ finished her work.","options":["has","have","had","having"],"answer":"has","topic":"verbs","difficulty":"hard"},
+  {"id":"vh15","question":"Identify the error: They is playing outside.","options":["They","Is","Playing","Outside"],"answer":"Is","topic":"verbs","difficulty":"hard"},
+
+  {"id":"vh16","question":"Choose the correct form: They ___ playing outside.","options":["are","is","am","be"],"answer":"are","topic":"verbs","difficulty":"hard"},
+  {"id":"vh17","question":"Choose the correct verb: Neither of the boys ___ present.","options":["is","are","am","be"],"answer":"is","topic":"verbs","difficulty":"hard"},
+  {"id":"vh18","question":"Choose the correct verb: Each of the students ___ a book.","options":["has","have","had","having"],"answer":"has","topic":"verbs","difficulty":"hard"},
+  {"id":"vh19","question":"Choose the correct verb: Everyone ___ happy.","options":["is","are","am","be"],"answer":"is","topic":"verbs","difficulty":"hard"},
+  {"id":"vh20","question":"Choose the correct verb: A number of students ___ absent.","options":["is","are","am","be"],"answer":"are","topic":"verbs","difficulty":"hard"},
+
+  {"id":"vh21","question":"Choose the correct verb: The number of students ___ increasing.","options":["is","are","am","be"],"answer":"is","topic":"verbs","difficulty":"hard"},
+  {"id":"vh22","question":"Choose the correct verb: Ten kilometers ___ a long distance.","options":["is","are","am","be"],"answer":"is","topic":"verbs","difficulty":"hard"},
+  {"id":"vh23","question":"Choose the correct verb: Mathematics ___ my favorite subject.","options":["is","are","am","be"],"answer":"is","topic":"verbs","difficulty":"hard"},
+  {"id":"vh24","question":"Choose the correct verb: The news ___ interesting.","options":["is","are","am","be"],"answer":"is","topic":"verbs","difficulty":"hard"},
+  {"id":"vh25","question":"Choose the correct verb: The police ___ investigating the case.","options":["is","are","am","be"],"answer":"are","topic":"verbs","difficulty":"hard"},
+
+  {"id":"vh26","question":"Choose the correct verb: The work ___ completed yesterday.","options":["was","were","is","are"],"answer":"was","topic":"verbs","difficulty":"hard"},
+  {"id":"vh27","question":"Choose the correct verb: The letters ___ sent already.","options":["was","were","is","are"],"answer":"were","topic":"verbs","difficulty":"hard"},
+  {"id":"vh28","question":"Choose the correct verb: The cake ___ eaten by the children.","options":["was","were","is","are"],"answer":"was","topic":"verbs","difficulty":"hard"},
+  {"id":"vh29","question":"Choose the correct verb: The books ___ arranged neatly.","options":["was","were","is","are"],"answer":"were","topic":"verbs","difficulty":"hard"},
+  {"id":"vh30","question":"Choose the correct verb: The room ___ cleaned daily.","options":["is","are","was","were"],"answer":"is","topic":"verbs","difficulty":"hard"},
+
+  {"id":"vh31","question":"Choose the correct verb: She has been ___ for two hours.","options":["study","studying","studied","studies"],"answer":"studying","topic":"verbs","difficulty":"hard"},
+  {"id":"vh32","question":"Choose the correct verb: They have been ___ since morning.","options":["work","working","worked","works"],"answer":"working","topic":"verbs","difficulty":"hard"},
+  {"id":"vh33","question":"Choose the correct verb: I had been ___ before you came.","options":["sleep","sleeping","slept","sleeps"],"answer":"sleeping","topic":"verbs","difficulty":"hard"},
+  {"id":"vh34","question":"Choose the correct verb: He will be ___ tomorrow.","options":["travel","traveling","traveled","travels"],"answer":"traveling","topic":"verbs","difficulty":"hard"},
+  {"id":"vh35","question":"Choose the correct verb: She is ___ a song.","options":["sing","singing","sang","sings"],"answer":"singing","topic":"verbs","difficulty":"hard"},
+
+  {"id":"vh36","question":"Choose the correct verb: Hardly ___ he reached when it started raining.","options":["had","has","have","having"],"answer":"had","topic":"verbs","difficulty":"hard"},
+  {"id":"vh37","question":"Choose the correct verb: No sooner ___ she arrived than the show started.","options":["had","has","have","having"],"answer":"had","topic":"verbs","difficulty":"hard"},
+  {"id":"vh38","question":"Choose the correct verb: Scarcely ___ we reached when it began to rain.","options":["had","has","have","having"],"answer":"had","topic":"verbs","difficulty":"hard"},
+  {"id":"vh39","question":"Choose the correct verb: He would rather ___ at home.","options":["stay","stays","stayed","staying"],"answer":"stay","topic":"verbs","difficulty":"hard"},
+  {"id":"vh40","question":"Choose the correct verb: I wish I ___ taller.","options":["am","was","were","be"],"answer":"were","topic":"verbs","difficulty":"hard"},
+
+  {"id":"vh41","question":"Choose the correct verb: It is time we ___ for the station.","options":["leave","left","leaving","leaves"],"answer":"left","topic":"verbs","difficulty":"hard"},
+  {"id":"vh42","question":"Choose the correct verb: He behaves as if he ___ everything.","options":["know","knows","knew","known"],"answer":"knows","topic":"verbs","difficulty":"hard"},
+  {"id":"vh43","question":"Choose the correct verb: If I ___ you, I would apologize.","options":["am","was","were","be"],"answer":"were","topic":"verbs","difficulty":"hard"},
+  {"id":"vh44","question":"Choose the correct verb: Unless you ___ hard, you will fail.","options":["study","studies","studied","studying"],"answer":"study","topic":"verbs","difficulty":"hard"},
+  {"id":"vh45","question":"Choose the correct verb: As soon as he ___, we will start.","options":["arrives","arrive","arrived","arriving"],"answer":"arrives","topic":"verbs","difficulty":"hard"},
+
+  {"id":"vh46","question":"Choose the correct verb: She insisted that he ___ the truth.","options":["tell","tells","told","telling"],"answer":"tell","topic":"verbs","difficulty":"hard"},
+  {"id":"vh47","question":"Choose the correct verb: It is necessary that he ___ on time.","options":["be","is","was","being"],"answer":"be","topic":"verbs","difficulty":"hard"},
+  {"id":"vh48","question":"Choose the correct verb: I suggest that she ___ a doctor.","options":["see","sees","saw","seeing"],"answer":"see","topic":"verbs","difficulty":"hard"},
+  {"id":"vh49","question":"Choose the correct verb: He demanded that the work ___ immediately.","options":["finish","finished","be finished","finishing"],"answer":"be finished","topic":"verbs","difficulty":"hard"},
+  {"id":"vh50","question":"Choose the correct verb: The teacher advised that he ___ harder.","options":["study","studies","studied","studying"],"answer":"study","topic":"verbs","difficulty":"hard"}
 ]

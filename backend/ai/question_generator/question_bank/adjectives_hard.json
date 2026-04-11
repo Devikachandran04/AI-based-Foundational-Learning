@@ -1,50 +1,61 @@
 [
-  {
-    "id": "ah1",
-    "question": "Choose the correct form: This is the ___ building in the city.",
-    "options": ["tall", "taller", "tallest", "more tall"],
-    "answer": "tallest",
-    "topic": "adjectives",
-    "difficulty": "hard"
-  },
-  {
-    "id": "ah2",
-    "question": "Choose the correct adjective order: She bought a ___ dress.",
-    "options": ["red beautiful", "beautiful red", "very red", "red silk beautiful"],
-    "answer": "beautiful red",
-    "topic": "adjectives",
-    "difficulty": "hard"
-  },
-  {
-    "id": "ah3",
-    "question": "Identify the adjective clause: The book which I borrowed is good.",
-    "options": ["which I borrowed", "book", "good", "is"],
-    "answer": "which I borrowed",
-    "topic": "adjectives",
-    "difficulty": "hard"
-  },
-  {
-    "id": "ah4",
-    "question": "Choose the correct form: She is ___ intelligent than her brother.",
-    "options": ["more", "most", "very", "much"],
-    "answer": "more",
-    "topic": "adjectives",
-    "difficulty": "hard"
-  },
-  {
-    "id": "ah5",
-    "question": "Choose the correct adjective: This is the ___ interesting chapter.",
-    "options": ["more", "much", "most", "very"],
-    "answer": "most",
-    "topic": "adjectives",
-    "difficulty": "hard"
-  },
-  {
-    "id": "ah6",
-    "question": "Identify the adjective agreement: She has ___ patience.",
-    "options": ["many", "much", "few", "several"],
-    "answer": "much",
-    "topic": "adjectives",
-    "difficulty": "hard"
-  }
+  {"id":"adh1","question":"Choose the correct form: She is the ___ girl in the class.","options":["intelligent","more intelligent","most intelligent","intelligenter"],"answer":"most intelligent","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh2","question":"Choose the correct form: This problem is ___ than the previous one.","options":["difficult","more difficult","most difficult","difficulter"],"answer":"more difficult","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh3","question":"Choose the correct form: He is ___ than his brother in mathematics.","options":["good","better","best","more good"],"answer":"better","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh4","question":"Choose the correct form: This is the ___ painting in the gallery.","options":["beautiful","more beautiful","most beautiful","beautifullest"],"answer":"most beautiful","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh5","question":"Choose the correct form: Of the two roads, this one is the ___.","options":["short","shorter","shortest","more short"],"answer":"shorter","topic":"adjectives","difficulty":"hard"},
+
+  {"id":"adh6","question":"Choose the correct form: She is ___ responsible than her sister.","options":["much","more","most","many"],"answer":"more","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh7","question":"Choose the correct form: He is one of the ___ players in the team.","options":["good","better","best","more good"],"answer":"best","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh8","question":"Choose the correct form: This is by far the ___ solution.","options":["effective","more effective","most effective","effectivest"],"answer":"most effective","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh9","question":"Choose the correct form: Your idea is ___ than mine.","options":["practical","more practical","most practical","practicaler"],"answer":"more practical","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh10","question":"Choose the correct form: He is the ___ of all the students.","options":["careful","more careful","most careful","carefullest"],"answer":"most careful","topic":"adjectives","difficulty":"hard"},
+
+  {"id":"adh11","question":"Choose the correct form: This task is ___ than I expected.","options":["easy","easier","easiest","more easy"],"answer":"easier","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh12","question":"Choose the correct form: She is the ___ speaker at the event.","options":["confident","more confident","most confident","confidenter"],"answer":"most confident","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh13","question":"Choose the correct form: His explanation was ___ than hers.","options":["clear","clearer","clearest","more clear"],"answer":"clearer","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh14","question":"Choose the correct form: This is the ___ chapter in the book.","options":["interesting","more interesting","most interesting","interestinger"],"answer":"most interesting","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh15","question":"Choose the correct form: My bag is ___ than yours.","options":["heavy","heavier","heaviest","more heavy"],"answer":"heavier","topic":"adjectives","difficulty":"hard"},
+
+  {"id":"adh16","question":"Choose the correct form: She is the ___ student I have ever taught.","options":["brilliant","more brilliant","most brilliant","brillianter"],"answer":"most brilliant","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh17","question":"Choose the correct form: This road is ___ than the highway.","options":["narrow","narrower","narrowest","more narrow"],"answer":"narrower","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh18","question":"Choose the correct form: He is the ___ man in the village.","options":["wealthy","wealthier","wealthiest","more wealthy"],"answer":"wealthiest","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh19","question":"Choose the correct form: Her dress is ___ than mine.","options":["expensive","more expensive","most expensive","expensiver"],"answer":"more expensive","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh20","question":"Choose the correct form: This is the ___ route to the station.","options":["safe","safer","safest","more safe"],"answer":"safest","topic":"adjectives","difficulty":"hard"},
+
+  {"id":"adh21","question":"Choose the correct form: Of all the books, this one is the ___.","options":["useful","more useful","most useful","usefullest"],"answer":"most useful","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh22","question":"Choose the correct form: He is ___ than he looks.","options":["strong","stronger","strongest","more strong"],"answer":"stronger","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh23","question":"Choose the correct form: This question is the ___ of all.","options":["tough","tougher","toughest","more tough"],"answer":"toughest","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh24","question":"Choose the correct form: She gave a ___ answer than I expected.","options":["polite","politer","politest","more polite"],"answer":"more polite","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh25","question":"Choose the correct form: He is the ___ child in the family.","options":["young","younger","youngest","more young"],"answer":"youngest","topic":"adjectives","difficulty":"hard"},
+
+  {"id":"adh26","question":"Choose the correct form: This movie is ___ than the last one.","options":["bad","worse","worst","more bad"],"answer":"worse","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh27","question":"Choose the correct form: She is the ___ dancer in the school.","options":["graceful","more graceful","most graceful","gracefullest"],"answer":"most graceful","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh28","question":"Choose the correct form: My house is ___ from the station than yours.","options":["far","farther","farthest","more far"],"answer":"farther","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh29","question":"Choose the correct form: This is the ___ mistake you could make.","options":["serious","more serious","most serious","seriouser"],"answer":"most serious","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh30","question":"Choose the correct form: His second attempt was ___ than the first.","options":["good","better","best","more good"],"answer":"better","topic":"adjectives","difficulty":"hard"},
+
+  {"id":"adh31","question":"Choose the correct adjective: She looks ___.","options":["beautiful","beautifully","more beautiful","most beautiful"],"answer":"beautiful","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh32","question":"Choose the correct adjective: The soup smells ___.","options":["delicious","deliciously","more delicious","most delicious"],"answer":"delicious","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh33","question":"Choose the correct adjective: He seems ___.","options":["tired","tiredly","more tired","most tired"],"answer":"tired","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh34","question":"Choose the correct adjective: The rose smells ___.","options":["sweet","sweetly","sweeter","sweetest"],"answer":"sweet","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh35","question":"Choose the correct adjective: The child became ___.","options":["angry","angrily","angrier","angriest"],"answer":"angry","topic":"adjectives","difficulty":"hard"},
+
+  {"id":"adh36","question":"Choose the correct adjective: He made me ___.","options":["happy","happily","happier","happiest"],"answer":"happy","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh37","question":"Choose the correct adjective: The room remained ___.","options":["silent","silently","silenter","silentest"],"answer":"silent","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh38","question":"Choose the correct adjective: She felt ___ after the exam.","options":["relieved","relievedly","more relieved","most relieved"],"answer":"relieved","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh39","question":"Choose the correct adjective: The sky turned ___.","options":["dark","darkly","darker","darkest"],"answer":"dark","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh40","question":"Choose the correct adjective: The teacher was ___.","options":["pleased","pleasedly","more pleased","most pleased"],"answer":"pleased","topic":"adjectives","difficulty":"hard"},
+
+  {"id":"adh41","question":"Identify the adjective in the sentence: She wore an elegant dress to the party.","options":["She","Wore","Elegant","Party"],"answer":"Elegant","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh42","question":"Identify the adjective in the sentence: It was a difficult decision to make.","options":["Was","Difficult","Decision","Make"],"answer":"Difficult","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh43","question":"Identify the adjective in the sentence: The ancient temple attracted many visitors.","options":["Temple","Ancient","Attracted","Visitors"],"answer":"Ancient","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh44","question":"Identify the adjective in the sentence: He gave a brief explanation.","options":["Gave","Brief","Explanation","He"],"answer":"Brief","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh45","question":"Identify the adjective in the sentence: They lived in a spacious house.","options":["Lived","Spacious","House","They"],"answer":"Spacious","topic":"adjectives","difficulty":"hard"},
+
+  {"id":"adh46","question":"Choose the correct form: No other girl in the class is ___ than Meera.","options":["smart","smarter","smartest","more smart"],"answer":"smarter","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh47","question":"Choose the correct form: Very few cities in India are as ___ as Mumbai.","options":["large","larger","largest","more large"],"answer":"large","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh48","question":"Choose the correct form: Iron is ___ than wood.","options":["heavy","heavier","heaviest","more heavy"],"answer":"heavier","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh49","question":"Choose the correct form: This is one of the ___ novels I have read.","options":["good","better","best","more good"],"answer":"best","topic":"adjectives","difficulty":"hard"},
+  {"id":"adh50","question":"Choose the correct form: Of the two sisters, Riya is the ___.","options":["tall","taller","tallest","more tall"],"answer":"taller","topic":"adjectives","difficulty":"hard"}
 ]

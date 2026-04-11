@@ -1,50 +1,61 @@
 [
-  {
-    "id": "th1",
-    "question": "She ___ completed the work before I arrived.",
-    "options": ["has", "had", "have", "having"],
-    "answer": "had",
-    "topic": "tenses",
-    "difficulty": "hard"
-  },
-  {
-    "id": "th2",
-    "question": "By next year, he ___ graduated.",
-    "options": ["will", "will have", "has", "had"],
-    "answer": "will have",
-    "topic": "tenses",
-    "difficulty": "hard"
-  },
-  {
-    "id": "th3",
-    "question": "If she had studied well, she ___ the exam.",
-    "options": ["passes", "would pass", "would have passed", "passed"],
-    "answer": "would have passed",
-    "topic": "tenses",
-    "difficulty": "hard"
-  },
-  {
-    "id": "th4",
-    "question": "By the time we reached, they ___ dinner.",
-    "options": ["finished", "had finished", "have finished", "finish"],
-    "answer": "had finished",
-    "topic": "tenses",
-    "difficulty": "hard"
-  },
-  {
-    "id": "th5",
-    "question": "She ___ for two hours when her friend arrived.",
-    "options": ["studied", "was studying", "had been studying", "has studied"],
-    "answer": "had been studying",
-    "topic": "tenses",
-    "difficulty": "hard"
-  },
-  {
-    "id": "th6",
-    "question": "This time tomorrow, I ___ on the train.",
-    "options": ["will travel", "will be travelling", "am travelling", "travelled"],
-    "answer": "will be travelling",
-    "topic": "tenses",
-    "difficulty": "hard"
-  }
+  {"id":"th1","question":"Choose the correct verb: If she ___ hard, she will pass.","options":["study","studies","studied","studying"],"answer":"studies","topic":"tenses","difficulty":"hard"},
+  {"id":"th2","question":"Choose the correct verb: If I ___ you, I would apologize.","options":["am","was","were","be"],"answer":"were","topic":"tenses","difficulty":"hard"},
+  {"id":"th3","question":"Choose the correct verb: If they ___ earlier, they would have caught the train.","options":["leave","left","had left","leaving"],"answer":"had left","topic":"tenses","difficulty":"hard"},
+  {"id":"th4","question":"Choose the correct verb: If he ___ on time, we would not have missed the bus.","options":["arrived","arrives","had arrived","arriving"],"answer":"had arrived","topic":"tenses","difficulty":"hard"},
+  {"id":"th5","question":"Choose the correct verb: If she ___ more carefully, she would succeed.","options":["work","works","worked","working"],"answer":"worked","topic":"tenses","difficulty":"hard"},
+
+  {"id":"th6","question":"Choose the correct verb: When he ___, we will start.","options":["arrives","arrive","arrived","arriving"],"answer":"arrives","topic":"tenses","difficulty":"hard"},
+  {"id":"th7","question":"Choose the correct verb: I will call you when I ___ home.","options":["reach","reaches","reached","reaching"],"answer":"reach","topic":"tenses","difficulty":"hard"},
+  {"id":"th8","question":"Choose the correct verb: As soon as she ___, we will leave.","options":["arrives","arrive","arrived","arriving"],"answer":"arrives","topic":"tenses","difficulty":"hard"},
+  {"id":"th9","question":"Choose the correct verb: Before he ___, I had finished my work.","options":["came","comes","come","coming"],"answer":"came","topic":"tenses","difficulty":"hard"},
+  {"id":"th10","question":"Choose the correct verb: After they ___ dinner, they went out.","options":["have","had","having","has"],"answer":"had","topic":"tenses","difficulty":"hard"},
+
+  {"id":"th11","question":"Choose the correct verb: She ___ for two hours before he arrived.","options":["waited","was waiting","had been waiting","waiting"],"answer":"had been waiting","topic":"tenses","difficulty":"hard"},
+  {"id":"th12","question":"Choose the correct verb: I ___ since morning.","options":["worked","have worked","had worked","working"],"answer":"have worked","topic":"tenses","difficulty":"hard"},
+  {"id":"th13","question":"Choose the correct verb: They ___ here for five years.","options":["live","have lived","had lived","living"],"answer":"have lived","topic":"tenses","difficulty":"hard"},
+  {"id":"th14","question":"Choose the correct verb: He ___ when I called him.","options":["slept","was sleeping","had slept","sleeping"],"answer":"was sleeping","topic":"tenses","difficulty":"hard"},
+  {"id":"th15","question":"Choose the correct verb: She ___ her work before going out.","options":["finished","finishes","had finished","finishing"],"answer":"had finished","topic":"tenses","difficulty":"hard"},
+
+  {"id":"th16","question":"Identify the error: He has went to school.","options":["Has","Went","To","School"],"answer":"Went","topic":"tenses","difficulty":"hard"},
+  {"id":"th17","question":"Choose the correct form: He has ___ to school.","options":["go","gone","went","going"],"answer":"gone","topic":"tenses","difficulty":"hard"},
+  {"id":"th18","question":"Identify the error: She is knowing the answer.","options":["Is","Knowing","The","Answer"],"answer":"Knowing","topic":"tenses","difficulty":"hard"},
+  {"id":"th19","question":"Choose the correct form: She ___ the answer.","options":["know","knows","knowing","knew"],"answer":"knows","topic":"tenses","difficulty":"hard"},
+  {"id":"th20","question":"Identify the error: I am having a car.","options":["Am","Having","A","Car"],"answer":"Having","topic":"tenses","difficulty":"hard"},
+
+  {"id":"th21","question":"Choose the correct form: I ___ a car.","options":["have","am having","had","having"],"answer":"have","topic":"tenses","difficulty":"hard"},
+  {"id":"th22","question":"Choose the correct verb: Hardly ___ he reached when it started raining.","options":["had","has","have","having"],"answer":"had","topic":"tenses","difficulty":"hard"},
+  {"id":"th23","question":"Choose the correct verb: No sooner ___ she arrived than the show began.","options":["had","has","have","having"],"answer":"had","topic":"tenses","difficulty":"hard"},
+  {"id":"th24","question":"Choose the correct verb: Scarcely ___ we reached when it began to rain.","options":["had","has","have","having"],"answer":"had","topic":"tenses","difficulty":"hard"},
+  {"id":"th25","question":"Choose the correct verb: By the time he arrives, we ___ our work.","options":["finish","will finish","will have finished","finished"],"answer":"will have finished","topic":"tenses","difficulty":"hard"},
+
+  {"id":"th26","question":"Choose the correct verb: By next year, she ___ her degree.","options":["completes","will complete","will have completed","completed"],"answer":"will have completed","topic":"tenses","difficulty":"hard"},
+  {"id":"th27","question":"Choose the correct verb: This time tomorrow, we ___ traveling.","options":["are","will be","were","be"],"answer":"will be","topic":"tenses","difficulty":"hard"},
+  {"id":"th28","question":"Choose the correct verb: He ___ working here for ten years next month.","options":["will be","will have been","is","was"],"answer":"will have been","topic":"tenses","difficulty":"hard"},
+  {"id":"th29","question":"Choose the correct verb: I ___ my work by evening.","options":["finish","will finish","will have finished","finished"],"answer":"will have finished","topic":"tenses","difficulty":"hard"},
+  {"id":"th30","question":"Choose the correct verb: She ___ studying for three hours.","options":["is","has been","had been","was"],"answer":"has been","topic":"tenses","difficulty":"hard"},
+
+  {"id":"th31","question":"Choose the correct verb: When I ___ him, he was reading.","options":["see","saw","seen","seeing"],"answer":"saw","topic":"tenses","difficulty":"hard"},
+  {"id":"th32","question":"Choose the correct verb: While she ___, the phone rang.","options":["slept","was sleeping","had slept","sleeping"],"answer":"was sleeping","topic":"tenses","difficulty":"hard"},
+  {"id":"th33","question":"Choose the correct verb: As I ___ the road, I saw an accident.","options":["cross","crossed","crossing","was crossing"],"answer":"was crossing","topic":"tenses","difficulty":"hard"},
+  {"id":"th34","question":"Choose the correct verb: He ___ when I entered.","options":["wrote","was writing","had written","writing"],"answer":"was writing","topic":"tenses","difficulty":"hard"},
+  {"id":"th35","question":"Choose the correct verb: They ___ dinner when we arrived.","options":["had","were having","have","having"],"answer":"were having","topic":"tenses","difficulty":"hard"},
+
+  {"id":"th36","question":"Choose the correct verb: If you ___ hard, you will succeed.","options":["work","works","worked","working"],"answer":"work","topic":"tenses","difficulty":"hard"},
+  {"id":"th37","question":"Choose the correct verb: Unless you ___ fast, you will miss the bus.","options":["run","runs","ran","running"],"answer":"run","topic":"tenses","difficulty":"hard"},
+  {"id":"th38","question":"Choose the correct verb: If he ___ earlier, he would be here now.","options":["left","leaves","had left","leaving"],"answer":"had left","topic":"tenses","difficulty":"hard"},
+  {"id":"th39","question":"Choose the correct verb: If I ___ known, I would have helped.","options":["know","knew","had known","knowing"],"answer":"had known","topic":"tenses","difficulty":"hard"},
+  {"id":"th40","question":"Choose the correct verb: If she ___ more careful, she would not make mistakes.","options":["is","was","were","be"],"answer":"were","topic":"tenses","difficulty":"hard"},
+
+  {"id":"th41","question":"Choose the correct verb: It is time we ___ home.","options":["go","went","gone","going"],"answer":"went","topic":"tenses","difficulty":"hard"},
+  {"id":"th42","question":"Choose the correct verb: I wish I ___ taller.","options":["am","was","were","be"],"answer":"were","topic":"tenses","difficulty":"hard"},
+  {"id":"th43","question":"Choose the correct verb: He behaves as if he ___ everything.","options":["know","knows","knew","known"],"answer":"knows","topic":"tenses","difficulty":"hard"},
+  {"id":"th44","question":"Choose the correct verb: She talks as if she ___ the answer.","options":["know","knows","knew","known"],"answer":"knows","topic":"tenses","difficulty":"hard"},
+  {"id":"th45","question":"Choose the correct verb: I would rather ___ at home.","options":["stay","stays","stayed","staying"],"answer":"stay","topic":"tenses","difficulty":"hard"},
+
+  {"id":"th46","question":"Choose the correct verb: He suggested that she ___ a doctor.","options":["see","sees","saw","seeing"],"answer":"see","topic":"tenses","difficulty":"hard"},
+  {"id":"th47","question":"Choose the correct verb: It is necessary that he ___ on time.","options":["be","is","was","being"],"answer":"be","topic":"tenses","difficulty":"hard"},
+  {"id":"th48","question":"Choose the correct verb: She insisted that he ___ the truth.","options":["tell","tells","told","telling"],"answer":"tell","topic":"tenses","difficulty":"hard"},
+  {"id":"th49","question":"Choose the correct verb: He demanded that the work ___ immediately.","options":["finish","finished","be finished","finishing"],"answer":"be finished","topic":"tenses","difficulty":"hard"},
+  {"id":"th50","question":"Choose the correct verb: The teacher advised that he ___ harder.","options":["study","studies","studied","studying"],"answer":"study","topic":"tenses","difficulty":"hard"}
 ]

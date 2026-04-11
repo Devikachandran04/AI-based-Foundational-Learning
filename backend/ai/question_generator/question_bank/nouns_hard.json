@@ -1,55 +1,61 @@
 [
-  {
-    "id": "nh1",
-    "question": "Identify the abstract noun.",
-    "options": ["beauty", "chair", "dog", "table"],
-    "answer": "beauty",
-    "topic": "nouns",
-    "difficulty": "hard"
-  },
-  {
-    "id": "nh2",
-    "question": "Choose the correct proper noun.",
-    "options": ["city", "river", "Kerala", "teacher"],
-    "answer": "Kerala",
-    "topic": "nouns",
-    "difficulty": "hard"
-  },
-  {
-    "id": "nh3",
-    "question": "Which is a material noun?",
-    "options": ["gold", "team", "happiness", "dog"],
-    "answer": "gold",
-    "topic": "nouns",
-    "difficulty": "hard"
-  },
-  {
-    "id": "nh4",
-    "question": "Identify the collective noun.",
-    "options": ["flock", "bird", "run", "quick"],
-    "answer": "flock",
-    "topic": "nouns",
-    "difficulty": "hard"
-  },
-  {
-    "id": "nh5",
-    "question": "Choose the correct noun form: He has great ___.",
-    "options": ["strength", "strong", "strongly", "stronger"],
-    "answer": "strength",
-    "topic": "nouns",
-    "difficulty": "hard"
-  },
-  {
-    "id": "nh6",
-    "question": "Which sentence has an abstract noun?",
-    "options": [
-      "She has kindness.",
-      "He runs fast.",
-      "They play football.",
-      "We eat food."
-    ],
-    "answer": "She has kindness.",
-    "topic": "nouns",
-    "difficulty": "hard"
-  }
+  {"id":"nh1","question":"Which is an abstract noun?","options":["Love","Rose","Heart","Girl"],"answer":"Love","topic":"nouns","difficulty":"hard"},
+  {"id":"nh2","question":"Which is a collective noun?","options":["Soldier","Army","Gun","War"],"answer":"Army","topic":"nouns","difficulty":"hard"},
+  {"id":"nh3","question":"Plural of Sheep?","options":["Sheeps","Sheepes","Sheep","Sheepi"],"answer":"Sheep","topic":"nouns","difficulty":"hard"},
+  {"id":"nh4","question":"Plural of Deer?","options":["Deers","Deer","Deeres","Deeri"],"answer":"Deer","topic":"nouns","difficulty":"hard"},
+  {"id":"nh5","question":"Plural of Fish (general use)?","options":["Fishes","Fish","Fishs","Fishies"],"answer":"Fish","topic":"nouns","difficulty":"hard"},
+
+  {"id":"nh6","question":"Which is an abstract noun?","options":["Beauty","Flower","Garden","Tree"],"answer":"Beauty","topic":"nouns","difficulty":"hard"},
+  {"id":"nh7","question":"Which is an abstract noun?","options":["Honesty","Book","Pen","Chair"],"answer":"Honesty","topic":"nouns","difficulty":"hard"},
+  {"id":"nh8","question":"Which is an abstract noun?","options":["Happiness","Smile","Child","Toy"],"answer":"Happiness","topic":"nouns","difficulty":"hard"},
+  {"id":"nh9","question":"Which is an abstract noun?","options":["Anger","Man","Road","City"],"answer":"Anger","topic":"nouns","difficulty":"hard"},
+  {"id":"nh10","question":"Which is an abstract noun?","options":["Freedom","Flag","Nation","Leader"],"answer":"Freedom","topic":"nouns","difficulty":"hard"},
+
+  {"id":"nh11","question":"Which is a collective noun?","options":["Team","Player","Game","Score"],"answer":"Team","topic":"nouns","difficulty":"hard"},
+  {"id":"nh12","question":"Which is a collective noun?","options":["Class","Student","Book","Teacher"],"answer":"Class","topic":"nouns","difficulty":"hard"},
+  {"id":"nh13","question":"Which is a collective noun?","options":["Fleet","Ship","Boat","Sail"],"answer":"Fleet","topic":"nouns","difficulty":"hard"},
+  {"id":"nh14","question":"Which is a collective noun?","options":["Herd","Cow","Grass","Milk"],"answer":"Herd","topic":"nouns","difficulty":"hard"},
+  {"id":"nh15","question":"Which is a collective noun?","options":["Bunch","Flower","Petal","Garden"],"answer":"Bunch","topic":"nouns","difficulty":"hard"},
+
+  {"id":"nh16","question":"Identify the noun: The sun shines brightly.","options":["Sun","Shines","Brightly","The"],"answer":"Sun","topic":"nouns","difficulty":"hard"},
+  {"id":"nh17","question":"Identify the noun: Time flies quickly.","options":["Time","Flies","Quickly","Fast"],"answer":"Time","topic":"nouns","difficulty":"hard"},
+  {"id":"nh18","question":"Identify the noun: Knowledge is power.","options":["Knowledge","Is","Power","Strong"],"answer":"Knowledge","topic":"nouns","difficulty":"hard"},
+  {"id":"nh19","question":"Identify the noun: Practice makes perfect.","options":["Practice","Makes","Perfect","Well"],"answer":"Practice","topic":"nouns","difficulty":"hard"},
+  {"id":"nh20","question":"Identify the noun: Honesty is the best policy.","options":["Honesty","Is","Best","Policy"],"answer":"Honesty","topic":"nouns","difficulty":"hard"},
+
+  {"id":"nh21","question":"Plural of Analysis?","options":["Analysises","Analyses","Analysis","Analys"],"answer":"Analyses","topic":"nouns","difficulty":"hard"},
+  {"id":"nh22","question":"Plural of Crisis?","options":["Crisises","Crises","Crisis","Crise"],"answer":"Crises","topic":"nouns","difficulty":"hard"},
+  {"id":"nh23","question":"Plural of Phenomenon?","options":["Phenomenons","Phenomena","Phenomenas","Phenomen"],"answer":"Phenomena","topic":"nouns","difficulty":"hard"},
+  {"id":"nh24","question":"Plural of Datum?","options":["Datums","Data","Datumes","Datas"],"answer":"Data","topic":"nouns","difficulty":"hard"},
+  {"id":"nh25","question":"Plural of Radius?","options":["Radiuses","Radii","Radius","Radiis"],"answer":"Radii","topic":"nouns","difficulty":"hard"},
+
+  {"id":"nh26","question":"Which is NOT a noun?","options":["Run","Book","Chair","City"],"answer":"Run","topic":"nouns","difficulty":"hard"},
+  {"id":"nh27","question":"Which is NOT a noun?","options":["Quick","Dog","House","River"],"answer":"Quick","topic":"nouns","difficulty":"hard"},
+  {"id":"nh28","question":"Which is NOT a noun?","options":["Jump","Teacher","School","Car"],"answer":"Jump","topic":"nouns","difficulty":"hard"},
+  {"id":"nh29","question":"Which is NOT a noun?","options":["Happy","Pen","Bottle","Table"],"answer":"Happy","topic":"nouns","difficulty":"hard"},
+  {"id":"nh30","question":"Which is NOT a noun?","options":["Eat","Apple","Tree","Road"],"answer":"Eat","topic":"nouns","difficulty":"hard"},
+
+  {"id":"nh31","question":"Identify the abstract noun in: The beauty of nature is amazing.","options":["Beauty","Nature","Amazing","Is"],"answer":"Beauty","topic":"nouns","difficulty":"hard"},
+  {"id":"nh32","question":"Identify the abstract noun in: His bravery saved lives.","options":["Bravery","Lives","Saved","His"],"answer":"Bravery","topic":"nouns","difficulty":"hard"},
+  {"id":"nh33","question":"Identify the abstract noun in: Childhood is full of joy.","options":["Childhood","Joy","Full","Is"],"answer":"Childhood","topic":"nouns","difficulty":"hard"},
+  {"id":"nh34","question":"Identify the abstract noun in: Wisdom comes with age.","options":["Wisdom","Age","Comes","With"],"answer":"Wisdom","topic":"nouns","difficulty":"hard"},
+  {"id":"nh35","question":"Identify the abstract noun in: Truth always wins.","options":["Truth","Wins","Always","Win"],"answer":"Truth","topic":"nouns","difficulty":"hard"},
+
+  {"id":"nh36","question":"Which is a collective noun for birds?","options":["Flock","Pack","Herd","Team"],"answer":"Flock","topic":"nouns","difficulty":"hard"},
+  {"id":"nh37","question":"Which is a collective noun for wolves?","options":["Pack","Flock","Herd","Group"],"answer":"Pack","topic":"nouns","difficulty":"hard"},
+  {"id":"nh38","question":"Which is a collective noun for cattle?","options":["Herd","Pack","Flock","Team"],"answer":"Herd","topic":"nouns","difficulty":"hard"},
+  {"id":"nh39","question":"Which is a collective noun for players?","options":["Team","Pack","Flock","Herd"],"answer":"Team","topic":"nouns","difficulty":"hard"},
+  {"id":"nh40","question":"Which is a collective noun for books?","options":["Stack","Flock","Pack","Herd"],"answer":"Stack","topic":"nouns","difficulty":"hard"},
+
+  {"id":"nh41","question":"Identify the noun: Iron is a useful metal.","options":["Iron","Useful","Metal","Is"],"answer":"Iron","topic":"nouns","difficulty":"hard"},
+  {"id":"nh42","question":"Identify the noun: Music soothes the mind.","options":["Music","Soothes","Mind","The"],"answer":"Music","topic":"nouns","difficulty":"hard"},
+  {"id":"nh43","question":"Identify the noun: Education is important.","options":["Education","Is","Important","Very"],"answer":"Education","topic":"nouns","difficulty":"hard"},
+  {"id":"nh44","question":"Identify the noun: The jury gave its verdict.","options":["Jury","Gave","Verdict","Its"],"answer":"Jury","topic":"nouns","difficulty":"hard"},
+  {"id":"nh45","question":"Identify the noun: The committee agreed.","options":["Committee","Agreed","The","All"],"answer":"Committee","topic":"nouns","difficulty":"hard"},
+
+  {"id":"nh46","question":"Which is a noun phrase?","options":["The big house","Run fast","Very quick","Jump high"],"answer":"The big house","topic":"nouns","difficulty":"hard"},
+  {"id":"nh47","question":"Which is a noun phrase?","options":["A red apple","Run quickly","Jump high","Very fast"],"answer":"A red apple","topic":"nouns","difficulty":"hard"},
+  {"id":"nh48","question":"Which is a noun phrase?","options":["The tall boy","Run fast","Quickly done","Jump high"],"answer":"The tall boy","topic":"nouns","difficulty":"hard"},
+  {"id":"nh49","question":"Which is a noun phrase?","options":["A beautiful garden","Run fast","Very quick","Jump high"],"answer":"A beautiful garden","topic":"nouns","difficulty":"hard"},
+  {"id":"nh50","question":"Which is a noun phrase?","options":["The old man","Run fast","Very quick","Jump high"],"answer":"The old man","topic":"nouns","difficulty":"hard"}
 ]
