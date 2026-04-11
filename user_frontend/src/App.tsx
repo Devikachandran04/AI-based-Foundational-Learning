@@ -3682,7 +3682,7 @@ const HelpModal = ({
                 <div className="flex items-center justify-between gap-3 flex-wrap">
                   <div className="flex items-center gap-3 flex-wrap">
                     <label className="py-3 px-5 bg-white border border-[#e8d4a7] text-stone-700 rounded-2xl font-bold cursor-pointer hover:bg-stone-50 transition-all">
-                      Attach Image
+                      📎 Attach Image
                       <input
                         type="file"
                         accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
@@ -3924,39 +3924,57 @@ export default function App() {
   };
 
   const checkUnreadHelp = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) return;
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) return;
 
-      const res = await fetch(`${BASE_URL}/api/help/my`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    const res = await fetch(`${BASE_URL}/api/help/my`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      const data = await res.json();
-      const doubts = data.my_doubts || [];
+    const data = await res.json();
+    const doubts = data.my_doubts || [];
 
-      if (doubts.length === 0) {
-        setHasUnreadHelp(false);
-        return;
-      }
-
-      const latestThread = doubts[0];
-      const messages = latestThread.messages || [];
-      const lastMessage = messages[messages.length - 1];
-
-      setHasUnreadHelp(lastMessage?.sender === "teacher");
-    } catch (error) {
-      console.error("Error checking unread help messages:", error);
+    if (doubts.length === 0) {
+      setHasUnreadHelp(false);
+      return;
     }
-  };
+
+    const allMessages = doubts.flatMap((thread: any) => thread.messages || []);
+    const teacherMessages = allMessages.filter(
+      (msg: any) => msg.sender === "teacher"
+    );
+
+    if (teacherMessages.length === 0) {
+      setHasUnreadHelp(false);
+      return;
+    }
+
+    const latestTeacherMessage = teacherMessages.sort(
+      (a: any, b: any) =>
+        new Date(b.timestamp || 0).getTime() -
+        new Date(a.timestamp || 0).getTime()
+    )[0];
+
+    const lastSeenHelp = localStorage.getItem("lastSeenHelpTime");
+    const lastSeenTime = lastSeenHelp ? new Date(lastSeenHelp).getTime() : 0;
+    const latestTeacherTime = new Date(
+      latestTeacherMessage.timestamp || 0
+    ).getTime();
+
+    setHasUnreadHelp(latestTeacherTime > lastSeenTime);
+  } catch (error) {
+    console.error("Error checking unread help messages:", error);
+  }
+};
 
   const handleOpenHelp = () => {
-    setIsHelpModalOpen(true);
-    setHasUnreadHelp(false);
-  };
-
+  setIsHelpModalOpen(true);
+  setHasUnreadHelp(false);
+  localStorage.setItem("lastSeenHelpTime", new Date().toISOString());
+};
   useEffect(() => {
     if (!user?.isLoggedIn) {
       setHasUnreadHelp(false);
