@@ -50,7 +50,6 @@ def _pick_questions(lesson_id: str, quiz_mode: str):
             {"$sample": {"size": count}}
         ]))
 
-        # Ensure enough questions exist
         if len(questions) < count:
             raise ValueError(
                 f"Not enough {difficulty} questions for lesson {lesson_id}. "
@@ -199,12 +198,18 @@ def submit_quiz(user_id: str, quiz_id: str, submitted_answers, time_taken_sec: i
         {"$set": {"status": "submitted"}}
     )
 
+    lesson_name = questions[0].get("topic", "Unknown") if questions else "Unknown"
+
     update_profile_after_attempt(
         user_id=user_id,
         lesson_id=lesson_id,
+        lesson_name=lesson_name,
         score=score,
         topic_accuracy=topic_accuracy,
-        decision=decision
+        decision=decision,
+        quiz_type=quiz_type,
+        difficulty_breakdown=difficulty_breakdown,
+        attempt_no=attempt_no
     )
 
     return {
