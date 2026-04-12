@@ -3742,11 +3742,18 @@ const LearnerProfilePage = ({ onClose }: { onClose: () => void }) => {
   const [selectedLesson, setSelectedLesson] = useState("");
 
   const graphLessonNames = student?.graph_data
-    ? Object.keys(student.graph_data)
-    : [];
+  ? Object.entries(student.graph_data)
+      .filter(([_, value]: any) => {
+        const mixedCount = value?.mixed_scores?.length || 0;
+        const simplifiedCount = value?.simplified_scores?.length || 0;
+        return mixedCount + simplifiedCount > 0;
+      })
+      .map(([lessonName]) => lessonName)
+  : [];
 
-  const selectedGraph = selectedLesson
-    ? student?.graph_data?.[selectedLesson]
+const selectedGraph =
+  selectedLesson && student?.graph_data?.[selectedLesson]
+    ? student.graph_data[selectedLesson]
     : null;
 
   React.useEffect(() => {
@@ -3776,10 +3783,16 @@ const LearnerProfilePage = ({ onClose }: { onClose: () => void }) => {
   }, []);
 
   React.useEffect(() => {
-    if (graphLessonNames.length > 0 && !selectedLesson) {
+  if (graphLessonNames.length > 0) {
+    const stillValid = graphLessonNames.includes(selectedLesson);
+
+    if (!selectedLesson || !stillValid) {
       setSelectedLesson(graphLessonNames[0]);
     }
-  }, [graphLessonNames, selectedLesson]);
+  } else {
+    setSelectedLesson("");
+  }
+}, [graphLessonNames, selectedLesson]);
 
   if (loading) {
     return (
@@ -3969,7 +3982,7 @@ const LearnerProfilePage = ({ onClose }: { onClose: () => void }) => {
           </select>
         </div>
 
-        {selectedGraph ? (
+        {selectedGraph && graphLessonNames.length > 0 ? (
           <>
             <div className="bg-white rounded-2xl p-5 border border-stone-200">
               <div className="h-60 flex items-end gap-4">
@@ -4027,7 +4040,7 @@ const LearnerProfilePage = ({ onClose }: { onClose: () => void }) => {
             </div>
           </>
         ) : (
-          <p className="text-stone-600">No graph data available</p>
+          <p className="text-stone-600">No quiz attempt data available yet</p>
         )}
       </div>
 

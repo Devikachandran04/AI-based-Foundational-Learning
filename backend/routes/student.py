@@ -45,25 +45,34 @@ def get_student_profile():
     completed_lessons = profile.get("completed_lessons", [])
     weak_topics = profile.get("weak_topics", {})
 
-    # Adaptive score
     scores = [a.get("score", 0) for a in attempts]
     adaptive_score = round(sum(scores) / len(scores)) if scores else 0
     performance_level = get_performance_level(adaptive_score)
 
-    course_completion = round(
-        (len(completed_lessons) / lessons_col.count_documents({})) * 100
-    ) if lessons_col.count_documents({}) > 0 else 0
+    if len(scores) >= 2:
+        if scores[-1] > scores[0]:
+            overall_status = "Improving"
+        elif scores[-1] < scores[0]:
+            overall_status = "Needs Attention"
+        else:
+            overall_status = "Stable"
+    else:
+        overall_status = "Stable"
 
-    # Learning path
+    total_lessons = lessons_col.count_documents({})
+    course_completion = round((len(completed_lessons) / total_lessons) * 100) if total_lessons > 0 else 0
+
     all_lessons = list(lessons_col.find().sort("title", 1))
+
     learning_path = []
     first_incomplete_found = False
+    completed_set = set(completed_lessons)
 
     for lesson in all_lessons:
         lesson_id = str(lesson["_id"])
-        title = lesson.get("title", "Unknown Lesson")
+        lesson_title = lesson.get("title", "Unknown Lesson")
 
-        if lesson_id in completed_lessons:
+        if lesson_id in completed_set:
             state = "Completed"
         elif not first_incomplete_found:
             state = "In Progress"
@@ -73,17 +82,17 @@ def get_student_profile():
 
         learning_path.append({
             "lesson_id": lesson_id,
-            "lesson_title": title,
+            "lesson_title": lesson_title,
             "state": state
         })
 
-    # Lesson performance and graph data
-    lesson_performance = []
-    graph_data = {}
-
     attempts_by_lesson = {}
     for a in attempts:
-        attempts_by_lesson.setdefault(a["lesson_id"], []).append(a)
+        lesson_id = a.get("lesson_id")
+        attempts_by_lesson.setdefault(lesson_id, []).append(a)
+
+    lesson_performance = []
+    graph_data = {}
 
     for lesson in all_lessons:
         lesson_id = str(lesson["_id"])
@@ -98,10 +107,10 @@ def get_student_profile():
             latest_score = latest_attempt.get("score", 0)
             decision = latest_attempt.get("decision", "")
         else:
+            quiz_type = "not_started"
             quiz_label = "Not Started"
             latest_score = 0
             decision = ""
-            quiz_type = "mixed"
 
         basic_correct = sum(
             a.get("difficulty_correct", {}).get("basic", 0)
@@ -153,7 +162,7 @@ def get_student_profile():
         "email": student.get("email", ""),
         "adaptive_score": adaptive_score,
         "performance_level": performance_level,
-        "overall_status": "Improving",
+        "overall_status": overall_status,
         "course_completion": course_completion,
         "lessons_completed": len(completed_lessons),
         "learning_path": learning_path,
