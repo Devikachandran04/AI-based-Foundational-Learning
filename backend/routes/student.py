@@ -49,17 +49,22 @@ def get_student_profile():
 
     scores = [a.get("score", 0) for a in attempts]
     adaptive_score = round(sum(scores) / len(scores)) if scores else 0
-    performance_level = get_performance_level(adaptive_score)
 
-    if len(scores) >= 2:
-        if scores[-1] > scores[0]:
-            overall_status = "Improving"
-        elif scores[-1] < scores[0]:
-            overall_status = "Needs Attention"
-        else:
-            overall_status = "Stable"
+    if not scores:
+        performance_level = "Not Started"
+        overall_status = "Not Started"
     else:
-        overall_status = "Stable"
+        performance_level = get_performance_level(adaptive_score)
+
+        if len(scores) >= 2:
+            if scores[-1] > scores[0]:
+                overall_status = "Improving"
+            elif scores[-1] < scores[0]:
+                overall_status = "Needs Attention"
+            else:
+                overall_status = "Stable"
+        else:
+            overall_status = "Started"
 
     total_lessons = lessons_col.count_documents({})
     course_completion = (

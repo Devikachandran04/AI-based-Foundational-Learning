@@ -3920,10 +3920,10 @@ console.log("GRAPH DATA:", data.graph_data);
                 <div
                   className={`px-4 py-3 rounded-2xl border text-sm font-bold ${
                     lesson.state === "Completed"
-                      ? "bg-green-100 text-green-700 border-green-200"
-                      : lesson.state === "In Progress"
-                      ? "bg-yellow-100 text-yellow-700 border-yellow-200"
-                      : "bg-stone-100 text-stone-600 border-stone-200"
+  ? "bg-green-100 text-green-700 border-green-200"
+  : lesson.state === "Attempted"
+  ? "bg-yellow-100 text-yellow-700 border-yellow-200"
+  : "bg-stone-100 text-stone-600 border-stone-200"
                   }`}
                 >
                   {lesson.lesson_title}
