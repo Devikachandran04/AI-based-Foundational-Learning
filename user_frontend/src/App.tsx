@@ -219,10 +219,10 @@ const QuizPage = ({
         const data = await res.json();
 
         if (!res.ok) {
-          console.error("Quiz start failed:", data);
-          console.error(data.error || "Failed to start quiz");
-          return;
-        }
+  console.error("Quiz start failed:", data);
+  alert(data.error || "Failed to start quiz");
+  return;
+}
 
         setQuizId(data.quiz_id);
         setQuestions(data.questions || []);
