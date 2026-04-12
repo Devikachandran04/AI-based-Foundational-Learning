@@ -31,18 +31,21 @@ def update_profile_after_attempt(
     completed_lessons = profile.get("completed_lessons", [])
     history = profile.get("history", [])
 
+    # Track weak topics
     for topic, acc in topic_accuracy.items():
         if acc < 0.75:
             weak_topics[topic] = weak_topics.get(topic, 0) + 1
 
+    # Track completed lessons
     if decision == "NEXT_LESSON" and score >= PASS_THRESHOLD and lesson_id not in completed_lessons:
         completed_lessons.append(lesson_id)
 
+    # Store history
     history.append({
         "lesson_id": lesson_id,
         "lesson_name": lesson_name,
         "score": score,
-        "quiz_type": quiz_type,   # mixed / simplified
+        "quiz_type": quiz_type,
         "difficulty_breakdown": difficulty_breakdown,
         "attempt_no": attempt_no,
         "decision": decision,

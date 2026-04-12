@@ -3739,6 +3739,15 @@ const MODULE_ORDER = ['nouns', 'verbs', 'tenses', 'articles', 'prepositions', 'a
 const LearnerProfilePage = ({ onClose }: { onClose: () => void }) => {
   const [student, setStudent] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedLesson, setSelectedLesson] = useState("");
+
+  const graphLessonNames = student?.graph_data
+    ? Object.keys(student.graph_data)
+    : [];
+
+  const selectedGraph = selectedLesson
+    ? student?.graph_data?.[selectedLesson]
+    : null;
 
   React.useEffect(() => {
     const fetchProfile = async () => {
@@ -3766,9 +3775,15 @@ const LearnerProfilePage = ({ onClose }: { onClose: () => void }) => {
     fetchProfile();
   }, []);
 
+  React.useEffect(() => {
+    if (graphLessonNames.length > 0 && !selectedLesson) {
+      setSelectedLesson(graphLessonNames[0]);
+    }
+  }, [graphLessonNames, selectedLesson]);
+
   if (loading) {
     return (
-      <div className="max-w-4xl w-full bg-white p-10 rounded-[40px] shadow-xl border border-stone-50">
+      <div className="max-w-6xl w-full bg-white p-10 rounded-[40px] shadow-xl border border-stone-50">
         <p className="text-lg font-medium text-stone-600">Loading profile...</p>
       </div>
     );
@@ -3776,7 +3791,7 @@ const LearnerProfilePage = ({ onClose }: { onClose: () => void }) => {
 
   if (!student) {
     return (
-      <div className="max-w-4xl w-full bg-white p-10 rounded-[40px] shadow-xl border border-stone-50">
+      <div className="max-w-6xl w-full bg-white p-10 rounded-[40px] shadow-xl border border-stone-50">
         <h1 className="text-3xl font-serif italic mb-4 text-teal-900">Learner Profile</h1>
         <p className="text-stone-600 mb-6">Profile not found.</p>
         <button
@@ -3790,17 +3805,28 @@ const LearnerProfilePage = ({ onClose }: { onClose: () => void }) => {
   }
 
   return (
-    <div className="max-w-5xl w-full bg-white p-10 rounded-[40px] shadow-xl border border-stone-50">
-      <h1 className="text-4xl font-serif italic mb-8 text-teal-900">Learner Profile</h1>
+    <div className="max-w-7xl w-full bg-white p-10 rounded-[40px] shadow-xl border border-stone-50">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+        <h1 className="text-4xl font-serif italic text-teal-900">Learner Profile</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Student Info */}
+        <button
+          onClick={() => window.print()}
+          className="px-5 py-3 bg-teal-600 text-white rounded-2xl hover:bg-teal-700 transition-all font-bold shadow-sm"
+        >
+          Download Report
+        </button>
+      </div>
+
+      {/* Top Summary */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div className="bg-stone-50 rounded-3xl p-6">
           <h2 className="text-lg font-bold mb-4 text-teal-800">Student Info</h2>
           <div className="space-y-3">
             <div className="flex justify-between gap-4">
               <span>Name</span>
-              <span className="font-medium text-right">{student.name || "Unnamed Student"}</span>
+              <span className="font-medium text-right">
+                {student.name || "Unnamed Student"}
+              </span>
             </div>
             <div className="flex justify-between gap-4">
               <span>Class</span>
@@ -3808,70 +3834,220 @@ const LearnerProfilePage = ({ onClose }: { onClose: () => void }) => {
             </div>
             <div className="flex justify-between gap-4">
               <span>Email</span>
-              <span className="font-medium text-right break-all">{student.email || "-"}</span>
+              <span className="font-medium text-right break-all">
+                {student.email || "-"}
+              </span>
             </div>
-            <div className="mt-4">
-  <span className="block mb-2 font-medium">Lessons Completed</span>
-
-  {student.completed_lessons_details && student.completed_lessons_details.length > 0 ? (
-    <div className="flex flex-col gap-2">
-      {student.completed_lessons_details.map((lesson: any, index: number) => (
-        <div
-          key={index}
-          className="flex justify-between items-center bg-white rounded-xl px-4 py-3 border border-stone-200"
-        >
-          <span>{lesson.lesson_title}</span>
-          <span
-            className={`px-3 py-1 rounded-full text-xs font-bold ${
-              lesson.quiz_type === "mixed"
-                ? "bg-green-100 text-green-700"
-                : "bg-orange-100 text-orange-700"
-            }`}
-          >
-            {lesson.quiz_label}
-          </span>
-        </div>
-      ))}
-    </div>
-  ) : (
-    <p className="text-stone-600">No lessons completed</p>
-  )}
-</div>
           </div>
         </div>
 
-        {/* Attempts */}
         <div className="bg-stone-50 rounded-3xl p-6">
-          <h2 className="text-lg font-bold mb-4 text-teal-800">Attempts</h2>
-          <div className="space-y-3">
+          <h2 className="text-lg font-bold mb-4 text-teal-800">Overall Progress</h2>
+          <div className="space-y-4">
             <div className="flex justify-between gap-4">
-              <span>Basic</span>
-              <strong>{student.basic_questions_attempted || 0}</strong>
+              <span>Adaptive Learning Score</span>
+              <strong>{student.adaptive_score || 0}%</strong>
             </div>
             <div className="flex justify-between gap-4">
-              <span>Medium</span>
-              <strong>{student.intermediate_questions_attempted || 0}</strong>
+              <span>Performance Level</span>
+              <strong>{student.performance_level || "-"}</strong>
             </div>
             <div className="flex justify-between gap-4">
-              <span>Advanced</span>
-              <strong>{student.advanced_questions_attempted || 0}</strong>
+              <span>Overall Status</span>
+              <strong>{student.overall_status || "-"}</strong>
+            </div>
+            <div>
+              <div className="flex justify-between gap-4 mb-2">
+                <span>Course Completion</span>
+                <strong>{student.course_completion || 0}%</strong>
+              </div>
+              <div className="w-full h-3 bg-stone-200 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-teal-600 rounded-full"
+                  style={{ width: `${student.course_completion || 0}%` }}
+                />
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Weak Topics */}
-        <div className="bg-stone-50 rounded-3xl p-6 md:col-span-2">
-          <h2 className="text-lg font-bold mb-4 text-teal-800">Weak Topics</h2>
-          {student.weak_topics && Object.keys(student.weak_topics).length > 0 ? (
-            <ul className="list-disc pl-6 space-y-2">
-              {Object.keys(student.weak_topics).map((topic, i) => (
-                <li key={i}>{topic}</li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-stone-600">No weak topics</p>
-          )}
+      {/* Learning Path */}
+      <div className="bg-stone-50 rounded-3xl p-6 mb-6">
+        <h2 className="text-lg font-bold mb-4 text-teal-800">Learning Path</h2>
+        {student.learning_path && student.learning_path.length > 0 ? (
+          <div className="flex flex-wrap items-center gap-3">
+            {student.learning_path.map((lesson: any, index: number) => (
+              <React.Fragment key={lesson.lesson_id || index}>
+                <div
+                  className={`px-4 py-3 rounded-2xl border text-sm font-bold ${
+                    lesson.state === "Completed"
+                      ? "bg-green-100 text-green-700 border-green-200"
+                      : lesson.state === "In Progress"
+                      ? "bg-yellow-100 text-yellow-700 border-yellow-200"
+                      : "bg-stone-100 text-stone-600 border-stone-200"
+                  }`}
+                >
+                  {lesson.lesson_title}
+                  <div className="text-xs font-medium mt-1">{lesson.state}</div>
+                </div>
+                {index < student.learning_path.length - 1 && (
+                  <span className="text-stone-400 font-bold">→</span>
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+        ) : (
+          <p className="text-stone-600">No learning path available</p>
+        )}
+      </div>
+
+      {/* Lesson Performance */}
+      <div className="bg-stone-50 rounded-3xl p-6 mb-6">
+        <h2 className="text-lg font-bold mb-4 text-teal-800">Lesson Performance</h2>
+        {student.lesson_performance && student.lesson_performance.length > 0 ? (
+          <div className="overflow-x-auto">
+            <table className="min-w-full text-sm">
+              <thead>
+                <tr className="text-left text-stone-500 border-b border-stone-200">
+                  <th className="py-3 pr-6">Lesson</th>
+                  <th className="py-3 pr-6">Current Quiz Path</th>
+                  <th className="py-3 pr-6">Latest Score</th>
+                  <th className="py-3 pr-6">Basic Correct</th>
+                  <th className="py-3 pr-6">Moderate Correct</th>
+                  <th className="py-3 pr-6">Hard Correct</th>
+                  <th className="py-3">Recommended Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {student.lesson_performance.map((lesson: any, index: number) => (
+                  <tr key={lesson.lesson_id || index} className="border-b border-stone-100 align-top">
+                    <td className="py-4 pr-6 font-medium">{lesson.lesson_title}</td>
+                    <td className="py-4 pr-6">
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-bold ${
+                          lesson.current_quiz === "Main Quiz"
+                            ? "bg-green-100 text-green-700"
+                            : lesson.current_quiz === "Simplified Quiz"
+                            ? "bg-orange-100 text-orange-700"
+                            : "bg-stone-100 text-stone-600"
+                        }`}
+                      >
+                        {lesson.current_quiz}
+                      </span>
+                    </td>
+                    <td className="py-4 pr-6 font-bold">{lesson.latest_score}%</td>
+                    <td className="py-4 pr-6 font-bold">{lesson.basic_correct}</td>
+                    <td className="py-4 pr-6 font-bold">{lesson.moderate_correct}</td>
+                    <td className="py-4 pr-6 font-bold">{lesson.hard_correct}</td>
+                    <td className="py-4">{lesson.recommended_action}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="text-stone-600">No lesson performance data</p>
+        )}
+      </div>
+
+      {/* Quiz Attempt Progress */}
+      <div className="bg-stone-50 rounded-3xl p-6 mb-6">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+          <h2 className="text-lg font-bold text-teal-800">Quiz Attempt Progress</h2>
+
+          <select
+            value={selectedLesson}
+            onChange={(e) => setSelectedLesson(e.target.value)}
+            className="px-4 py-2 rounded-2xl border border-stone-200 bg-white"
+          >
+            {graphLessonNames.map((lessonName) => (
+              <option key={lessonName} value={lessonName}>
+                {lessonName}
+              </option>
+            ))}
+          </select>
         </div>
+
+        {selectedGraph ? (
+          <>
+            <div className="bg-white rounded-2xl p-5 border border-stone-200">
+              <div className="h-60 flex items-end gap-4">
+                {Array.from({
+                  length: Math.max(
+                    selectedGraph?.mixed_scores?.length || 0,
+                    selectedGraph?.simplified_scores?.length || 0
+                  ),
+                }).map((_, i) => {
+                  const mixed = selectedGraph?.mixed_scores?.[i];
+                  const simplified = selectedGraph?.simplified_scores?.[i];
+
+                  return (
+                    <div key={i} className="flex-1 flex flex-col items-center">
+                      <div className="w-full h-44 flex items-end justify-center gap-2">
+                        {mixed !== undefined ? (
+                          <div className="w-1/2 flex flex-col items-center">
+                            <div
+                              className="w-full rounded-t-md bg-green-500"
+                              style={{ height: `${Math.max(mixed, 6)}%` }}
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-1/2" />
+                        )}
+
+                        {simplified !== undefined ? (
+                          <div className="w-1/2 flex flex-col items-center">
+                            <div
+                              className="w-full rounded-t-md bg-orange-400"
+                              style={{ height: `${Math.max(simplified, 6)}%` }}
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-1/2" />
+                        )}
+                      </div>
+
+                      <span className="text-xs mt-2 font-medium">A{i + 1}</span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="flex gap-6 mt-4 text-sm text-stone-600">
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full bg-green-500 inline-block" />
+                  Mixed Quiz
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full bg-orange-400 inline-block" />
+                  Simplified Quiz
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <p className="text-stone-600">No graph data available</p>
+        )}
+      </div>
+
+      {/* Weak Lessons */}
+      <div className="bg-stone-50 rounded-3xl p-6">
+        <h2 className="text-lg font-bold mb-4 text-teal-800">Weak Lessons</h2>
+        {student.weak_lessons && student.weak_lessons.length > 0 ? (
+          <div className="flex flex-wrap gap-3">
+            {student.weak_lessons.map((lesson: any, i: number) => (
+              <span
+                key={i}
+                className="px-4 py-2 rounded-full bg-red-100 text-red-700 text-sm font-bold"
+              >
+                {lesson.lesson_title}
+              </span>
+            ))}
+          </div>
+        ) : (
+          <p className="text-stone-600">No weak lessons</p>
+        )}
       </div>
 
       <div className="mt-8">
@@ -3885,7 +4061,6 @@ const LearnerProfilePage = ({ onClose }: { onClose: () => void }) => {
     </div>
   );
 };
-
 export default function App() {
   const user = useStore((state) => state.user);
   const logout = useStore((state) => state.logout);

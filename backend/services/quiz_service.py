@@ -7,7 +7,7 @@ from services.adaptive_policy import decide_next_step
 WEIGHTS = {
     "basic": 1,
     "moderate": 2,
-    "advanced": 3
+    "hard": 3
 }
 
 
@@ -21,22 +21,22 @@ def _get_attempt_no(user_id: str, lesson_id: str) -> int:
 
 def _pick_questions(lesson_id: str, quiz_mode: str):
     """
-    mixed      -> 3 basic + 4 moderate + 3 advanced (10 questions)
-    simplified -> 5 basic + 5 moderate (10 questions)
+    mixed      -> 3 basic + 4 moderate + 3 hard
+    simplified -> 5 basic + 5 moderate
     """
 
     if quiz_mode == "simplified":
         plan = [("basic", 5), ("moderate", 5)]
         quiz_type = "simplified"
     else:
-        plan = [("basic", 3), ("moderate", 4), ("advanced", 3)]
+        plan = [("basic", 3), ("moderate", 4), ("hard", 3)]
         quiz_type = "mixed"
 
     picked = []
     difficulty_breakdown = {
         "basic": 0,
         "moderate": 0,
-        "advanced": 0
+        "hard": 0
     }
 
     for difficulty, count in plan:
@@ -64,13 +64,11 @@ def _pick_questions(lesson_id: str, quiz_mode: str):
 
 def start_quiz(user_id: str, lesson_id: str, quiz_mode: str = "mixed"):
     lesson_id = str(lesson_id)
-
     attempt_no = _get_attempt_no(user_id, lesson_id)
 
-    questions, quiz_type, difficulty_breakdown = _pick_questions(lesson_id, quiz_mode)
-
-    if not questions:
-        raise ValueError("No questions found for this lesson.")
+    questions, quiz_type, difficulty_breakdown = _pick_questions(
+        lesson_id, quiz_mode
+    )
 
     question_ids = []
     question_payload = []
@@ -128,14 +126,13 @@ def submit_quiz(user_id: str, quiz_id: str, submitted_answers, time_taken_sec: i
     difficulty_breakdown = quiz.get("difficulty_breakdown", {
         "basic": 0,
         "moderate": 0,
-        "advanced": 0
+        "hard": 0
     })
 
     question_ids = [ObjectId(qid) for qid in quiz["question_ids"]]
     questions = list(question_bank_col.find({"_id": {"$in": question_ids}}))
 
     answers_map = {}
-
     if isinstance(submitted_answers, list):
         for ans in submitted_answers:
             answers_map[ans["question_id"]] = ans["selected_index"]
@@ -147,6 +144,12 @@ def submit_quiz(user_id: str, quiz_id: str, submitted_answers, time_taken_sec: i
     total_weight = 0
     earned_weight = 0
     topic_stats = {}
+
+    difficulty_correct = {
+        "basic": 0,
+        "moderate": 0,
+        "hard": 0
+    }
 
     for q in questions:
         qid = str(q["_id"])
@@ -167,11 +170,12 @@ def submit_quiz(user_id: str, quiz_id: str, submitted_answers, time_taken_sec: i
         if selected_index is not None and int(selected_index) == int(correct_index):
             earned_weight += weight
             topic_stats[topic]["correct"] += 1
+            difficulty_correct[difficulty] += 1
 
     score = round((earned_weight / total_weight) * 100) if total_weight > 0 else 0
 
     topic_accuracy = {
-        topic: round(stats["correct"] / stats["total"], 2) if stats["total"] > 0 else 0
+        topic: round(stats["correct"] / stats["total"], 2)
         for topic, stats in topic_stats.items()
     }
 
@@ -184,6 +188,7 @@ def submit_quiz(user_id: str, quiz_id: str, submitted_answers, time_taken_sec: i
         "attempt_no": attempt_no,
         "quiz_type": quiz_type,
         "difficulty_breakdown": difficulty_breakdown,
+        "difficulty_correct": difficulty_correct,
         "score": score,
         "time_taken_sec": time_taken_sec,
         "topic_accuracy": topic_accuracy,
