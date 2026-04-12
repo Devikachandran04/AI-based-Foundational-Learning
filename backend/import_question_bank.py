@@ -24,7 +24,7 @@ LESSON_TITLE_MAP = {
 DIFFICULTY_MAP = {
     "basic": "basic",
     "moderate": "moderate",
-    "hard": "advanced"
+    "hard": "hard"
 }
 
 
