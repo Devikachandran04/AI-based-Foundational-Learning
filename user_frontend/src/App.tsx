@@ -3951,9 +3951,9 @@ console.log("GRAPH DATA:", data.graph_data);
                   <th className="py-3 pr-6">Lesson</th>
                   <th className="py-3 pr-6">Current Quiz Path</th>
                   <th className="py-3 pr-6">Latest Score</th>
-                  <th className="py-3 pr-6">Basic Correct</th>
-                  <th className="py-3 pr-6">Moderate Correct</th>
-                  <th className="py-3 pr-6">Hard Correct</th>
+                  <th className="py-3 pr-6">Basic </th>
+                  <th className="py-3 pr-6">Moderate </th>
+                  <th className="py-3 pr-6">Hard </th>
                   <th className="py-3">Recommended Action</th>
                 </tr>
               </thead>
@@ -3990,7 +3990,7 @@ console.log("GRAPH DATA:", data.graph_data);
       </div>
 
             {/* Quiz Attempt Progress */}
-      <div className="bg-stone-50 rounded-3xl p-6 mb-6">
+      <div className="bg-stone-50 rounded-3xl p-6 mb-6 print:break-inside-avoid print:page-break-inside-avoid">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
           <h2 className="text-lg font-bold text-teal-800">Quiz Attempt Progress</h2>
 
@@ -4008,8 +4008,8 @@ console.log("GRAPH DATA:", data.graph_data);
         </div>
 
         {selectedGraph && graphLessonNames.length > 0 ? (
-          <div className="bg-white rounded-2xl p-6 border border-stone-200">
-            <div className="h-72 flex items-end gap-6 border-l border-b border-stone-300 pl-4 pb-4 overflow-x-auto">
+          <div className="bg-white rounded-2xl p-6 border border-stone-200 print:break-inside-avoid print:page-break-inside-avoid">
+            <div className="h-72 print:h-56 flex items-end gap-6 border-l border-b border-stone-300 pl-4 pb-4 overflow-x-auto print:overflow-visible">
               {Array.from({
                 length: Math.max(
                   selectedGraph?.mixed_scores?.length || 0,
@@ -4031,7 +4031,7 @@ console.log("GRAPH DATA:", data.graph_data);
                     key={i}
                     className="min-w-[90px] h-full flex flex-col justify-end items-center"
                   >
-                    <div className="w-full flex items-end justify-center gap-2 h-[220px]">
+                    <div className="w-full flex items-end justify-center gap-2 h-[220px] print:h-[160px]">
                       <div className="w-8 flex flex-col items-center justify-end">
                         {mixed !== null ? (
                           <>
@@ -4039,11 +4039,11 @@ console.log("GRAPH DATA:", data.graph_data);
                               {mixed}
                             </span>
                             <div
-                              className="w-full bg-green-500 rounded-t-md"
-                              style={{
-                                height: `${Math.max((mixed / 100) * 180, 18)}px`,
-                              }}
-                            />
+  className="w-full rounded-t-md bg-green-500 print:bg-white print:border print:border-black"
+  style={{
+    height: `${Math.max((mixed / 100) * 180, 18)}px`,
+  }}
+/>
                           </>
                         ) : (
                           <div className="w-full h-[18px]" />
@@ -4057,11 +4057,11 @@ console.log("GRAPH DATA:", data.graph_data);
                               {simplified}
                             </span>
                             <div
-                              className="w-full bg-orange-400 rounded-t-md"
-                              style={{
-                                height: `${Math.max((simplified / 100) * 180, 18)}px`,
-                              }}
-                            />
+  className="w-full rounded-t-md bg-orange-400 print:bg-white print:border print:border-black"
+  style={{
+    height: `${Math.max((simplified / 100) * 180, 18)}px`,
+  }}
+/>
                           </>
                         ) : (
                           <div className="w-full h-[18px]" />
