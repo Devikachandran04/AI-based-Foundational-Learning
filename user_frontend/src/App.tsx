@@ -3063,42 +3063,45 @@ const Navbar = ({
         </div>
 
         <div className="flex items-center gap-4 sm:gap-6">
-          <div className="text-right hidden sm:block">
-            <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-0.5">
-              {user?.class}
-            </p>
-            <button
-              onClick={onProfile}
-              className="font-serif text-lg italic text-teal-900 leading-none hover:underline"
-            >
-              {user?.username}
-            </button>
-          </div>
+  <div className="hidden sm:flex flex-col items-center justify-center">
+  <img
+    src="https://i.pinimg.com/originals/b6/47/0b/b6470b72ee3ad6dc963ad5a5f792b264.jpg?nii=t"
+    alt="Profile"
+    className="w-10 h-10 rounded-full shadow-sm cursor-pointer hover:scale-105 transition-transform object-cover"
+    onClick={onProfile}
+  />
 
-          {/* NEED HELP? Leaf - FIXED 2026 */}
-          <button 
-            onClick={onHelp}
-            className="flex flex-col items-center gap-1 group active:scale-95"
-          >
-            <div className="relative p-2.5 bg-[#A7D8F0] text-white rounded-full shadow-md hover:shadow-[#A7D8F0]/40 transition-all">
-              <Leaf size={20} className="fill-current" />
-              {hasUnreadHelp && (
-                <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
-              )}
-            </div>
-            <span className="text-[9px] font-black text-teal-800 uppercase tracking-widest opacity-70 group-hover:opacity-100 transition-opacity">
-              Help 
-            </span>
-          </button>
+  <button
+    onClick={onProfile}
+    className="font-serif text-xs italic text-teal-900 leading-none mt-1 hover:underline"
+  >
+    {user?.username}
+  </button>
+</div>
 
-          <button 
-            onClick={onLogout}
-            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-stone-100 transition-colors text-muted hover:text-rose-500"
-            title="Logout"
-          >
-            <LogOut size={18} />
-          </button>
-        </div>
+  <button 
+    onClick={onHelp}
+    className="flex flex-col items-center gap-1 group active:scale-95"
+  >
+    <div className="relative p-2.5 bg-[#A7D8F0] text-white rounded-full shadow-md hover:shadow-[#A7D8F0]/40 transition-all">
+      <Leaf size={20} className="fill-current" />
+      {hasUnreadHelp && (
+        <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
+      )}
+    </div>
+    <span className="text-[9px] font-black text-teal-800 uppercase tracking-widest opacity-70 group-hover:opacity-100 transition-opacity">
+      Help
+    </span>
+  </button>
+
+  <button 
+    onClick={onLogout}
+    className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-stone-100 transition-colors text-muted hover:text-rose-500"
+    title="Logout"
+  >
+    <LogOut size={18} />
+  </button>
+</div>
       </div>
     </nav>
   );
