@@ -32,14 +32,16 @@ def get_student_profile():
 
     try:
         student_obj_id = ObjectId(student_id)
-    except:
+    except Exception:
         return jsonify({"error": "Invalid student id"}), 400
 
     student = users_col.find_one({"_id": student_obj_id})
     if not student:
         return jsonify({"error": "Student not found"}), 404
 
-    attempts = list(attempts_col.find({"user_id": student_id}).sort("created_at", 1))
+    attempts = list(
+        attempts_col.find({"user_id": student_id}).sort("created_at", 1)
+    )
     profile = profiles_col.find_one({"user_id": student_id}) or {}
 
     completed_lessons = profile.get("completed_lessons", [])
@@ -60,10 +62,14 @@ def get_student_profile():
         overall_status = "Stable"
 
     total_lessons = lessons_col.count_documents({})
-    course_completion = round((len(completed_lessons) / total_lessons) * 100) if total_lessons > 0 else 0
+    course_completion = (
+        round((len(completed_lessons) / total_lessons) * 100)
+        if total_lessons > 0 else 0
+    )
 
     all_lessons = list(lessons_col.find().sort("title", 1))
 
+    # Learning Path
     learning_path = []
     first_incomplete_found = False
     completed_set = set(completed_lessons)
@@ -86,6 +92,7 @@ def get_student_profile():
             "state": state
         })
 
+    # Organize attempts by lesson
     attempts_by_lesson = {}
     for a in attempts:
         lesson_id = a.get("lesson_id")
@@ -103,7 +110,10 @@ def get_student_profile():
 
         if latest_attempt:
             quiz_type = latest_attempt.get("quiz_type", "mixed")
-            quiz_label = "Main Quiz" if quiz_type == "mixed" else "Simplified Quiz"
+            quiz_label = (
+                "Main Quiz" if quiz_type == "mixed"
+                else "Simplified Quiz"
+            )
             latest_score = latest_attempt.get("score", 0)
             decision = latest_attempt.get("decision", "")
         else:
@@ -112,16 +122,28 @@ def get_student_profile():
             latest_score = 0
             decision = ""
 
+        # Corrected Indentation
         basic_correct = sum(
-            a.get("difficulty_correct", {}).get("basic", 0)
+            a.get("difficulty_correct", {}).get(
+                "basic",
+                a.get("difficulty_breakdown", {}).get("basic", 0)
+            )
             for a in lesson_attempts
         )
+
         moderate_correct = sum(
-            a.get("difficulty_correct", {}).get("moderate", 0)
+            a.get("difficulty_correct", {}).get(
+                "moderate",
+                a.get("difficulty_breakdown", {}).get("moderate", 0)
+            )
             for a in lesson_attempts
         )
+
         hard_correct = sum(
-            a.get("difficulty_correct", {}).get("hard", 0)
+            a.get("difficulty_correct", {}).get(
+                "hard",
+                a.get("difficulty_breakdown", {}).get("hard", 0)
+            )
             for a in lesson_attempts
         )
 

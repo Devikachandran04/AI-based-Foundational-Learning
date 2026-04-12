@@ -4002,7 +4002,7 @@ const selectedGraph =
                           <div className="w-1/2 flex flex-col items-center">
                             <div
                               className="w-full rounded-t-md bg-green-500"
-                              style={{ height: `${Math.max(mixed, 6)}%` }}
+                              style={{ height: `${mixed === 0 ? 12 : Math.max(mixed, 12)}%` }}
                             />
                           </div>
                         ) : (
@@ -4013,7 +4013,7 @@ const selectedGraph =
                           <div className="w-1/2 flex flex-col items-center">
                             <div
                               className="w-full rounded-t-md bg-orange-400"
-                              style={{ height: `${Math.max(simplified, 6)}%` }}
+                              style={{ height: `${simplified === 0 ? 12 : Math.max(simplified, 12)}%` }}
                             />
                           </div>
                         ) : (
