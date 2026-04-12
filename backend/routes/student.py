@@ -69,10 +69,14 @@ def get_student_profile():
 
     all_lessons = list(lessons_col.find().sort("title", 1))
 
-    # Learning Path
     learning_path = []
-    first_incomplete_found = False
     completed_set = set(completed_lessons)
+
+    attempted_lessons = set()
+    for a in attempts:
+        lesson_id = a.get("lesson_id")
+        if lesson_id:
+            attempted_lessons.add(str(lesson_id))
 
     for lesson in all_lessons:
         lesson_id = str(lesson["_id"])
@@ -80,11 +84,10 @@ def get_student_profile():
 
         if lesson_id in completed_set:
             state = "Completed"
-        elif not first_incomplete_found:
-            state = "In Progress"
-            first_incomplete_found = True
+        elif lesson_id in attempted_lessons:
+            state = "Attempted"
         else:
-            state = "Pending"
+            state = "Not Started"
 
         learning_path.append({
             "lesson_id": lesson_id,

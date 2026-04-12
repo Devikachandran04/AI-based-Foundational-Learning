@@ -3794,6 +3794,8 @@ const selectedGraph =
         );
 
         const data = await res.json();
+        console.log("PROFILE DATA:", data);
+console.log("GRAPH DATA:", data.graph_data);
         setStudent(data);
       } catch (err) {
         console.error("Profile fetch error:", err);
@@ -3910,7 +3912,7 @@ const selectedGraph =
 
       {/* Learning Path */}
       <div className="bg-stone-50 rounded-3xl p-6 mb-6">
-        <h2 className="text-lg font-bold mb-4 text-teal-800">Learning Path</h2>
+        <h2 className="text-lg font-bold mb-4 text-teal-800">Lesson Journey</h2>
         {student.learning_path && student.learning_path.length > 0 ? (
           <div className="flex flex-wrap items-center gap-3">
             {student.learning_path.map((lesson: any, index: number) => (
@@ -3987,7 +3989,7 @@ const selectedGraph =
         )}
       </div>
 
-      {/* Quiz Attempt Progress */}
+            {/* Quiz Attempt Progress */}
       <div className="bg-stone-50 rounded-3xl p-6 mb-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
           <h2 className="text-lg font-bold text-teal-800">Quiz Attempt Progress</h2>
@@ -4006,62 +4008,86 @@ const selectedGraph =
         </div>
 
         {selectedGraph && graphLessonNames.length > 0 ? (
-          <>
-            <div className="bg-white rounded-2xl p-5 border border-stone-200">
-              <div className="h-60 flex items-end gap-4">
-                {Array.from({
-                  length: Math.max(
-                    selectedGraph?.mixed_scores?.length || 0,
-                    selectedGraph?.simplified_scores?.length || 0
-                  ),
-                }).map((_, i) => {
-                  const mixed = selectedGraph?.mixed_scores?.[i];
-                  const simplified = selectedGraph?.simplified_scores?.[i];
+          <div className="bg-white rounded-2xl p-6 border border-stone-200">
+            <div className="h-72 flex items-end gap-6 border-l border-b border-stone-300 pl-4 pb-4 overflow-x-auto">
+              {Array.from({
+                length: Math.max(
+                  selectedGraph?.mixed_scores?.length || 0,
+                  selectedGraph?.simplified_scores?.length || 0
+                ),
+              }).map((_, i) => {
+                const mixed =
+                  selectedGraph?.mixed_scores?.[i] !== undefined
+                    ? Number(selectedGraph.mixed_scores[i])
+                    : null;
 
-                  return (
-                    <div key={i} className="flex-1 flex flex-col items-center">
-                      <div className="w-full h-44 flex items-end justify-center gap-2">
-                        {mixed !== undefined ? (
-                          <div className="w-1/2 flex flex-col items-center">
-                            <div
-                              className="w-full rounded-t-md bg-green-500"
-                              style={{ height: `${mixed === 0 ? 12 : Math.max(mixed, 12)}%` }}
-                            />
-                          </div>
-                        ) : (
-                          <div className="w-1/2" />
-                        )}
+                const simplified =
+                  selectedGraph?.simplified_scores?.[i] !== undefined
+                    ? Number(selectedGraph.simplified_scores[i])
+                    : null;
 
-                        {simplified !== undefined ? (
-                          <div className="w-1/2 flex flex-col items-center">
+                return (
+                  <div
+                    key={i}
+                    className="min-w-[90px] h-full flex flex-col justify-end items-center"
+                  >
+                    <div className="w-full flex items-end justify-center gap-2 h-[220px]">
+                      <div className="w-8 flex flex-col items-center justify-end">
+                        {mixed !== null ? (
+                          <>
+                            <span className="text-[11px] font-bold text-stone-700 mb-1">
+                              {mixed}
+                            </span>
                             <div
-                              className="w-full rounded-t-md bg-orange-400"
-                              style={{ height: `${simplified === 0 ? 12 : Math.max(simplified, 12)}%` }}
+                              className="w-full bg-green-500 rounded-t-md"
+                              style={{
+                                height: `${Math.max((mixed / 100) * 180, 18)}px`,
+                              }}
                             />
-                          </div>
+                          </>
                         ) : (
-                          <div className="w-1/2" />
+                          <div className="w-full h-[18px]" />
                         )}
                       </div>
 
-                      <span className="text-xs mt-2 font-medium">A{i + 1}</span>
+                      <div className="w-8 flex flex-col items-center justify-end">
+                        {simplified !== null ? (
+                          <>
+                            <span className="text-[11px] font-bold text-stone-700 mb-1">
+                              {simplified}
+                            </span>
+                            <div
+                              className="w-full bg-orange-400 rounded-t-md"
+                              style={{
+                                height: `${Math.max((simplified / 100) * 180, 18)}px`,
+                              }}
+                            />
+                          </>
+                        ) : (
+                          <div className="w-full h-[18px]" />
+                        )}
+                      </div>
                     </div>
-                  );
-                })}
-              </div>
 
-              <div className="flex gap-6 mt-4 text-sm text-stone-600">
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-green-500 inline-block" />
-                  Mixed Quiz
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-orange-400 inline-block" />
-                  Simplified Quiz
-                </div>
+                    <span className="text-xs mt-3 font-medium text-stone-600">
+                      A{i + 1}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="flex gap-6 mt-5 text-sm text-stone-600">
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-green-500 inline-block" />
+                Mixed Quiz
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-orange-400 inline-block" />
+                Simplified Quiz
               </div>
             </div>
-          </>
+          </div>
         ) : (
           <p className="text-stone-600">No quiz attempt data available yet</p>
         )}
