@@ -185,54 +185,59 @@ const QuizPage = ({
   const [submitting, setSubmitting] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [backendResult, setBackendResult] = useState<any>(null);
-
+  const [quizError, setQuizError] = useState<string | null>(null);
   const currentQuestion = questions[currentQuestionIdx];
 
   React.useEffect(() => {
     const startQuizFromBackend = async () => {
-      try {
-        setLoadingQuiz(true);
+  try {
+    setLoadingQuiz(true);
+    setQuizError(null);
 
-        const token = localStorage.getItem("token");
-        const dbLessonId = LESSON_ID_MAP[lessonId];
+    const token = localStorage.getItem("token");
+    const dbLessonId = LESSON_ID_MAP[lessonId];
 
-        if (!dbLessonId) {
-          console.error(`No backend lesson id mapped for ${lessonId}`);
-          return;
-        }
+    if (!dbLessonId) {
+      const msg = `No backend lesson id mapped for ${lessonId}`;
+      console.error(msg);
+      setQuizError(msg);
+      return;
+    }
 
-        const res = await fetch(
-          "https://ai-based-foundational-learning-production.up.railway.app/api/quiz/start",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-  lesson_id: dbLessonId,
-  quiz_mode: isSimpler ? "simplified" : "mixed",
-}),
-          }
-        );
-
-        const data = await res.json();
-
-        if (!res.ok) {
-  console.error("Quiz start failed:", data);
-  alert(data.error || "Failed to start quiz");
-  return;
-}
-
-        setQuizId(data.quiz_id);
-        setQuestions(data.questions || []);
-      } catch (err) {
-        console.error("Quiz start error:", err);
-        console.error("Failed to start quiz");
-      } finally {
-        setLoadingQuiz(false);
+    const res = await fetch(
+      "https://ai-based-foundational-learning-production.up.railway.app/api/quiz/start",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          lesson_id: dbLessonId,
+          quiz_mode: isSimpler ? "simplified" : "mixed",
+        }),
       }
-    };
+    );
+
+    const data = await res.json();
+    console.log("QUIZ START RESPONSE:", data);
+
+    if (!res.ok) {
+      const msg = data.error || "Failed to start quiz";
+      console.error("Quiz start failed:", data);
+      setQuizError(msg);
+      return;
+    }
+
+    setQuizId(data.quiz_id);
+    setQuestions(data.questions || []);
+  } catch (err) {
+    console.error("Quiz start error:", err);
+    setQuizError("Something went wrong while starting the quiz.");
+  } finally {
+    setLoadingQuiz(false);
+  }
+};
 
     startQuizFromBackend();
   }, [lessonId]);
@@ -303,21 +308,39 @@ const QuizPage = ({
     );
   }
 
-  if (!questions.length) {
-    return (
-      <div className="max-w-2xl w-full bg-white p-10 rounded-[40px] shadow-xl border border-stone-50 text-center">
-        <p className="text-xl font-medium text-stone-600 mb-6">No quiz questions found.</p>
-        {onBack && (
-          <button
-            onClick={onBack}
-            className="px-6 py-3 bg-ink text-white rounded-2xl"
-          >
-            Back
-          </button>
-        )}
-      </div>
-    );
-  }
+  if (quizError) {
+  return (
+    <div className="max-w-2xl w-full bg-white p-10 rounded-[40px] shadow-xl border border-stone-50 text-center">
+      <p className="text-xl font-medium text-red-600 mb-4">Quiz failed to load.</p>
+      <p className="text-sm text-stone-600 mb-6">{quizError}</p>
+      {onBack && (
+        <button
+          onClick={onBack}
+          className="px-6 py-3 bg-ink text-white rounded-2xl"
+        >
+          Back
+        </button>
+      )}
+    </div>
+  );
+}
+
+if (!questions.length) {
+  return (
+    <div className="max-w-2xl w-full bg-white p-10 rounded-[40px] shadow-xl border border-stone-50 text-center">
+      <p className="text-xl font-medium text-stone-600 mb-6">No quiz questions found.</p>
+      {onBack && (
+        <button
+          onClick={onBack}
+          className="px-6 py-3 bg-ink text-white rounded-2xl"
+        >
+          Back
+        </button>
+      )}
+    </div>
+  );
+}
+        
 
   if (showResult && backendResult) {
   const percentage = backendResult.score || 0;

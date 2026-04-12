@@ -20,11 +20,6 @@ def _get_attempt_no(user_id: str, lesson_id: str) -> int:
 
 
 def _pick_questions(lesson_id: str, quiz_mode: str):
-    """
-    mixed      -> 3 basic + 4 moderate + 3 hard
-    simplified -> 5 basic + 5 moderate
-    """
-
     if quiz_mode == "simplified":
         plan = [("basic", 5), ("moderate", 5)]
         quiz_type = "simplified"
@@ -39,6 +34,9 @@ def _pick_questions(lesson_id: str, quiz_mode: str):
         "hard": 0
     }
 
+    print("QUIZ MODE:", quiz_mode)
+    print("LESSON ID RECEIVED:", lesson_id)
+
     for difficulty, count in plan:
         questions = list(question_bank_col.aggregate([
             {
@@ -49,6 +47,13 @@ def _pick_questions(lesson_id: str, quiz_mode: str):
             },
             {"$sample": {"size": count}}
         ]))
+
+        print("QUIZ DEBUG =>", {
+            "lesson_id": str(lesson_id),
+            "difficulty": difficulty,
+            "required": count,
+            "found": len(questions)
+        })
 
         if len(questions) < count:
             raise ValueError(
