@@ -22,12 +22,17 @@ function TeacherDashboard() {
 
         if (token) {
           localStorage.setItem("token", token);
+          localStorage.setItem("teacher_token", token);
         } else {
-          token = localStorage.getItem("token");
+          token =
+            localStorage.getItem("teacher_token") ||
+            localStorage.getItem("token");
         }
 
         if (!token) {
-          setSessionError("No login session found. Please login again.");
+          setSessionError(
+            "No login session found. Open the deployed admin flow and login again."
+          );
           setLoading(false);
           return;
         }
@@ -47,35 +52,20 @@ function TeacherDashboard() {
         ]);
 
         setSummaryData({
-          total_students:
-            summaryRes.data && summaryRes.data.total_students
-              ? summaryRes.data.total_students
-              : 0,
-          avg_score_7d:
-            summaryRes.data && summaryRes.data.avg_score_7d
-              ? summaryRes.data.avg_score_7d
-              : 0,
+          total_students: summaryRes.data?.total_students ?? 0,
+          avg_score_7d: summaryRes.data?.avg_score_7d ?? 0,
         });
 
-        setLowScoreCount(
-          lowRes.data && lowRes.data.students ? lowRes.data.students.length : 0
-        );
-        setWeakCount(
-          weakRes.data && weakRes.data.weak_topics
-            ? weakRes.data.weak_topics.length
-            : 0
-        );
-        setHelpCount(
-          helpRes.data && helpRes.data.all_doubts
-            ? helpRes.data.all_doubts.length
-            : 0
-        );
+        setLowScoreCount(lowRes.data?.students?.length ?? 0);
+        setWeakCount(weakRes.data?.weak_topics?.length ?? 0);
+        setHelpCount(helpRes.data?.all_doubts?.length ?? 0);
       } catch (err) {
         console.error("Error fetching dashboard data:", err);
 
-        if (err && err.response && err.response.status === 401) {
+        if (err?.response?.status === 401) {
           localStorage.removeItem("token");
-          setSessionError("Session expired. Please login again.");
+          localStorage.removeItem("teacher_token");
+          setSessionError("Session expired. Login again from the deployed site.");
         }
       } finally {
         setLoading(false);
@@ -87,12 +77,8 @@ function TeacherDashboard() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("teacher_token");
     localStorage.removeItem("grammar-pal-storage");
-    window.location.href =
-      "https://ai-based-foundational-learning-user.vercel.app/";
-  };
-
-  const handleLoginRedirect = () => {
     window.location.href =
       "https://ai-based-foundational-learning-user.vercel.app/";
   };
@@ -101,37 +87,6 @@ function TeacherDashboard() {
     summaryData.total_students > 0
       ? Math.min(100, Math.round((summaryData.avg_score_7d || 0) * 0.8))
       : 0;
-
-  if (loading) {
-    return (
-      <div className="dashboard-container">
-        <p className="loading-text">Loading dashboard...</p>
-      </div>
-    );
-  }
-
-  if (sessionError) {
-    return (
-      <div className="dashboard-container">
-        <div className="top-navbar">
-          <div className="logo-section">
-            <h2 className="logo-text">GrammarPal</h2>
-            <p className="logo-subtitle">Admin Panel</p>
-          </div>
-        </div>
-
-        <div className="analytics-panel" style={{ maxWidth: "700px", margin: "40px auto" }}>
-          <h3>Session Error</h3>
-          <p className="dashboard-subheading" style={{ marginBottom: "20px" }}>
-            {sessionError}
-          </p>
-          <button className="card-btn" onClick={handleLoginRedirect}>
-            Go to Login
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="dashboard-container">
@@ -150,160 +105,179 @@ function TeacherDashboard() {
         <div>
           <h1 className="dashboard-heading">Grammar Learning Dashboard</h1>
           <p className="dashboard-subheading">
-            Monitor student progress, lesson performance, and support requests.
+            Monitor student progress, weak lesson areas, and support conversations.
           </p>
         </div>
       </div>
 
-      <div className="admin-hero">
-        <div className="hero-panel">
-          <p className="hero-eyebrow">Teacher Overview</p>
-          <h2 className="hero-title">Academic Monitoring Hub</h2>
-          <p className="hero-text">
-            This dashboard helps teachers track student performance, review
-            weak lesson areas, monitor help requests, and open detailed learner
-            pages for closer follow-up.
-          </p>
+      <div className="quick-nav">
+        <Link to="/dashboard" className="quick-link active">Overview</Link>
+        <Link to="/progress" className="quick-link">Student Insights</Link>
+        <Link to="/weak-topics" className="quick-link">Lesson Analytics</Link>
+        <Link to="/low-scores" className="quick-link">Support Cases</Link>
+        <Link to="/help-requests" className="quick-link">Help Requests</Link>
+      </div>
 
-          <div className="hero-mini-grid">
-            <div className="hero-mini-card">
-              <h5>Total Students</h5>
+      {loading ? (
+        <p className="loading-text">Loading dashboard...</p>
+      ) : sessionError ? (
+        <div className="analytics-panel">
+          <h3>Session Required</h3>
+          <p className="dashboard-subheading">{sessionError}</p>
+          <div style={{ marginTop: "18px" }}>
+            <button
+              className="card-btn"
+              onClick={() => {
+                window.location.href =
+                  "https://ai-based-foundational-learning-user.vercel.app/";
+              }}
+            >
+              Go to Login
+            </button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="admin-hero">
+            <div className="hero-panel">
+              <p className="hero-eyebrow">Teacher Overview</p>
+              <h2 className="hero-title">Academic Monitoring Hub</h2>
+              <p className="hero-text">
+                Review student performance, identify difficult grammar concepts,
+                follow support cases, and move quickly into detailed learner pages.
+              </p>
+
+              <div className="hero-mini-grid">
+                <div className="hero-mini-card">
+                  <h5>Total Students</h5>
+                  <p>{summaryData.total_students}</p>
+                </div>
+
+                <div className="hero-mini-card">
+                  <h5>Average Score</h5>
+                  <p>{summaryData.avg_score_7d}%</p>
+                </div>
+
+                <div className="hero-mini-card">
+                  <h5>Need Support</h5>
+                  <p>{lowScoreCount}</p>
+                </div>
+
+                <div className="hero-mini-card">
+                  <h5>Pending Help</h5>
+                  <p>{helpCount}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="insight-panel">
+              <h3>Admin Insights</h3>
+
+              <div className="insight-item warning">
+                <strong>{weakCount} lesson areas need attention</strong>
+                Review weak-topic analytics to identify the most difficult grammar concepts.
+              </div>
+
+              <div className="insight-item danger">
+                <strong>{lowScoreCount} learners need support</strong>
+                Repeated low-scoring students should be monitored from the support page.
+              </div>
+
+              <div className="insight-item success">
+                <strong>{helpCount} help threads active</strong>
+                Student doubts and teacher follow-ups are available in the help request panel.
+              </div>
+            </div>
+          </div>
+
+          <div className="kpi-grid">
+            <div className="kpi-card">
+              <h4>Total Students</h4>
               <p>{summaryData.total_students}</p>
             </div>
 
-            <div className="hero-mini-card">
-              <h5>Average Score</h5>
+            <div className="kpi-card average-card">
+              <h4>Average Score</h4>
               <p>{summaryData.avg_score_7d}%</p>
             </div>
 
-            <div className="hero-mini-card">
-              <h5>Need Support</h5>
+            <div className="kpi-card">
+              <h4>Need Support</h4>
               <p>{lowScoreCount}</p>
             </div>
 
-            <div className="hero-mini-card">
-              <h5>Pending Help</h5>
+            <div className="kpi-card lowest-card">
+              <h4>Pending Help</h4>
               <p>{helpCount}</p>
             </div>
           </div>
-        </div>
 
-        <div className="insight-panel">
-          <h3>Admin Insights</h3>
+          <div className="analytics-two-col">
+            <div className="analytics-panel">
+              <h3>Quick Access</h3>
 
-          <div className="insight-item warning">
-            <strong>{weakCount} lesson areas need attention</strong>
-            Review topic analytics to identify the grammar concepts learners
-            struggle with the most.
+              <div className="card-grid">
+                <div className="dashboard-card">
+                  <div className="card-icon">SI</div>
+                  <h3>Student Insights</h3>
+                  <p>View learner scores, risk levels, and direct profile access.</p>
+                  <Link to="/progress">
+                    <button className="card-btn">Open Insights</button>
+                  </Link>
+                </div>
+
+                <div className="dashboard-card">
+                  <div className="card-icon">LA</div>
+                  <h3>Lesson Analytics</h3>
+                  <p>Track weak grammar lessons and identify difficult learning areas.</p>
+                  <Link to="/weak-topics">
+                    <button className="card-btn">Open Analytics</button>
+                  </Link>
+                </div>
+
+                <div className="dashboard-card">
+                  <div className="card-icon">SC</div>
+                  <h3>Support Cases</h3>
+                  <p>Monitor students with repeated low scores and open learner profiles.</p>
+                  <Link to="/low-scores">
+                    <button className="card-btn">Open Support</button>
+                  </Link>
+                </div>
+
+                <div className="dashboard-card">
+                  <div className="card-icon">HR</div>
+                  <h3>Help Requests</h3>
+                  <p>Open student conversations, review doubts, and reply from one place.</p>
+                  <Link to="/help-requests">
+                    <button className="card-btn">Open Chats</button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            <div className="analytics-panel">
+              <h3>Support Snapshot</h3>
+
+              <div className="side-stack">
+                <div className="side-stat-card">
+                  <h5>Average Completion</h5>
+                  <p>{averageCompletion}%</p>
+                </div>
+
+                <div className="side-stat-card">
+                  <h5>Weak Lessons</h5>
+                  <p>{weakCount}</p>
+                </div>
+
+                <div className="side-stat-card">
+                  <h5>Open Chats</h5>
+                  <p>{helpCount}</p>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <div className="insight-item danger">
-            <strong>{lowScoreCount} students need support</strong>
-            These learners are currently showing lower performance and may
-            need closer monitoring.
-          </div>
-
-          <div className="insight-item success">
-            <strong>{helpCount} help threads available</strong>
-            Student doubts and follow-up replies can be managed from the
-            help request section.
-          </div>
-        </div>
-      </div>
-
-      <div className="card-grid">
-        <div className="dashboard-card">
-          <div className="card-icon">SI</div>
-          <h3>Student Insights</h3>
-          <p>View learner scores, risk levels, and overall student performance.</p>
-          <span className="badge">{summaryData.total_students} Learners</span>
-          <br />
-          <br />
-          <Link to="/progress">
-            <button className="card-btn">Open Insights</button>
-          </Link>
-        </div>
-
-        <div className="dashboard-card">
-          <div className="card-icon">LA</div>
-          <h3>Lesson Analytics</h3>
-          <p>Check weak grammar lessons and identify difficult topic areas.</p>
-          <span className="badge warning">{weakCount} Lessons</span>
-          <br />
-          <br />
-          <Link to="/weak-topics">
-            <button className="card-btn">Open Analytics</button>
-          </Link>
-        </div>
-
-        <div className="dashboard-card">
-          <div className="card-icon">SS</div>
-          <h3>Students Needing Support</h3>
-          <p>Review learners with repeated low scores and monitor their progress.</p>
-          <span className="badge warning">{lowScoreCount} Students</span>
-          <br />
-          <br />
-          <Link to="/low-scores">
-            <button className="card-btn">View Students</button>
-          </Link>
-        </div>
-
-        <div className="dashboard-card">
-          <div className="card-icon">HR</div>
-          <h3>Help Requests</h3>
-          <p>Open student chats, view doubts, and send teacher replies.</p>
-          <span className="badge danger">{helpCount} Threads</span>
-          <br />
-          <br />
-          <Link to="/help-requests">
-            <button className="card-btn">Open Chats</button>
-          </Link>
-        </div>
-      </div>
-
-      <div className="kpi-grid">
-        <div className="kpi-card">
-          <h4>Total Students</h4>
-          <p>{summaryData.total_students}</p>
-        </div>
-
-        <div className="kpi-card average-card">
-          <h4>Average Score</h4>
-          <p>{summaryData.avg_score_7d}%</p>
-        </div>
-
-        <div className="kpi-card">
-          <h4>Weak Lessons</h4>
-          <p>{weakCount}</p>
-        </div>
-
-        <div className="kpi-card lowest-card">
-          <h4>Pending Replies</h4>
-          <p>{helpCount}</p>
-        </div>
-      </div>
-
-      <div className="kpi-grid" style={{ marginTop: "24px" }}>
-        <div className="kpi-card">
-          <h4>Average Completion</h4>
-          <p>{averageCompletion}%</p>
-        </div>
-
-        <div className="kpi-card">
-          <h4>Support Cases</h4>
-          <p>{lowScoreCount}</p>
-        </div>
-
-        <div className="kpi-card">
-          <h4>Lesson Alerts</h4>
-          <p>{weakCount}</p>
-        </div>
-
-        <div className="kpi-card">
-          <h4>Open Chats</h4>
-          <p>{helpCount}</p>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }

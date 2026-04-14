@@ -22,8 +22,9 @@ function WeakTopicsDetails() {
 
     if (t) {
       localStorage.setItem("token", t);
+      localStorage.setItem("teacher_token", t);
     } else {
-      t = localStorage.getItem("token");
+      t = localStorage.getItem("teacher_token") || localStorage.getItem("token");
     }
 
     setToken(t);
@@ -61,15 +62,40 @@ function WeakTopicsDetails() {
 
   const barColors = ["#e74c3c", "#f39c12", "#2ecc71", "#3498db", "#9b59b6", "#16a085"];
 
+  const getRiskLevel = (score) => {
+    if (score < 50) return "High";
+    if (score < 65) return "Medium";
+    return "Low";
+  };
+
   return (
     <div className="analytics-page">
-      <div className="analytics-header">
-        <div className="top-bar">
-          <h1 className="dashboard-heading">📚 Lesson Analytics</h1>
+      <div className="top-navbar">
+        <div className="logo-section">
+          <h2 className="logo-text">GrammarPal</h2>
+          <p className="logo-subtitle">Admin Panel</p>
         </div>
+
         <Link to="/dashboard">
-          <button className="back-btn">← Back</button>
+          <button className="back-btn">Back</button>
         </Link>
+      </div>
+
+      <div className="top-bar">
+        <div>
+          <h1 className="dashboard-heading">Lesson Analytics</h1>
+          <p className="dashboard-subheading">
+            Understand which grammar lessons are producing the lowest scores.
+          </p>
+        </div>
+      </div>
+
+      <div className="quick-nav">
+        <Link to="/dashboard" className="quick-link">Overview</Link>
+        <Link to="/progress" className="quick-link">Student Insights</Link>
+        <Link to="/weak-topics" className="quick-link active">Lesson Analytics</Link>
+        <Link to="/low-scores" className="quick-link">Support Cases</Link>
+        <Link to="/help-requests" className="quick-link">Help Requests</Link>
       </div>
 
       <div className="kpi-grid">
@@ -77,70 +103,74 @@ function WeakTopicsDetails() {
           <h4>Total Weak Lessons</h4>
           <p>{weakTopics.length}</p>
         </div>
-        <div className="kpi-card">
+
+        <div className="kpi-card lowest-card">
           <h4>High Risk Lessons</h4>
           <p>{highRiskCount}</p>
         </div>
-        <div className="kpi-card">
+
+        <div className="kpi-card average-card">
           <h4>Average Lesson Score</h4>
           <p>{avgPerformance}%</p>
         </div>
       </div>
 
-      <div style={{ width: "90%", height: 320, margin: "30px auto" }}>
-        <ResponsiveContainer>
-          <BarChart data={chartData} barCategoryGap="25%">
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" tick={{ fill: "#ffffff", fontSize: 13 }} />
-            <YAxis
-              domain={[0, 100]}
-              tickFormatter={(value) => `${value}%`}
-              tick={{ fill: "#ffffff", fontSize: 13 }}
-            />
-            <Tooltip />
-            <Bar dataKey="value" radius={[10, 10, 0, 0]} barSize={70}>
-              {chartData.map((entry, index) => (
-                <Cell key={index} fill={barColors[index % barColors.length]} />
-              ))}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
+      <div className="chart-panel">
+        <h3>Weak Lesson Distribution</h3>
+        <div className="chart-area">
+          <ResponsiveContainer>
+            <BarChart data={chartData} barCategoryGap="25%">
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis domain={[0, 100]} tickFormatter={(value) => `${value}%`} />
+              <Tooltip formatter={(value) => `${value}%`} />
+              <Bar dataKey="value" radius={[10, 10, 0, 0]} barSize={70}>
+                {chartData.map((entry, index) => (
+                  <Cell key={index} fill={barColors[index % barColors.length]} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
 
       <div className="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Lesson / Topic</th>
-              <th>Average Score</th>
-              <th>Risk Level</th>
-            </tr>
-          </thead>
-          <tbody>
-            {weakTopics.length > 0 ? (
-              weakTopics.map((item, i) => {
-                const score = item.avg_score || 0;
-                const riskLevel = score < 50 ? "High" : score < 65 ? "Medium" : "Low";
-
-                return (
-                  <tr key={item.id || i}>
-                    <td>{item.topic}</td>
-                    <td>{score}%</td>
-                    <td>
-                      <span className={`risk-badge ${riskLevel.toLowerCase()}`}>
-                        {riskLevel}
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })
-            ) : (
+        <h3>Lesson Risk Overview</h3>
+        <div className="table-scroll">
+          <table>
+            <thead>
               <tr>
-                <td colSpan="3">No lesson analytics found.</td>
+                <th>Lesson / Topic</th>
+                <th>Average Score</th>
+                <th>Risk Level</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {weakTopics.length > 0 ? (
+                weakTopics.map((item, i) => {
+                  const score = item.avg_score || 0;
+                  const riskLevel = getRiskLevel(score);
+
+                  return (
+                    <tr key={item.id || i}>
+                      <td>{item.topic}</td>
+                      <td>{score}%</td>
+                      <td>
+                        <span className={`risk-badge ${riskLevel.toLowerCase()}`}>
+                          {riskLevel}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan="3">No lesson analytics found.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
