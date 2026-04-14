@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  Cell,
+} from "recharts";
 
 function WeakTopicsDetails() {
   const [weakTopics, setWeakTopics] = useState([]);
@@ -43,7 +52,6 @@ function WeakTopicsDetails() {
     value: item.avg_score || 0,
   }));
 
-  const COLORS = ["#e74c3c", "#f39c12", "#2ecc71", "#3498db", "#9b59b6"];
   const highRiskCount = weakTopics.filter((t) => (t.avg_score || 0) < 50).length;
   const avgPerformance = weakTopics.length
     ? Math.round(
@@ -51,11 +59,13 @@ function WeakTopicsDetails() {
       )
     : 0;
 
+  const barColors = ["#e74c3c", "#f39c12", "#2ecc71", "#3498db", "#9b59b6", "#16a085"];
+
   return (
     <div className="analytics-page">
       <div className="analytics-header">
         <div className="top-bar">
-          <h1 className="dashboard-heading">📚 Weak Topics Analytics</h1>
+          <h1 className="dashboard-heading">📚 Lesson Analytics</h1>
         </div>
         <Link to="/dashboard">
           <button className="back-btn">← Back</button>
@@ -64,38 +74,36 @@ function WeakTopicsDetails() {
 
       <div className="kpi-grid">
         <div className="kpi-card">
-          <h4>Total Weak Topics</h4>
+          <h4>Total Weak Lessons</h4>
           <p>{weakTopics.length}</p>
         </div>
         <div className="kpi-card">
-          <h4>High Risk Topics</h4>
+          <h4>High Risk Lessons</h4>
           <p>{highRiskCount}</p>
         </div>
         <div className="kpi-card">
-          <h4>Average Performance</h4>
+          <h4>Average Lesson Score</h4>
           <p>{avgPerformance}%</p>
         </div>
       </div>
 
-      <div style={{ width: "100%", height: 300, marginTop: "30px" }}>
+      <div style={{ width: "90%", height: 320, margin: "30px auto" }}>
         <ResponsiveContainer>
-          <PieChart>
-            <Pie
-              data={chartData}
-              cx="50%"
-              cy="50%"
-              labelLine={false}
-              label
-              outerRadius={110}
-              dataKey="value"
-            >
-              {chartData.map((entry, index) => (
-                <Cell key={index} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
+          <BarChart data={chartData} barCategoryGap="25%">
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" tick={{ fill: "#ffffff", fontSize: 13 }} />
+            <YAxis
+              domain={[0, 100]}
+              tickFormatter={(value) => `${value}%`}
+              tick={{ fill: "#ffffff", fontSize: 13 }}
+            />
             <Tooltip />
-            <Legend />
-          </PieChart>
+            <Bar dataKey="value" radius={[10, 10, 0, 0]} barSize={70}>
+              {chartData.map((entry, index) => (
+                <Cell key={index} fill={barColors[index % barColors.length]} />
+              ))}
+            </Bar>
+          </BarChart>
         </ResponsiveContainer>
       </div>
 
@@ -103,7 +111,7 @@ function WeakTopicsDetails() {
         <table>
           <thead>
             <tr>
-              <th>Topic</th>
+              <th>Lesson / Topic</th>
               <th>Average Score</th>
               <th>Risk Level</th>
             </tr>
@@ -128,7 +136,7 @@ function WeakTopicsDetails() {
               })
             ) : (
               <tr>
-                <td colSpan="3">No weak topics found.</td>
+                <td colSpan="3">No lesson analytics found.</td>
               </tr>
             )}
           </tbody>

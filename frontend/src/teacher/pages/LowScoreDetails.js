@@ -40,15 +40,13 @@ function LowScoreDetails() {
     fetchData();
   }, [token]);
 
-  const highRisk = students.filter(
-    (s) => (s.consecutive_low || 0) >= 3
-  ).length;
+  const highRisk = students.filter((s) => (s.consecutive_low || 0) >= 3).length;
 
   return (
     <div className="analytics-page">
       <div className="analytics-header">
         <div className="top-bar">
-          <h1 className="dashboard-heading">📉 Low Score Students Analytics</h1>
+          <h1 className="dashboard-heading">📉 At-Risk Students</h1>
         </div>
 
         <Link to="/dashboard">
@@ -58,7 +56,7 @@ function LowScoreDetails() {
 
       <div className="kpi-grid">
         <div className="kpi-card">
-          <h4>Total Low Score Students</h4>
+          <h4>Total At-Risk Students</h4>
           <p>{students.length}</p>
         </div>
 
@@ -120,7 +118,7 @@ function LowScoreDetails() {
               })
             ) : (
               <tr>
-                <td colSpan="4">No low score students found.</td>
+                <td colSpan="4">No at-risk students found.</td>
               </tr>
             )}
           </tbody>

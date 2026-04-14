@@ -3063,7 +3063,7 @@ const Navbar = ({
         </div>
 
         <div className="flex items-center gap-4 sm:gap-6">
-  <div className="hidden sm:flex flex-col items-center justify-center">
+  <div className="flex flex-col items-center justify-center">
   <img
     src="https://i.pinimg.com/originals/b6/47/0b/b6470b72ee3ad6dc963ad5a5f792b264.jpg?nii=t"
     alt="Profile"
@@ -3846,9 +3846,9 @@ console.log("GRAPH DATA:", data.graph_data);
   }
 
   return (
-    <div className="max-w-7xl w-full bg-white p-10 rounded-[40px] shadow-xl border border-stone-50">
+    <div className="max-w-7xl w-full bg-white p-4 sm:p-6 lg:p-10 rounded-[24px] sm:rounded-[32px] lg:rounded-[40px] shadow-xl border border-stone-50">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
-        <h1 className="text-4xl font-serif italic text-teal-900">Learner Profile</h1>
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif italic text-teal-900">Learner Profile</h1>
 
         <button
           onClick={() => window.print()}
@@ -3948,7 +3948,7 @@ console.log("GRAPH DATA:", data.graph_data);
         <h2 className="text-lg font-bold mb-4 text-teal-800">Lesson Performance</h2>
         {student.lesson_performance && student.lesson_performance.length > 0 ? (
           <div className="overflow-x-auto">
-            <table className="min-w-full text-sm">
+            <table className="min-w-[900px] text-sm">
               <thead>
                 <tr className="text-left text-stone-500 border-b border-stone-200">
                   <th className="py-3 pr-6">Lesson</th>

@@ -13,9 +13,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Default route */}
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
-
         <Route path="/dashboard" element={<TeacherDashboard />} />
         <Route path="/progress" element={<ProgressDetails />} />
         <Route path="/weak-topics" element={<WeakTopicsDetails />} />

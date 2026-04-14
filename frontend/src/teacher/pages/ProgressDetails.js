@@ -47,7 +47,6 @@ function ProgressDetails() {
     fetchData();
   }, [token]);
 
-  // Get latest attempt score for each student
   const scores = students.map((s) => {
     if (s.recent_attempts && s.recent_attempts.length > 0) {
       return Number(s.recent_attempts[0].score) || 0;
@@ -70,12 +69,26 @@ function ProgressDetails() {
 
   const colors = ["#3b82f6", "#27ae60", "#e74c3c"];
 
+  const supportCount = students.filter((s) => (Number(s.avg_score) || 0) < 50).length;
+  const improvingCount = students.filter((s) => (Number(s.avg_score) || 0) >= 65).length;
+
+  let topPerformer = "—";
+  let topScore = 0;
+
+  students.forEach((s) => {
+    const avg = Number(s.avg_score) || 0;
+    if (avg > topScore) {
+      topScore = avg;
+      topPerformer = s.name || s.student_name || "Unnamed Student";
+    }
+  });
+
   return (
     <div className="analytics-page">
       <div className="analytics-header">
         <div className="top-bar">
           <div></div>
-          <h1 className="dashboard-heading">📊 Student Progress Analytics</h1>
+          <h1 className="dashboard-heading">📊 Student Insights</h1>
         </div>
 
         <Link to="/dashboard">
@@ -105,7 +118,23 @@ function ProgressDetails() {
         </div>
       </div>
 
-      {/* Chart */}
+      <div className="kpi-grid" style={{ marginTop: "22px" }}>
+        <div className="kpi-card">
+          <h4>Top Performer</h4>
+          <p>{topPerformer}</p>
+        </div>
+
+        <div className="kpi-card">
+          <h4>Need Support</h4>
+          <p>{supportCount}</p>
+        </div>
+
+        <div className="kpi-card">
+          <h4>Improving Students</h4>
+          <p>{improvingCount}</p>
+        </div>
+      </div>
+
       <div style={{ width: "70%", height: 280, margin: "30px auto" }}>
         <ResponsiveContainer>
           <BarChart data={scoreChart} barCategoryGap="30%">
@@ -126,9 +155,8 @@ function ProgressDetails() {
         </ResponsiveContainer>
       </div>
 
-      {/* Table */}
       <div className="table-container">
-        <h3>📌 Student Scores</h3>
+        <h3>📌 Student Performance Overview</h3>
         <table>
           <thead>
             <tr>
