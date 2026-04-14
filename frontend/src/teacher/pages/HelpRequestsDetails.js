@@ -14,6 +14,8 @@ function HelpRequestsDetails() {
   const [loadingThreads, setLoadingThreads] = useState(true);
   const [loadingChat, setLoadingChat] = useState(false);
   const [search, setSearch] = useState("");
+
+  const chatBodyRef = useRef(null);
   const chatEndRef = useRef(null);
 
   const BASE_URL =
@@ -226,10 +228,14 @@ function HelpRequestsDetails() {
   }, [groupedRequests, selectedRequest]);
 
   useEffect(() => {
-  if (threadMessages.length > 0) {
-    chatEndRef.current?.scrollIntoView({ behavior: "auto" });
-  }
-}, [selectedRequest]);
+    if (!selectedRequest || !chatBodyRef.current) return;
+
+    const timer = setTimeout(() => {
+      chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
+    }, 80);
+
+    return () => clearTimeout(timer);
+  }, [selectedRequest]);
 
   const filteredRequests = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -253,14 +259,6 @@ function HelpRequestsDetails() {
       );
     });
   }, [groupedRequests, search]);
-
-  const totalChats = groupedRequests.length;
-  const pendingChats = groupedRequests.filter(
-    (r) => r.status !== "answered"
-  ).length;
-  const resolvedChats = groupedRequests.filter(
-    (r) => r.status === "answered"
-  ).length;
 
   const openThread = useCallback((requestItem) => {
     setLoadingChat(true);
@@ -375,6 +373,12 @@ function HelpRequestsDetails() {
       setReply("");
       setSelectedImage(null);
       await refreshSelectedThread(token);
+
+      setTimeout(() => {
+        if (chatBodyRef.current) {
+          chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
+        }
+      }, 120);
     } catch (err) {
       console.error(
         "Error sending reply:",
@@ -431,7 +435,7 @@ function HelpRequestsDetails() {
   };
 
   return (
-    <div className="analytics-page">
+    <div className="analytics-page help-page-tight">
       <div className="top-navbar">
         <div className="logo-section">
           <h2 className="logo-text">GrammarPal</h2>
@@ -460,24 +464,7 @@ function HelpRequestsDetails() {
         <Link to="/help-requests" className="quick-link active">Help Requests</Link>
       </div>
 
-      <div className="kpi-grid">
-        <div className="kpi-card">
-          <h4>Total Chats</h4>
-          <p>{totalChats}</p>
-        </div>
-
-        <div className="kpi-card lowest-card">
-          <h4>Pending Replies</h4>
-          <p>{pendingChats}</p>
-        </div>
-
-        <div className="kpi-card highest-card">
-          <h4>Resolved Chats</h4>
-          <p>{resolvedChats}</p>
-        </div>
-      </div>
-
-      <div className="help-layout">
+      <div className="help-layout help-layout-tall">
         <div className="help-sidebar">
           <h3>Student Chats</h3>
 
@@ -548,7 +535,7 @@ function HelpRequestsDetails() {
 
         <div className="help-chat-panel">
           {!selectedRequest ? (
-            <div className="help-chat-messages">
+            <div className="help-chat-messages" ref={chatBodyRef}>
               <p className="loading-text">Select a student chat from the left sidebar.</p>
             </div>
           ) : (
@@ -572,7 +559,7 @@ function HelpRequestsDetails() {
                 </span>
               </div>
 
-              <div className="help-chat-messages">
+              <div className="help-chat-messages" ref={chatBodyRef}>
                 {loadingChat ? (
                   <p className="loading-text">Loading conversation...</p>
                 ) : threadMessages.length > 0 ? (
@@ -623,7 +610,7 @@ function HelpRequestsDetails() {
                   value={reply}
                   onChange={(e) => setReply(e.target.value)}
                   placeholder="Type your reply..."
-                  rows={4}
+                  rows={3}
                   className="help-textarea"
                 />
 

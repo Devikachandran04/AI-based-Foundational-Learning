@@ -61,6 +61,7 @@ function TeacherDashboard() {
         const allDoubts = helpRes.data?.all_doubts || [];
 
 const groupedByStudent = {};
+
 allDoubts.forEach((item) => {
   const key =
     item.student_id ||
@@ -72,23 +73,26 @@ allDoubts.forEach((item) => {
   if (!groupedByStudent[key]) {
     groupedByStudent[key] = [];
   }
+
   groupedByStudent[key].push(item);
 });
 
 const pendingGroupedChats = Object.values(groupedByStudent).filter((threads) => {
-  const latest = [...threads].sort(
+  const sorted = [...threads].sort(
     (a, b) =>
       new Date(b.updated_at || b.created_at || 0).getTime() -
       new Date(a.updated_at || a.created_at || 0).getTime()
-  )[0];
+  );
 
-  const hasTeacherReply =
+  const latest = sorted[0];
+
+  const teacherAnswered =
     latest?.reply ||
     (latest?.messages &&
       latest.messages.length > 0 &&
       latest.messages[latest.messages.length - 1]?.sender === "teacher");
 
-  return !hasTeacherReply;
+  return !teacherAnswered;
 });
 
 setHelpCount(pendingGroupedChats.length);

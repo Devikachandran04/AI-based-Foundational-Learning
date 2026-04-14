@@ -799,3 +799,45 @@ tr:hover {
     max-width: 88%;
   }
 }
+.help-layout-tall {
+  height: calc(100vh - 210px);
+  min-height: calc(100vh - 210px);
+}
+
+.help-chat-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+  min-height: 0;
+}
+
+.help-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding: 22px;
+  background: #fcfdfd;
+}
+
+.help-chat-input {
+  border-top: 1px solid #e7ece9;
+  background: #fafdfc;
+  padding: 16px 18px;
+  flex-shrink: 0;
+}
+
+.help-sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  height: 100%;
+  min-height: 0;
+}
+
+.help-list {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding-right: 4px;
+}
