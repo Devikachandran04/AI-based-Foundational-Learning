@@ -345,17 +345,26 @@ function LearnerProfile() {
                   {student.lesson_performance.map((lesson, index) => {
                     const latestScore = Number(lesson.latest_score) || 0;
 
-                    let recommendedAction = "Monitor Progress";
+let recommendedAction = "Not Started";
 
-                    if (latestScore < 40) {
-                      recommendedAction = "Immediate Support";
-                    } else if (lesson.current_quiz === "Simplified Quiz") {
-                      recommendedAction = "Retry Main Quiz";
-                    } else if (latestScore < 70) {
-                      recommendedAction = "Practice More";
-                    } else {
-                      recommendedAction = "Progressing Well";
-                    }
+// Check if the lesson has not been attempted
+if (
+  lesson.current_quiz === "Not Started" ||
+  lesson.current_quiz === null ||
+  lesson.current_quiz === undefined ||
+  lesson.attempts === 0 ||
+  latestScore === 0
+) {
+  recommendedAction = "Not Started";
+} else if (latestScore < 40) {
+  recommendedAction = "Immediate Support";
+} else if (lesson.current_quiz === "Simplified Quiz") {
+  recommendedAction = "Retry Main Quiz";
+} else if (latestScore < 70) {
+  recommendedAction = "Practice More";
+} else {
+  recommendedAction = "Progressing Well";
+}
 
                     return (
                       <tr key={lesson.lesson_id || index}>
