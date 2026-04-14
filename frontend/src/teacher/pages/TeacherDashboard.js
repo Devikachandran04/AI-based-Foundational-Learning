@@ -58,7 +58,40 @@ function TeacherDashboard() {
 
         setLowScoreCount(lowRes.data?.students?.length ?? 0);
         setWeakCount(weakRes.data?.weak_topics?.length ?? 0);
-        setHelpCount(helpRes.data?.all_doubts?.length ?? 0);
+        const allDoubts = helpRes.data?.all_doubts || [];
+
+const groupedByStudent = {};
+allDoubts.forEach((item) => {
+  const key =
+    item.student_id ||
+    item.user_id ||
+    item.student_email ||
+    item.student_name ||
+    item._id;
+
+  if (!groupedByStudent[key]) {
+    groupedByStudent[key] = [];
+  }
+  groupedByStudent[key].push(item);
+});
+
+const pendingGroupedChats = Object.values(groupedByStudent).filter((threads) => {
+  const latest = [...threads].sort(
+    (a, b) =>
+      new Date(b.updated_at || b.created_at || 0).getTime() -
+      new Date(a.updated_at || a.created_at || 0).getTime()
+  )[0];
+
+  const hasTeacherReply =
+    latest?.reply ||
+    (latest?.messages &&
+      latest.messages.length > 0 &&
+      latest.messages[latest.messages.length - 1]?.sender === "teacher");
+
+  return !hasTeacherReply;
+});
+
+setHelpCount(pendingGroupedChats.length);
       } catch (err) {
         console.error("Error fetching dashboard data:", err);
 

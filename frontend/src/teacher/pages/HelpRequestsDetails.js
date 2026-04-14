@@ -226,8 +226,10 @@ function HelpRequestsDetails() {
   }, [groupedRequests, selectedRequest]);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [threadMessages]);
+  if (threadMessages.length > 0) {
+    chatEndRef.current?.scrollIntoView({ behavior: "auto" });
+  }
+}, [selectedRequest]);
 
   const filteredRequests = useMemo(() => {
     const q = search.trim().toLowerCase();
