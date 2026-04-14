@@ -362,7 +362,7 @@ if (
   recommendedAction = "Retry Main Quiz";
 } else if (latestScore < 70) {
   recommendedAction = "Practice More";
-} else {
+ } else {
   recommendedAction = "Progressing Well";
 }
 
