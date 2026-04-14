@@ -589,3 +589,6 @@
     font-size: 24px;
   }
 }
+.hero-actions a {
+  text-decoration: none;
+}

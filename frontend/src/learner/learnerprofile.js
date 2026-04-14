@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import {
   ArrowLeft,
   Mail,
@@ -28,7 +28,17 @@ function LearnerProfile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const urlParams = new URLSearchParams(window.location.search);
+        let token = urlParams.get("token");
+
+        if (token) {
+          localStorage.setItem("token", token);
+          localStorage.setItem("teacher_token", token);
+        } else {
+          token =
+            localStorage.getItem("teacher_token") ||
+            localStorage.getItem("token");
+        }
 
         let url =
           "https://ai-based-foundational-learning-production.up.railway.app/api/student/profile";
@@ -55,21 +65,23 @@ function LearnerProfile() {
 
   const weakTopicsList = useMemo(() => {
     if (!student?.weak_topics) return [];
-    return Object.keys(student.weak_topics);
-  }, [student]);
-
-  const totalQuestionAttempts = useMemo(() => {
-    if (!student) return 0;
-    return (
-      (student.basic_questions_attempted || 0) +
-      (student.intermediate_questions_attempted || 0) +
-      (student.advanced_questions_attempted || 0)
+    return Object.keys(student.weak_topics).filter(
+      (topic) => student.weak_topics[topic] > 0
     );
   }, [student]);
 
+  const basicAttempts = Number(student?.basic_questions_attempted) || 0;
+  const moderateAttempts =
+    Number(student?.intermediate_questions_attempted) || 0;
+  const advancedAttempts = Number(student?.advanced_questions_attempted) || 0;
+
+  const totalQuestionAttempts = useMemo(() => {
+    return basicAttempts + moderateAttempts + advancedAttempts;
+  }, [basicAttempts, moderateAttempts, advancedAttempts]);
+
   const completionPercent = useMemo(() => {
     if (!student) return 0;
-    const totalLessons = 6; // adjust if your system has different total lessons
+    const totalLessons = 6;
     return Math.min(
       100,
       Math.round(((student.lessons_completed || 0) / totalLessons) * 100)
@@ -81,13 +93,17 @@ function LearnerProfile() {
     if (totalQuestionAttempts === 0) return 0;
 
     const weightedScore =
-      (student.basic_questions_attempted || 0) * 1 +
-      (student.intermediate_questions_attempted || 0) * 2 +
-      (student.advanced_questions_attempted || 0) * 3;
+      basicAttempts * 1 + moderateAttempts * 2 + advancedAttempts * 3;
 
     const maxWeighted = totalQuestionAttempts * 3;
     return Math.round((weightedScore / maxWeighted) * 100);
-  }, [student, totalQuestionAttempts]);
+  }, [
+    student,
+    totalQuestionAttempts,
+    basicAttempts,
+    moderateAttempts,
+    advancedAttempts,
+  ]);
 
   const performanceLevel = useMemo(() => {
     if (adaptiveScore >= 75) return "Strong";
@@ -122,6 +138,25 @@ function LearnerProfile() {
     }));
   }, [student]);
 
+  const maxAttempts = useMemo(() => {
+    return Math.max(basicAttempts, moderateAttempts, advancedAttempts, 1);
+  }, [basicAttempts, moderateAttempts, advancedAttempts]);
+
+  const basicWidth = Math.max(
+    basicAttempts > 0 ? Math.round((basicAttempts / maxAttempts) * 100) : 0,
+    basicAttempts > 0 ? 12 : 0
+  );
+
+  const moderateWidth = Math.max(
+    moderateAttempts > 0 ? Math.round((moderateAttempts / maxAttempts) * 100) : 0,
+    moderateAttempts > 0 ? 12 : 0
+  );
+
+  const advancedWidth = Math.max(
+    advancedAttempts > 0 ? Math.round((advancedAttempts / maxAttempts) * 100) : 0,
+    advancedAttempts > 0 ? 12 : 0
+  );
+
   if (loading) {
     return <p className="loading">Loading profile...</p>;
   }
@@ -142,7 +177,6 @@ function LearnerProfile() {
   return (
     <div className="learner-page">
       <div className="learner-container">
-        {/* HERO HEADER */}
         <div className="hero-card">
           <div className="hero-left">
             <button className="back-link-btn" onClick={() => navigate(-1)}>
@@ -159,14 +193,22 @@ function LearnerProfile() {
           </div>
 
           <div className="hero-actions">
-            <button className="primary-btn">
-              <MessageCircle size={16} />
-              <span>Open Help Chat</span>
-            </button>
+            <Link
+              to="/help-requests"
+              state={{
+                studentId: studentId || student._id || student.user_id || null,
+                studentName: student.name || "",
+                studentEmail: student.email || "",
+              }}
+            >
+              <button className="primary-btn">
+                <MessageCircle size={16} />
+                <span>Open Help Chat</span>
+              </button>
+            </Link>
           </div>
         </div>
 
-        {/* TOP GRID */}
         <div className="top-grid">
           <div className="profile-summary-card">
             <div className="profile-summary-main">
@@ -232,14 +274,13 @@ function LearnerProfile() {
             <div className="info-chip">
               <div className="chip-icon"><MessageCircle size={18} /></div>
               <div>
-                <p className="chip-label">Pending Help</p>
-                <p className="chip-value">Available in Help Chat</p>
+                <p className="chip-label">Help Chat</p>
+                <p className="chip-value">Open from button above</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* KPI CARDS */}
         <div className="stats-grid">
           <div className="stat-card teal">
             <div>
@@ -274,7 +315,6 @@ function LearnerProfile() {
           </div>
         </div>
 
-        {/* SECOND GRID */}
         <div className="middle-grid">
           <div className="section-card">
             <div className="section-head">
@@ -316,7 +356,6 @@ function LearnerProfile() {
           </div>
         </div>
 
-        {/* PERFORMANCE TABLE */}
         <div className="section-card">
           <div className="section-head">
             <BarChartIcon />
@@ -335,23 +374,29 @@ function LearnerProfile() {
               <tbody>
                 <tr>
                   <td>Basic</td>
-                  <td>{student.basic_questions_attempted || 0}</td>
+                  <td>{basicAttempts}</td>
                   <td>
-                    <span className="table-badge success">Tracked</span>
+                    <span className="table-badge success">
+                      {basicAttempts > 0 ? "Tracked" : "No attempts"}
+                    </span>
                   </td>
                 </tr>
                 <tr>
                   <td>Moderate</td>
-                  <td>{student.intermediate_questions_attempted || 0}</td>
+                  <td>{moderateAttempts}</td>
                   <td>
-                    <span className="table-badge warning">Tracked</span>
+                    <span className="table-badge warning">
+                      {moderateAttempts > 0 ? "Tracked" : "No attempts"}
+                    </span>
                   </td>
                 </tr>
                 <tr>
                   <td>Advanced</td>
-                  <td>{student.advanced_questions_attempted || 0}</td>
+                  <td>{advancedAttempts}</td>
                   <td>
-                    <span className="table-badge danger">Tracked</span>
+                    <span className="table-badge danger">
+                      {advancedAttempts > 0 ? "Tracked" : "No attempts"}
+                    </span>
                   </td>
                 </tr>
               </tbody>
@@ -359,7 +404,6 @@ function LearnerProfile() {
           </div>
         </div>
 
-        {/* BOTTOM GRID */}
         <div className="bottom-grid">
           <div className="section-card">
             <div className="section-head">
@@ -373,15 +417,10 @@ function LearnerProfile() {
                 <div className="progress-line">
                   <div
                     className="progress-fill teal-fill"
-                    style={{
-                      width: `${Math.min(
-                        100,
-                        (student.basic_questions_attempted || 0) * 10
-                      )}%`,
-                    }}
+                    style={{ width: `${basicWidth}%` }}
                   />
                 </div>
-                <span>{student.basic_questions_attempted || 0}</span>
+                <span>{basicAttempts}</span>
               </div>
 
               <div className="analytic-box">
@@ -389,15 +428,10 @@ function LearnerProfile() {
                 <div className="progress-line">
                   <div
                     className="progress-fill amber-fill"
-                    style={{
-                      width: `${Math.min(
-                        100,
-                        (student.intermediate_questions_attempted || 0) * 10
-                      )}%`,
-                    }}
+                    style={{ width: `${moderateWidth}%` }}
                   />
                 </div>
-                <span>{student.intermediate_questions_attempted || 0}</span>
+                <span>{moderateAttempts}</span>
               </div>
 
               <div className="analytic-box">
@@ -405,15 +439,10 @@ function LearnerProfile() {
                 <div className="progress-line">
                   <div
                     className="progress-fill rose-fill"
-                    style={{
-                      width: `${Math.min(
-                        100,
-                        (student.advanced_questions_attempted || 0) * 10
-                      )}%`,
-                    }}
+                    style={{ width: `${advancedWidth}%` }}
                   />
                 </div>
-                <span>{student.advanced_questions_attempted || 0}</span>
+                <span>{advancedAttempts}</span>
               </div>
             </div>
           </div>
