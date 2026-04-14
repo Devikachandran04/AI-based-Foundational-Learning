@@ -71,6 +71,14 @@ function LearnerProfile() {
     return Number(student?.course_completion) || 0;
   }, [student]);
 
+  const riskLevel = useMemo(() => {
+    const adaptive = Number(student?.adaptive_score) || 0;
+
+    if (adaptive < 40) return "High Risk";
+    if (adaptive < 70) return "Medium Risk";
+    return "Low Risk";
+  }, [student]);
+
   const graphLessonNames = useMemo(() => {
     if (!student?.graph_data) return [];
 
@@ -181,6 +189,17 @@ function LearnerProfile() {
                   <span className="pill pill-light">
                     {student.overall_status || "Not Started"}
                   </span>
+                  <span
+                    className={`pill pill-risk ${
+                      riskLevel === "High Risk"
+                        ? "high"
+                        : riskLevel === "Medium Risk"
+                        ? "medium"
+                        : "low"
+                    }`}
+                  >
+                    {riskLevel}
+                  </span>
                 </div>
               </div>
             </div>
@@ -211,8 +230,8 @@ function LearnerProfile() {
             <div className="info-chip">
               <div className="chip-icon"><MessageCircle size={18} /></div>
               <div>
-                <p className="chip-label">Help Chat</p>
-                <p className="chip-value">Available</p>
+                <p className="chip-label">Risk Level</p>
+                <p className="chip-value">{riskLevel}</p>
               </div>
             </div>
           </div>
@@ -262,7 +281,16 @@ function LearnerProfile() {
             <div className="journey-wrap">
               {lessonJourney.length > 0 ? (
                 lessonJourney.map((lesson) => (
-                  <div key={lesson.id} className="journey-chip completed">
+                  <div
+                    key={lesson.id}
+                    className={`journey-chip ${
+                      lesson.state === "Completed"
+                        ? "completed"
+                        : lesson.state === "Attempted"
+                        ? "attempted"
+                        : "not-started"
+                    }`}
+                  >
                     <div className="journey-title">{lesson.title}</div>
                     <div className="journey-status">{lesson.state}</div>
                   </div>
@@ -310,31 +338,49 @@ function LearnerProfile() {
                     <th>Basic</th>
                     <th>Moderate</th>
                     <th>Advanced</th>
+                    <th>Recommended Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {student.lesson_performance.map((lesson, index) => (
-                    <tr key={lesson.lesson_id || index}>
-                      <td>{lesson.lesson_title}</td>
-                      <td>
-                        <span
-                          className={`table-badge ${
-                            lesson.current_quiz === "Main Quiz"
-                              ? "success"
-                              : lesson.current_quiz === "Simplified Quiz"
-                              ? "warning"
-                              : "neutral"
-                          }`}
-                        >
-                          {lesson.current_quiz}
-                        </span>
-                      </td>
-                      <td>{lesson.latest_score || 0}%</td>
-                      <td>{lesson.basic_correct || 0}</td>
-                      <td>{lesson.moderate_correct || 0}</td>
-                      <td>{lesson.hard_correct || 0}</td>
-                    </tr>
-                  ))}
+                  {student.lesson_performance.map((lesson, index) => {
+                    const latestScore = Number(lesson.latest_score) || 0;
+
+                    let recommendedAction = "Monitor Progress";
+
+                    if (latestScore < 40) {
+                      recommendedAction = "Immediate Support";
+                    } else if (lesson.current_quiz === "Simplified Quiz") {
+                      recommendedAction = "Retry Main Quiz";
+                    } else if (latestScore < 70) {
+                      recommendedAction = "Practice More";
+                    } else {
+                      recommendedAction = "Progressing Well";
+                    }
+
+                    return (
+                      <tr key={lesson.lesson_id || index}>
+                        <td>{lesson.lesson_title}</td>
+                        <td>
+                          <span
+                            className={`table-badge ${
+                              lesson.current_quiz === "Main Quiz"
+                                ? "success"
+                                : lesson.current_quiz === "Simplified Quiz"
+                                ? "warning"
+                                : "neutral"
+                            }`}
+                          >
+                            {lesson.current_quiz}
+                          </span>
+                        </td>
+                        <td>{latestScore}%</td>
+                        <td>{lesson.basic_correct || 0}</td>
+                        <td>{lesson.moderate_correct || 0}</td>
+                        <td>{lesson.hard_correct || 0}</td>
+                        <td>{recommendedAction}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             ) : (
