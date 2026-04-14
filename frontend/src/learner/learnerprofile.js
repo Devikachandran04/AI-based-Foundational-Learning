@@ -64,33 +64,41 @@ function LearnerProfile() {
   }, [studentId]);
 
   const weakTopicsList = useMemo(() => {
-    if (!student?.weak_topics) return [];
-    return Object.keys(student.weak_topics).filter(
-      (topic) => student.weak_topics[topic] > 0
+    if (!student?.weak_lessons) return [];
+    return student.weak_lessons.map((item) => item.lesson_title).filter(Boolean);
+  }, [student]);
+
+  const difficultyTotals = useMemo(() => {
+    const rows = student?.lesson_performance || [];
+
+    return rows.reduce(
+      (acc, lesson) => {
+        acc.basic += Number(lesson.basic_correct) || 0;
+        acc.moderate += Number(lesson.moderate_correct) || 0;
+        acc.advanced += Number(lesson.hard_correct) || 0;
+        return acc;
+      },
+      { basic: 0, moderate: 0, advanced: 0 }
     );
   }, [student]);
 
-  const basicAttempts = Number(student?.basic_questions_attempted) || 0;
-  const moderateAttempts =
-    Number(student?.intermediate_questions_attempted) || 0;
-  const advancedAttempts = Number(student?.advanced_questions_attempted) || 0;
+  const basicAttempts = difficultyTotals.basic;
+  const moderateAttempts = difficultyTotals.moderate;
+  const advancedAttempts = difficultyTotals.advanced;
 
   const totalQuestionAttempts = useMemo(() => {
     return basicAttempts + moderateAttempts + advancedAttempts;
   }, [basicAttempts, moderateAttempts, advancedAttempts]);
 
   const completionPercent = useMemo(() => {
-    if (!student) return 0;
-    const totalLessons = 6;
-    return Math.min(
-      100,
-      Math.round(((student.lessons_completed || 0) / totalLessons) * 100)
-    );
+    return Number(student?.course_completion) || 0;
   }, [student]);
 
   const adaptiveScore = useMemo(() => {
     if (!student) return 0;
-    if (totalQuestionAttempts === 0) return 0;
+    if (totalQuestionAttempts === 0) {
+      return Number(student?.adaptive_score) || 0;
+    }
 
     const weightedScore =
       basicAttempts * 1 + moderateAttempts * 2 + advancedAttempts * 3;
@@ -106,10 +114,8 @@ function LearnerProfile() {
   ]);
 
   const performanceLevel = useMemo(() => {
-    if (adaptiveScore >= 75) return "Strong";
-    if (adaptiveScore >= 45) return "Moderate";
-    return "Needs Improvement";
-  }, [adaptiveScore]);
+    return student?.performance_level || "Not Started";
+  }, [student]);
 
   const riskLevel = useMemo(() => {
     if (weakTopicsList.length >= 3) return "High";
@@ -128,13 +134,13 @@ function LearnerProfile() {
   }, [riskLevel]);
 
   const lessonJourney = useMemo(() => {
-    if (!student?.completed_lessons_details) return [];
+    if (!student?.learning_path) return [];
 
-    return student.completed_lessons_details.map((lesson, index) => ({
+    return student.learning_path.map((lesson, index) => ({
       id: index,
       title: lesson.lesson_title || `Lesson ${index + 1}`,
-      quizType: lesson.quiz_label || "Completed",
-      quizPath: lesson.quiz_type || "mixed",
+      quizType: lesson.state || "Not Started",
+      quizPath: lesson.state || "not_started",
     }));
   }, [student]);
 
@@ -161,7 +167,7 @@ function LearnerProfile() {
     return <p className="loading">Loading profile...</p>;
   }
 
-  if (!student) {
+  if (!student || student.error) {
     return (
       <div className="learner-page">
         <div className="empty-state">
@@ -227,7 +233,9 @@ function LearnerProfile() {
                     {riskLevel} Risk
                   </span>
                   <span className="pill pill-info">{performanceLevel}</span>
-                  <span className="pill pill-light">Profile Active</span>
+                  <span className="pill pill-light">
+                    {student.overall_status || "Profile Active"}
+                  </span>
                 </div>
               </div>
             </div>
@@ -267,7 +275,7 @@ function LearnerProfile() {
               <div className="chip-icon"><Clock3 size={18} /></div>
               <div>
                 <p className="chip-label">Status</p>
-                <p className="chip-value">Recently Active</p>
+                <p className="chip-value">{student.overall_status || "Started"}</p>
               </div>
             </div>
 
