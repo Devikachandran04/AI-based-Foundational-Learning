@@ -592,3 +592,127 @@
 .hero-actions a {
   text-decoration: none;
 }
+
+.graph-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 18px;
+}
+
+.lesson-select {
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid #d9dfdb;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  outline: none;
+}
+
+.attempt-graph-card {
+  background: #ffffff;
+  border: 1px solid #e7ece9;
+  border-radius: 22px;
+  padding: 24px;
+}
+
+.attempt-graph {
+  min-height: 320px;
+  display: flex;
+  align-items: flex-end;
+  gap: 26px;
+  padding: 10px 8px 0;
+  border-left: 1px solid #cfd8d3;
+  border-bottom: 1px solid #cfd8d3;
+  overflow-x: auto;
+}
+
+.attempt-group {
+  min-width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.attempt-bars {
+  height: 230px;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.attempt-bar-col {
+  width: 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.attempt-value {
+  font-size: 11px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.attempt-bar {
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+}
+
+.mixed-bar {
+  background: #16a34a;
+}
+
+.simplified-bar {
+  background: #f59e0b;
+}
+
+.attempt-bar-spacer {
+  width: 26px;
+  height: 18px;
+}
+
+.attempt-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-top: 10px;
+}
+
+.attempt-legend {
+  display: flex;
+  gap: 22px;
+  margin-top: 18px;
+  font-size: 14px;
+  color: #4b5563;
+  font-weight: 600;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.mixed-dot {
+  background: #16a34a;
+}
+
+.simplified-dot {
+  background: #f59e0b;
+}
+
+.table-badge.neutral {
+  background: #f3f4f6;
+  color: #6b7280;
+}

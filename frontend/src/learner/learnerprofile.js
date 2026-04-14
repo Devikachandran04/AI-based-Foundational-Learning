@@ -7,10 +7,8 @@ import {
   GraduationCap,
   TriangleAlert,
   TrendingUp,
-  Clock3,
   BookOpen,
   MessageCircle,
-  BadgeAlert,
   CheckCircle2,
   Sparkles,
 } from "lucide-react";
@@ -24,6 +22,7 @@ function LearnerProfile() {
 
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedLesson, setSelectedLesson] = useState("");
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -68,70 +67,38 @@ function LearnerProfile() {
     return student.weak_lessons.map((item) => item.lesson_title).filter(Boolean);
   }, [student]);
 
-  const difficultyTotals = useMemo(() => {
-    const rows = student?.lesson_performance || [];
-
-    return rows.reduce(
-      (acc, lesson) => {
-        acc.basic += Number(lesson.basic_correct) || 0;
-        acc.moderate += Number(lesson.moderate_correct) || 0;
-        acc.advanced += Number(lesson.hard_correct) || 0;
-        return acc;
-      },
-      { basic: 0, moderate: 0, advanced: 0 }
-    );
-  }, [student]);
-
-  const basicAttempts = difficultyTotals.basic;
-  const moderateAttempts = difficultyTotals.moderate;
-  const advancedAttempts = difficultyTotals.advanced;
-
-  const totalQuestionAttempts = useMemo(() => {
-    return basicAttempts + moderateAttempts + advancedAttempts;
-  }, [basicAttempts, moderateAttempts, advancedAttempts]);
-
   const completionPercent = useMemo(() => {
     return Number(student?.course_completion) || 0;
   }, [student]);
 
-  const adaptiveScore = useMemo(() => {
-    if (!student) return 0;
-    if (totalQuestionAttempts === 0) {
-      return Number(student?.adaptive_score) || 0;
-    }
+  const graphLessonNames = useMemo(() => {
+    if (!student?.graph_data) return [];
 
-    const weightedScore =
-      basicAttempts * 1 + moderateAttempts * 2 + advancedAttempts * 3;
-
-    const maxWeighted = totalQuestionAttempts * 3;
-    return Math.round((weightedScore / maxWeighted) * 100);
-  }, [
-    student,
-    totalQuestionAttempts,
-    basicAttempts,
-    moderateAttempts,
-    advancedAttempts,
-  ]);
-
-  const performanceLevel = useMemo(() => {
-    return student?.performance_level || "Not Started";
+    return Object.entries(student.graph_data)
+      .filter(([_, value]) => {
+        const mixedCount = value?.mixed_scores?.length || 0;
+        const simplifiedCount = value?.simplified_scores?.length || 0;
+        return mixedCount + simplifiedCount > 0;
+      })
+      .map(([lessonName]) => lessonName);
   }, [student]);
 
-  const riskLevel = useMemo(() => {
-    if (weakTopicsList.length >= 3) return "High";
-    if (weakTopicsList.length >= 1) return "Medium";
-    return "Low";
-  }, [weakTopicsList]);
+  useEffect(() => {
+    if (graphLessonNames.length > 0) {
+      const stillValid = graphLessonNames.includes(selectedLesson);
 
-  const recommendedAction = useMemo(() => {
-    if (riskLevel === "High") {
-      return "Review weak topics immediately, monitor learner activity closely, and provide guided support through help chat and revision tasks.";
+      if (!selectedLesson || !stillValid) {
+        setSelectedLesson(graphLessonNames[0]);
+      }
+    } else {
+      setSelectedLesson("");
     }
-    if (riskLevel === "Medium") {
-      return "Track recent performance, encourage practice in weak topics, and provide extra feedback where needed.";
-    }
-    return "Learner is progressing well. Continue regular monitoring and encourage completion of remaining lessons.";
-  }, [riskLevel]);
+  }, [graphLessonNames, selectedLesson]);
+
+  const selectedGraph =
+    selectedLesson && student?.graph_data?.[selectedLesson]
+      ? student.graph_data[selectedLesson]
+      : null;
 
   const lessonJourney = useMemo(() => {
     if (!student?.learning_path) return [];
@@ -139,29 +106,9 @@ function LearnerProfile() {
     return student.learning_path.map((lesson, index) => ({
       id: index,
       title: lesson.lesson_title || `Lesson ${index + 1}`,
-      quizType: lesson.state || "Not Started",
-      quizPath: lesson.state || "not_started",
+      state: lesson.state || "Not Started",
     }));
   }, [student]);
-
-  const maxAttempts = useMemo(() => {
-    return Math.max(basicAttempts, moderateAttempts, advancedAttempts, 1);
-  }, [basicAttempts, moderateAttempts, advancedAttempts]);
-
-  const basicWidth = Math.max(
-    basicAttempts > 0 ? Math.round((basicAttempts / maxAttempts) * 100) : 0,
-    basicAttempts > 0 ? 12 : 0
-  );
-
-  const moderateWidth = Math.max(
-    moderateAttempts > 0 ? Math.round((moderateAttempts / maxAttempts) * 100) : 0,
-    moderateAttempts > 0 ? 12 : 0
-  );
-
-  const advancedWidth = Math.max(
-    advancedAttempts > 0 ? Math.round((advancedAttempts / maxAttempts) * 100) : 0,
-    advancedAttempts > 0 ? 12 : 0
-  );
 
   if (loading) {
     return <p className="loading">Loading profile...</p>;
@@ -193,8 +140,7 @@ function LearnerProfile() {
             <p className="hero-label">Admin Learner Profile</p>
             <h1 className="hero-title">{student.name || "Student"}</h1>
             <p className="hero-subtitle">
-              A teacher-focused learner view showing profile details, lesson
-              progress, weak areas, attempts, and recommended intervention.
+              Admin-side tracking view for lesson progress, quiz path, and score history.
             </p>
           </div>
 
@@ -202,7 +148,7 @@ function LearnerProfile() {
             <Link
               to="/help-requests"
               state={{
-                studentId: studentId || student._id || student.user_id || null,
+                studentId: studentId || null,
                 studentName: student.name || "",
                 studentEmail: student.email || "",
               }}
@@ -229,23 +175,14 @@ function LearnerProfile() {
                 </p>
 
                 <div className="tag-row">
-                  <span className={`pill pill-risk ${riskLevel.toLowerCase()}`}>
-                    {riskLevel} Risk
+                  <span className="pill pill-info">
+                    {student.performance_level || "Not Started"}
                   </span>
-                  <span className="pill pill-info">{performanceLevel}</span>
                   <span className="pill pill-light">
-                    {student.overall_status || "Profile Active"}
+                    {student.overall_status || "Not Started"}
                   </span>
                 </div>
               </div>
-            </div>
-
-            <div className="action-box">
-              <div className="action-title">
-                <BadgeAlert size={16} />
-                <span>Recommended Teacher Action</span>
-              </div>
-              <p>{recommendedAction}</p>
             </div>
           </div>
 
@@ -272,18 +209,10 @@ function LearnerProfile() {
             </div>
 
             <div className="info-chip">
-              <div className="chip-icon"><Clock3 size={18} /></div>
-              <div>
-                <p className="chip-label">Status</p>
-                <p className="chip-value">{student.overall_status || "Started"}</p>
-              </div>
-            </div>
-
-            <div className="info-chip">
               <div className="chip-icon"><MessageCircle size={18} /></div>
               <div>
                 <p className="chip-label">Help Chat</p>
-                <p className="chip-value">Open from button above</p>
+                <p className="chip-value">Available</p>
               </div>
             </div>
           </div>
@@ -293,7 +222,7 @@ function LearnerProfile() {
           <div className="stat-card teal">
             <div>
               <p className="stat-label">Adaptive Score</p>
-              <h3>{adaptiveScore}%</h3>
+              <h3>{student.adaptive_score || 0}%</h3>
             </div>
             <div className="stat-icon"><TrendingUp size={24} /></div>
           </div>
@@ -316,7 +245,7 @@ function LearnerProfile() {
 
           <div className="stat-card red">
             <div>
-              <p className="stat-label">Weak Topics</p>
+              <p className="stat-label">Weak Lessons</p>
               <h3>{weakTopicsList.length}</h3>
             </div>
             <div className="stat-icon"><TriangleAlert size={24} /></div>
@@ -335,11 +264,11 @@ function LearnerProfile() {
                 lessonJourney.map((lesson) => (
                   <div key={lesson.id} className="journey-chip completed">
                     <div className="journey-title">{lesson.title}</div>
-                    <div className="journey-status">{lesson.quizType}</div>
+                    <div className="journey-status">{lesson.state}</div>
                   </div>
                 ))
               ) : (
-                <p className="empty-text">No completed lessons yet</p>
+                <p className="empty-text">No lesson journey available</p>
               )}
             </div>
           </div>
@@ -347,7 +276,7 @@ function LearnerProfile() {
           <div className="section-card">
             <div className="section-head">
               <TriangleAlert size={18} />
-              <h3>Weak Topics</h3>
+              <h3>Weak Lessons</h3>
             </div>
 
             <div className="weak-wrap">
@@ -358,7 +287,7 @@ function LearnerProfile() {
                   </span>
                 ))
               ) : (
-                <p className="empty-text">No weak topics</p>
+                <p className="empty-text">No weak lessons</p>
               )}
             </div>
           </div>
@@ -366,132 +295,156 @@ function LearnerProfile() {
 
         <div className="section-card">
           <div className="section-head">
-            <BarChartIcon />
-            <h3>Question Attempt Summary</h3>
+            <TrendingUp size={18} />
+            <h3>Lesson Performance Tracking</h3>
           </div>
 
           <div className="table-wrap">
-            <table className="profile-table">
-              <thead>
-                <tr>
-                  <th>Difficulty</th>
-                  <th>Attempt Count</th>
-                  <th>Performance Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Basic</td>
-                  <td>{basicAttempts}</td>
-                  <td>
-                    <span className="table-badge success">
-                      {basicAttempts > 0 ? "Tracked" : "No attempts"}
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Moderate</td>
-                  <td>{moderateAttempts}</td>
-                  <td>
-                    <span className="table-badge warning">
-                      {moderateAttempts > 0 ? "Tracked" : "No attempts"}
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Advanced</td>
-                  <td>{advancedAttempts}</td>
-                  <td>
-                    <span className="table-badge danger">
-                      {advancedAttempts > 0 ? "Tracked" : "No attempts"}
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            {student.lesson_performance && student.lesson_performance.length > 0 ? (
+              <table className="profile-table">
+                <thead>
+                  <tr>
+                    <th>Lesson</th>
+                    <th>Quiz Path</th>
+                    <th>Latest Score</th>
+                    <th>Basic</th>
+                    <th>Moderate</th>
+                    <th>Advanced</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {student.lesson_performance.map((lesson, index) => (
+                    <tr key={lesson.lesson_id || index}>
+                      <td>{lesson.lesson_title}</td>
+                      <td>
+                        <span
+                          className={`table-badge ${
+                            lesson.current_quiz === "Main Quiz"
+                              ? "success"
+                              : lesson.current_quiz === "Simplified Quiz"
+                              ? "warning"
+                              : "neutral"
+                          }`}
+                        >
+                          {lesson.current_quiz}
+                        </span>
+                      </td>
+                      <td>{lesson.latest_score || 0}%</td>
+                      <td>{lesson.basic_correct || 0}</td>
+                      <td>{lesson.moderate_correct || 0}</td>
+                      <td>{lesson.hard_correct || 0}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p className="empty-text">No lesson performance data available</p>
+            )}
           </div>
         </div>
 
-        <div className="bottom-grid">
-          <div className="section-card">
-            <div className="section-head">
-              <TrendingUp size={18} />
-              <h3>Performance Analytics</h3>
-            </div>
-
-            <div className="analytics-grid">
-              <div className="analytic-box">
-                <p className="analytic-label">Basic Attempts</p>
-                <div className="progress-line">
-                  <div
-                    className="progress-fill teal-fill"
-                    style={{ width: `${basicWidth}%` }}
-                  />
-                </div>
-                <span>{basicAttempts}</span>
-              </div>
-
-              <div className="analytic-box">
-                <p className="analytic-label">Moderate Attempts</p>
-                <div className="progress-line">
-                  <div
-                    className="progress-fill amber-fill"
-                    style={{ width: `${moderateWidth}%` }}
-                  />
-                </div>
-                <span>{moderateAttempts}</span>
-              </div>
-
-              <div className="analytic-box">
-                <p className="analytic-label">Advanced Attempts</p>
-                <div className="progress-line">
-                  <div
-                    className="progress-fill rose-fill"
-                    style={{ width: `${advancedWidth}%` }}
-                  />
-                </div>
-                <span>{advancedAttempts}</span>
-              </div>
-            </div>
+        <div className="section-card">
+          <div className="section-head">
+            <TrendingUp size={18} />
+            <h3>Quiz Attempt Progress</h3>
           </div>
 
-          <div className="section-card">
-            <div className="section-head">
-              <Clock3 size={18} />
-              <h3>Support Timeline</h3>
-            </div>
-
-            <div className="timeline">
-              <div className="timeline-item rose">
-                <p className="timeline-title">Weak topics detected</p>
-                <p className="timeline-desc">
-                  The learner profile shows areas that need more practice and support.
-                </p>
-              </div>
-
-              <div className="timeline-item amber">
-                <p className="timeline-title">Learner progress reviewed</p>
-                <p className="timeline-desc">
-                  Lessons completed and question attempts are available for admin review.
-                </p>
-              </div>
-
-              <div className="timeline-item teal">
-                <p className="timeline-title">Teacher action recommended</p>
-                <p className="timeline-desc">
-                  Follow up through chat, monitor weak topics, and guide revision.
-                </p>
-              </div>
-            </div>
+          <div className="graph-toolbar">
+            <select
+              value={selectedLesson}
+              onChange={(e) => setSelectedLesson(e.target.value)}
+              className="lesson-select"
+            >
+              {graphLessonNames.map((lessonName) => (
+                <option key={lessonName} value={lessonName}>
+                  {lessonName}
+                </option>
+              ))}
+            </select>
           </div>
+
+          {selectedGraph && graphLessonNames.length > 0 ? (
+            <div className="attempt-graph-card">
+              <div className="attempt-graph">
+                {Array.from({
+                  length: Math.max(
+                    selectedGraph?.mixed_scores?.length || 0,
+                    selectedGraph?.simplified_scores?.length || 0
+                  ),
+                }).map((_, i) => {
+                  const mixed =
+                    selectedGraph?.mixed_scores?.[i] !== undefined
+                      ? Number(selectedGraph.mixed_scores[i])
+                      : null;
+
+                  const simplified =
+                    selectedGraph?.simplified_scores?.[i] !== undefined
+                      ? Number(selectedGraph.simplified_scores[i])
+                      : null;
+
+                  return (
+                    <div key={i} className="attempt-group">
+                      <div className="attempt-bars">
+                        <div className="attempt-bar-col">
+                          {mixed !== null ? (
+                            <>
+                              <span className="attempt-value">{mixed}</span>
+                              <div
+                                className="attempt-bar mixed-bar"
+                                style={{
+                                  height: `${Math.max((mixed / 100) * 180, 18)}px`,
+                                }}
+                              />
+                            </>
+                          ) : (
+                            <div className="attempt-bar-spacer" />
+                          )}
+                        </div>
+
+                        <div className="attempt-bar-col">
+                          {simplified !== null ? (
+                            <>
+                              <span className="attempt-value">{simplified}</span>
+                              <div
+                                className="attempt-bar simplified-bar"
+                                style={{
+                                  height: `${Math.max(
+                                    (simplified / 100) * 180,
+                                    18
+                                  )}px`,
+                                }}
+                              />
+                            </>
+                          ) : (
+                            <div className="attempt-bar-spacer" />
+                          )}
+                        </div>
+                      </div>
+
+                      <span className="attempt-label">A{i + 1}</span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="attempt-legend">
+                <div className="legend-item">
+                  <span className="legend-dot mixed-dot" />
+                  Mixed Quiz
+                </div>
+                <div className="legend-item">
+                  <span className="legend-dot simplified-dot" />
+                  Simplified Quiz
+                </div>
+              </div>
+            </div>
+          ) : (
+            <p className="empty-text">No quiz attempt graph available yet</p>
+          )}
         </div>
       </div>
     </div>
   );
-}
-
-function BarChartIcon() {
-  return <TrendingUp size={18} />;
 }
 
 export default LearnerProfile;
