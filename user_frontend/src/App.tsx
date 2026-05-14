@@ -205,7 +205,7 @@ const QuizPage = ({
     }
 
     const res = await fetch(
-      "https://ai-based-foundational-learning-production.up.railway.app/api/quiz/start",
+      "https://ai-based-foundational-learning-production1.up.railway.app/api/quiz/start",
       {
         method: "POST",
         headers: {
@@ -266,7 +266,7 @@ const QuizPage = ({
         const token = localStorage.getItem("token");
 
         const res = await fetch(
-          "https://ai-based-foundational-learning-production.up.railway.app/api/quiz/submit",
+          "https://ai-based-foundational-learning-production1.up.railway.app/api/quiz/submit",
           {
             method: "POST",
             headers: {
@@ -3402,7 +3402,7 @@ const HelpModal = ({
   const chatEndRef = React.useRef<HTMLDivElement | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
-  const BASE_URL = "https://ai-based-foundational-learning-production.up.railway.app";
+  const BASE_URL = "https://ai-based-foundational-learning-production1.up.railway.app";
   const getImageUrl = (imagePath: string) => {
   if (!imagePath) return "";
 
@@ -3788,7 +3788,7 @@ const selectedGraph =
         const token = localStorage.getItem("token");
 
         const res = await fetch(
-          "https://ai-based-foundational-learning-production.up.railway.app/api/student/profile",
+          "https://ai-based-foundational-learning-production1.up.railway.app/api/student/profile",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -4152,7 +4152,7 @@ export default function App() {
   const [hasUnreadHelp, setHasUnreadHelp] = useState(false);
 
   const BASE_URL =
-    "https://ai-based-foundational-learning-production.up.railway.app";
+    "https://ai-based-foundational-learning-production1.up.railway.app";
 
   const handleLogout = () => {
     setIsHelpModalOpen(false);
