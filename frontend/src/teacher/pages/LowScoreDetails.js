@@ -26,7 +26,7 @@ function LowScoreDetails() {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          "https://ai-based-foundational-learning-production.up.railway.app/api/teacher/dashboard/low-score-students",
+          "https://ai-based-foundational-learning-production1.up.railway.app/api/teacher/dashboard/low-score-students",
           {
             headers: { Authorization: `Bearer ${token}` },
           }

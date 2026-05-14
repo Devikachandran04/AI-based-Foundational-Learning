@@ -38,7 +38,7 @@ function TeacherDashboard() {
         }
 
         const BASE_URL =
-          "https://ai-based-foundational-learning-production.up.railway.app";
+          "https://ai-based-foundational-learning-production1.up.railway.app";
 
         const config = {
           headers: { Authorization: `Bearer ${token}` },

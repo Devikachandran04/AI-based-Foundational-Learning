@@ -36,7 +36,7 @@ function WeakTopicsDetails() {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          "https://ai-based-foundational-learning-production.up.railway.app/api/teacher/dashboard/weak-topics",
+          "https://ai-based-foundational-learning-production.up.railway1.app/api/teacher/dashboard/weak-topics",
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setWeakTopics(res.data?.weak_topics || []);

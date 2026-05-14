@@ -40,7 +40,7 @@ function LearnerProfile() {
         }
 
         let url =
-          "https://ai-based-foundational-learning-production.up.railway.app/api/student/profile";
+          "https://ai-based-foundational-learning-production1.up.railway.app/api/student/profile";
 
         if (studentId) {
           url += `?id=${studentId}`;

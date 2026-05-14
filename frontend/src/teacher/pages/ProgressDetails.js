@@ -36,7 +36,7 @@ function ProgressDetails() {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          "https://ai-based-foundational-learning-production.up.railway.app/api/teacher/dashboard/student-progress",
+          "https://ai-based-foundational-learning-production1.up.railway.app/api/teacher/dashboard/student-progress",
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setStudents(res.data?.students || []);

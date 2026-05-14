@@ -19,7 +19,7 @@ function HelpRequestsDetails() {
   const chatEndRef = useRef(null);
 
   const BASE_URL =
-    "https://ai-based-foundational-learning-production.up.railway.app";
+    "https://ai-based-foundational-learning-production1.up.railway.app";
 
   const getImageUrl = (imagePath) => {
     if (!imagePath) return "";
