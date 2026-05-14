@@ -32,7 +32,7 @@ export const useStore = create<AppState>()(
       login: async (username: string, password: string, className: string) => {
         try {
           const res = await fetch(
-            "https://ai-based-foundational-learning-production.up.railway.app/api/auth/login",
+            "https://ai-based-foundational-learning-production1.up.railway.app/api/auth/login",
             {
               method: "POST",
               headers: {
@@ -81,7 +81,7 @@ export const useStore = create<AppState>()(
       register: async (name: string, email: string, password: string, className: string) => {
         try {
           const res = await fetch(
-            "https://ai-based-foundational-learning-production.up.railway.app/api/auth/register",
+            "https://ai-based-foundational-learning-production1.up.railway.app/api/auth/register",
             {
               method: "POST",
               headers: {
