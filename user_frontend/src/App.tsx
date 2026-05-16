@@ -124,10 +124,10 @@ const LESSON_CONTENT: Record<string, any> = {
 
     image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
     videos: [
-      { title: "What are Nouns?", id: "6RbFXTUwRok" },
-      { title: "Nouns for Kids", id: "6RbFXTUwRok" },
-      { title: "Types of Nouns", id: "6RbFXTUwRok" }
-    ]
+  { title: "What is a Noun?", id: "9cu7C07pNbA" },
+  { title: "Noun Song for Kids", id: "qcXy6_Mqe54" },
+  { title: "Common and Proper Nouns", id: "tquecIG-Pws" }
+]
   },
 
   verbs: {
@@ -176,10 +176,10 @@ const LESSON_CONTENT: Record<string, any> = {
 
     image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
     videos: [
-      { title: "What are Verbs?", id: "6RbFXTUwRok" },
-      { title: "Verbs for Kids", id: "6RbFXTUwRok" },
-      { title: "Action Verbs", id: "6RbFXTUwRok" }
-    ]
+  { title: "Action Verbs", id: "ineCCpqpZrM" },
+  { title: "The Verb Song", id: "lXQNmY5vQ44" },
+  { title: "Helping Verbs", id: "ESKrs05nrAY" }
+]
   },
 
   adjectives: {
@@ -228,10 +228,10 @@ const LESSON_CONTENT: Record<string, any> = {
 
     image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png",
     videos: [
-      { title: "What are Adjectives?", id: "6RbFXTUwRok" },
-      { title: "Adjectives for Kids", id: "6RbFXTUwRok" },
-      { title: "Describing Words", id: "6RbFXTUwRok" }
-    ]
+  { title: "What is an Adjective?", id: "GTymHwSzp7A" },
+  { title: "Adjective Song", id: "9UUgfdUAmEA" },
+  { title: "Describing Words", id: "4f3H12YNlxo" }
+]
   },
 
   tenses: {
@@ -280,10 +280,10 @@ const LESSON_CONTENT: Record<string, any> = {
 
     image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png",
     videos: [
-      { title: "Tenses Explained", id: "6RbFXTUwRok" },
-      { title: "Past Present Future", id: "6RbFXTUwRok" },
-      { title: "Verb Tenses for Kids", id: "6RbFXTUwRok" }
-    ]
+  { title: "Past, Present, Future", id: "jBUklI7YlYQ" },
+  { title: "Tense Rules", id: "NkuzcXPpPSA" },
+  { title: "Tense Examples", id: "tyMuM-2e5NA" }
+]
   },
 
   articles: {
@@ -332,10 +332,10 @@ const LESSON_CONTENT: Record<string, any> = {
 
     image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png",
     videos: [
-      { title: "Articles A An The", id: "6RbFXTUwRok" },
-      { title: "When to use A or An", id: "6RbFXTUwRok" },
-      { title: "Articles for Kids", id: "6RbFXTUwRok" }
-    ]
+  { title: "A, An, The", id: "drTyYqbz6Xk" },
+  { title: "Article Rules", id: "RDkx4J__-QY" },
+  { title: "Article Quiz", id: "o2WTRLH0dT8" }
+]
   },
 
   prepositions: {
@@ -384,10 +384,10 @@ const LESSON_CONTENT: Record<string, any> = {
 
     image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
     videos: [
-      { title: "What are Prepositions?", id: "6RbFXTUwRok" },
-      { title: "Prepositions of Place", id: "6RbFXTUwRok" },
-      { title: "Prepositions for Kids", id: "6RbFXTUwRok" }
-    ]
+  { title: "Prepositions for Kids", id: "xyMrLQ4ZI-4" },
+  { title: "Position Words", id: "_VK-kXkXTBc" },
+  { title: "Preposition of words", id: "VSn-7QmnJr8" }
+]
   }
 };
 const speak = (text: string) => {
