@@ -1286,7 +1286,7 @@ const VERB_ACTION_ROUNDS = [
     ]
   },
   {
-    sentence: "He is waling.",
+    sentence: "He is walking.",
     target: "walking",
     cards: [
       { word: "walking", image: "https://thumbs.dreamstime.com/b/school-boy-cartoon-walking-illustration-45749905.jpg" },
