@@ -142,9 +142,9 @@ const LESSON_CONTENT: Record<string, any> = {
     ],
 
     visualExamples: [
-      { word: "Run", emoji: "R", image: "https://cdn-icons-png.flaticon.com/512/1995/1995574.png" },
-      { word: "Jump", emoji: "J", image: "https://cdn-icons-png.flaticon.com/512/4333/4333609.png" },
-      { word: "Eat", emoji: "E", image: "https://cdn-icons-png.flaticon.com/512/1046/1046784.png" }
+      { word: "Walking", emoji: "R", image: "https://www.emojiall.com/images/240/emojitwo/1f6b6.png" },
+      { word: "Singing", emoji: "J", image: "https://media.baamboozle.com/uploads/images/99372/1598832580_95362" },
+      { word: "Eating", emoji: "E", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2Z6om19BHs0g-nFMea7YlpODqA7axXQdoiA&s" }
     ],
 
     activity: {
@@ -1226,7 +1226,7 @@ const WORD_BANK = {
 
 // --- Verb Practice Data & Logic --- // ← UPDATED 2026
 const VERB_ROOTS = [
-  { root: "eat", continuous: "eating", yesterday: "ate", hint: "He ate yesterday!" },
+  { root: "eats", continuous: "eating", yesterday: "ate", hint: "He ate yesterday!" },
   { root: "run", continuous: "running", yesterday: "ran", hint: "He ran yesterday!" },
   { root: "jump", continuous: "jumping", yesterday: "jumped", hint: "He jumped earlier!" },
   { root: "sing", continuous: "singing", yesterday: "sang", hint: "He sang a song!" },
@@ -1263,6 +1263,52 @@ const generateVerbRound = (roundIndex: number) => {
     cards,
     hint
   };
+};
+const VERB_ACTION_ROUNDS = [
+  {
+    sentence: "He is writing.",
+    target: "writing",
+    cards: [
+      { word: "walking", image: "https://thumbs.dreamstime.com/b/school-boy-cartoon-walking-illustration-45749905.jpg" },
+      { word: "singing", image: "https://media.baamboozle.com/uploads/images/99372/1598832580_95362" },
+      { word: "eating", image: "https://media.baamboozle.com/uploads/images/139653/1638792623_11182.webp" },
+      { word: "writing", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1rhJVY7FOD06n_36fr4M0ITKzAYLUdpfoxw&s" },
+    ]
+  },
+  {
+    sentence: "She is singing.",
+    target: "singing",
+    cards: [
+      { word: "walking", image: "https://thumbs.dreamstime.com/b/school-boy-cartoon-walking-illustration-45749905.jpg" },
+      { word: "singing", image: "https://media.baamboozle.com/uploads/images/99372/1598832580_95362" },
+      { word: "eating", image: "https://media.baamboozle.com/uploads/images/139653/1638792623_11182.webp" },
+      { word: "writing", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1rhJVY7FOD06n_36fr4M0ITKzAYLUdpfoxw&s" },
+    ]
+  },
+  {
+    sentence: "He is waling.",
+    target: "walking",
+    cards: [
+      { word: "walking", image: "https://thumbs.dreamstime.com/b/school-boy-cartoon-walking-illustration-45749905.jpg" },
+      { word: "singing", image: "https://media.baamboozle.com/uploads/images/99372/1598832580_95362" },
+      { word: "eating", image: "https://media.baamboozle.com/uploads/images/139653/1638792623_11182.webp" },
+      { word: "writing", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1rhJVY7FOD06n_36fr4M0ITKzAYLUdpfoxw&s" },
+    ]
+  },
+  {
+    sentence: "She is eating.",
+    target: "eating",
+    cards: [
+      { word: "walking", image: "https://thumbs.dreamstime.com/b/school-boy-cartoon-walking-illustration-45749905.jpg" },
+      { word: "singing", image: "https://media.baamboozle.com/uploads/images/99372/1598832580_95362" },
+      { word: "eating", image: "https://media.baamboozle.com/uploads/images/139653/1638792623_11182.webp" },
+      { word: "writing", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1rhJVY7FOD06n_36fr4M0ITKzAYLUdpfoxw&s" },
+    ]
+  }
+];
+
+const generateVerbActionRound = (roundIndex: number) => {
+  return VERB_ACTION_ROUNDS[roundIndex % VERB_ACTION_ROUNDS.length];
 };
 const generatePrepositionRound = (step: number) => {
   const rounds = [
@@ -1394,6 +1440,9 @@ const InteractivePractice = ({ lessonId, onComplete, onWatchVideo, onHelp, asset
 }) => {
   const [step, setStep] = useState(0);
   const [verbStep, setVerbStep] = useState(0);
+  const [verbActionStep, setVerbActionStep] = useState(0);
+const [currentVerbActionChallenge, setCurrentVerbActionChallenge] = useState<any>(null);
+const [verbActionFeedback, setVerbActionFeedback] = useState<{ type: 'correct' | 'wrong', card: string } | null>(null);
   const [articleStep, setArticleStep] = useState(0); // ← UPDATED 2026
   const [prepStep, setPrepStep] = useState(0);
 const [currentPrepChallenge, setCurrentPrepChallenge] = useState<any>(null);
@@ -1431,9 +1480,15 @@ const [prepFeedback, setPrepFeedback] = useState<any>(null);
   // ← UPDATED 2026: Full session reset with character and word randomization
   React.useEffect(() => {
   if (lessonId === 'verbs') {
-    setVerbStep(0);
-    setCurrentVerbChallenge(generateVerbRound(0));
-  } else if (lessonId === 'prepositions') {
+  setVerbActionStep(0);
+  setCurrentVerbActionChallenge(generateVerbActionRound(0));
+  setVerbActionFeedback(null);
+}
+
+if (lessonId === 'tenses') {
+  setVerbStep(0);
+  setCurrentVerbChallenge(generateVerbRound(0));
+}else if (lessonId === 'prepositions') {
     setPrepStep(0);
     setCurrentPrepChallenge(generatePrepositionRound(0));
     setPrepFeedback(null);
@@ -1693,8 +1748,126 @@ const handlePrepDragEnd = (event: any, info: any, card: string) => {
     { name: "Samyukta Sanil", xp: 920, rank: 3 },
     { name: "Aksa Susan Abraham", xp: 890, rank: 4 }
   ];
+if (lessonId === 'verbs') {
+  if (!currentVerbActionChallenge) return null;
 
-  if (lessonId === 'verbs') {
+  const handleVerbActionDragEnd = (event: any, info: any, card: any) => {
+    if (!characterRef.current || !currentVerbActionChallenge) return;
+
+    const boxRect = characterRef.current.getBoundingClientRect();
+    const cardRect = (event.target as HTMLElement).getBoundingClientRect();
+
+    const isOverBox = checkOverlap(cardRect, boxRect);
+    if (!isOverBox) return;
+
+    if (card.word === currentVerbActionChallenge.target) {
+      setVerbActionFeedback({ type: "correct", card: card.word });
+
+      confetti({
+        particleCount: 80,
+        spread: 60,
+        origin: { y: 0.6 }
+      });
+
+      setTimeout(() => {
+        if (verbActionStep < 2) {
+          const nextStep = verbActionStep + 1;
+
+          setVerbActionStep(nextStep);
+          setCurrentVerbActionChallenge(generateVerbActionRound(nextStep));
+          setVerbActionFeedback(null);
+        } else {
+          setIsDone(true);
+        }
+      }, 1200);
+    } else {
+      setVerbActionFeedback({
+        type: "wrong",
+        card: card.word
+      });
+
+      setTimeout(() => {
+        setVerbActionFeedback(null);
+      }, 1500);
+    }
+  };
+
+  return (
+    <div className="max-w-4xl w-full flex flex-col items-center relative">
+      <div className="text-center mb-10">
+        <h2 className="text-5xl font-serif italic mb-4">
+          Mastering Verbs
+        </h2>
+
+        <p className="text-lg text-muted font-medium">
+          Drag the correct action image.
+        </p>
+      </div>
+
+      {!isDone ? (
+        <div className="w-full max-w-3xl bg-white rounded-[40px] shadow-xl p-10">
+
+          <div className="text-center mb-10">
+            <p className="text-3xl font-bold text-ink">
+              {currentVerbActionChallenge.sentence}
+            </p>
+          </div>
+
+          <div className="flex justify-center mb-12">
+            <motion.div
+              ref={characterRef}
+              className="w-72 h-28 rounded-3xl border-2 border-dashed border-stone-300 bg-stone-50 flex items-center justify-center"
+            >
+              Drop action here
+            </motion.div>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-6">
+            {currentVerbActionChallenge.cards.map((card: any) => (
+              <motion.div
+                key={card.word}
+                drag
+                dragSnapToOrigin
+                onDragEnd={(e, info) =>
+                  handleVerbActionDragEnd(e, info, card)
+                }
+                whileHover={{ scale: 1.05 }}
+                whileDrag={{ scale: 1.1, zIndex: 50 }}
+                className="w-32 h-32 bg-white rounded-3xl shadow-lg border-2 border-stone-100 cursor-grab active:cursor-grabbing flex flex-col items-center justify-center"
+              >
+                <img
+                  src={card.image}
+                  alt={card.word}
+                  className="w-20 h-20 object-contain mb-2"
+                />
+
+                <span className="text-sm font-bold capitalize">
+                  {card.word}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="bg-white rounded-[40px] shadow-xl p-10 text-center">
+          <GrammaChu reaction="excited" />
+
+          <h3 className="text-3xl font-serif italic mb-3">
+            Well done!
+          </h3>
+
+          <button
+            onClick={onComplete}
+            className="w-full py-6 bg-ink text-white font-bold rounded-3xl"
+          >
+            Quiz time
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+  if (lessonId === 'tenses') {
   if (!currentVerbChallenge) return null;
 
   return (
@@ -1703,9 +1876,9 @@ const handlePrepDragEnd = (event: any, info: any, card: string) => {
         <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-2">
           Interactive Practice
         </p>
-        <h2 className="text-5xl font-serif italic mb-4">Mastering Verbs</h2>
+        <h2 className="text-5xl font-serif italic mb-4">Mastering Tenses</h2>
         <p className="text-lg text-muted font-medium max-w-2xl mx-auto">
-          Drag the correct verb card into the answer box.
+          Drag the correct tense card into the answer box.
         </p>
       </div>
 
@@ -1805,7 +1978,7 @@ const handlePrepDragEnd = (event: any, info: any, card: string) => {
             <GrammaChu reaction="excited" />
             <h3 className="text-3xl font-serif italic mb-3">Well done!</h3>
             <p className="text-muted font-medium mb-8">
-              You completed the verb practice. Now continue to the quiz or revise using videos.
+              You completed the tense practice. Now continue to the quiz or revise using videos.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
