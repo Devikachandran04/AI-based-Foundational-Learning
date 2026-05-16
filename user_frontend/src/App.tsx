@@ -74,80 +74,663 @@ interface LessonContentData {
   videos: { title: string; id: string }[];
 }
 
-const LESSON_CONTENT: Record<string, LessonContentData> = {
+const LESSON_CONTENT: Record<string, any> = {
   nouns: {
     title: "Nouns",
-    description: "The Naming Words",
-    image: "https://picsum.photos/seed/nouns/800/450",
-    body: "A noun is a word used to name a person, place, thing, or idea. It is one of the most important parts of speech in English grammar and is used to identify and describe objects or concepts in a sentence.",
-    examples: ["Pikachu (Person)", "School (Place)", "Pokéball (Thing)", "Happiness (Idea)"],
+    description: "Naming Words",
+
+    story: [
+      "Hey! Meet Pikachu!",
+      "Pikachu is a NAME!",
+      "Names are called NOUNS!",
+      "Can you find more names?"
+    ],
+
+    visualExamples: [
+      { word: "Pikachu", type: "Person", emoji: "P", image: "https://img.pokemondb.net/sprites/home/normal/pikachu.png" },
+      { word: "School", type: "Place", emoji: "S", image: "https://cdn-icons-png.flaticon.com/512/201/201818.png" },
+      { word: "Ball", type: "Thing", emoji: "B", image: "https://cdn-icons-png.flaticon.com/512/861/861512.png" },
+      { word: "Happiness", type: "Idea", emoji: "H", image: "https://cdn-icons-png.flaticon.com/512/742/742751.png" }
+    ],
+
+    activity: {
+      type: "tap-select",
+      question: "Tap the Nouns below!",
+      options: ["Run", "Apple", "Jump", "School"],
+      answers: ["Apple", "School"]
+    },
+
+    // --- EXPANDED body & examples ---
+    body: "A noun is a word that names a person, place, thing, or idea. Everything around us has a name — and those names are nouns! Nouns are the building blocks of language. Without nouns, we could not talk about the people we love, the places we visit, the objects we use every day, or the feelings and ideas we experience. For example, 'Pikachu' is a noun because it names a character. 'School' is a noun because it names a place you go to learn. 'Ball' is a noun because it names an object you play with. Even invisible things like 'Happiness' and 'Freedom' are nouns because they name ideas. Nouns can be singular (one thing) or plural (more than one thing). They can be common nouns that name general things, or proper nouns that name specific people, places, and things. Understanding nouns helps us build sentences and communicate clearly.",
+    examples: [
+      "Pikachu ran to school.",
+      "The ball is round and bouncy.",
+      "Happiness is a wonderful feeling.",
+      "The teacher is very kind.",
+      "London is a beautiful city.",
+      "Courage is the key to success.",
+      "My dog loves to play in the garden.",
+      "The river flows through the valley."
+    ],
+
+    // --- TYPES array ---
+    types: [
+      { name: "Common Noun", detail: "A general name for a person, place, or thing. Example: city, dog, river, teacher." },
+      { name: "Proper Noun", detail: "The specific name of a person, place, or organisation. It always starts with a capital letter. Example: Pikachu, London, Amazon." },
+      { name: "Concrete Noun", detail: "Something you can see, touch, hear, smell, or taste. Example: apple, book, music, perfume." },
+      { name: "Abstract Noun", detail: "Something you cannot touch — an idea, feeling, or quality. Example: happiness, freedom, courage, love." },
+      { name: "Collective Noun", detail: "A word for a group of people, animals, or things. Example: a flock of birds, a team of players, a bunch of grapes." }
+    ],
+
+    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
     videos: [
-      { title: "What is a Noun?", id: "9cu7C07pNbA" },
-      { title: "Noun Song for Kids", id: "qcXy6_Mqe54" },
-      { title: "Common and Proper Nouns", id: "tquecIG-Pws" }
+      { title: "What are Nouns?", id: "6RbFXTUwRok" },
+      { title: "Nouns for Kids", id: "6RbFXTUwRok" },
+      { title: "Types of Nouns", id: "6RbFXTUwRok" }
     ]
   },
+
   verbs: {
     title: "Verbs",
-    description: "The Action Words",
-    image: "https://picsum.photos/seed/verbs/800/450",
-    body: "Verbs are words that describe actions. They tell us what the subject of a sentence is doing. Every sentence needs at least one verb to make sense!",
-    examples: ["Run", "Jump", "Think", "Speak"],
+    description: "Action Words",
+
+    story: [
+      "Look at Pikachu!",
+      "Pikachu is RUNNING!",
+      "Running is an ACTION!",
+      "Action words are called VERBS!"
+    ],
+
+    visualExamples: [
+      { word: "Run", emoji: "R", image: "https://cdn-icons-png.flaticon.com/512/1995/1995574.png" },
+      { word: "Jump", emoji: "J", image: "https://cdn-icons-png.flaticon.com/512/4333/4333609.png" },
+      { word: "Eat", emoji: "E", image: "https://cdn-icons-png.flaticon.com/512/1046/1046784.png" }
+    ],
+
+    activity: {
+      type: "tap-select",
+      question: "Which one is an action word?",
+      options: ["Run", "Ball", "School", "Table"],
+      answers: ["Run"]
+    },
+
+    body: "A verb is a word that shows an action or a state of being. Every sentence needs a verb — without one, a sentence is incomplete! When Pikachu runs, jumps, or eats, those are all action verbs. Action verbs describe what a subject does: 'She sings', 'He jumps', 'They swim'. Linking verbs connect the subject to more information about it: 'She is happy', 'The sky looks blue'. Helping verbs (also called auxiliary verbs) work alongside main verbs to show tense, possibility, or necessity: 'She is running', 'He can fly', 'They should study'. Verbs also change form depending on tense — the same action can be described in the past, present, or future. For example, 'eat' becomes 'ate' in the past and 'will eat' in the future. Mastering verbs is essential for building clear, meaningful sentences in English.",
+    examples: [
+      "Pikachu runs very fast.",
+      "She jumps over the puddle.",
+      "They eat berries every day.",
+      "He sings a beautiful song.",
+      "The children are playing in the park.",
+      "I have finished my homework.",
+      "She was reading a book all night.",
+      "We will travel to the mountains tomorrow."
+    ],
+
+    types: [
+      { name: "Action Verb", detail: "Describes what the subject does physically or mentally. Example: run, think, write, dream." },
+      { name: "Linking Verb", detail: "Connects the subject to a word that describes it. Example: is, are, was, seems, looks, feels." },
+      { name: "Helping Verb", detail: "Works with the main verb to form tense or mood. Example: has, have, is, are, will, can, should, must." },
+      { name: "Transitive Verb", detail: "An action verb that needs an object to complete its meaning. Example: She kicked the ball. (ball is the object)" },
+      { name: "Intransitive Verb", detail: "An action verb that does not need an object. Example: He smiled. She arrived." }
+    ],
+
+    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
     videos: [
-      { title: "Action Verbs", id: "ineCCpqpZrM" },
-      { title: "The Verb Song", id: "lXQNmY5vQ44" },
-      { title: "Helping Verbs", id: "ESKrs05nrAY" }
+      { title: "What are Verbs?", id: "6RbFXTUwRok" },
+      { title: "Verbs for Kids", id: "6RbFXTUwRok" },
+      { title: "Action Verbs", id: "6RbFXTUwRok" }
     ]
   },
-  tenses: {
-    title: "Tenses",
-    description: "The Time Travelers",
-    image: "https://picsum.photos/seed/tenses/800/450",
-    body: "Tenses tell us when an action happens. We use the Past Tense for things that already happened, the Present Tense for things happening now, and the Future Tense for things that will happen later.",
-    examples: ["I walked (Past)", "I walk (Present)", "I will walk (Future)"],
-    videos: [
-      { title: "Past, Present, Future", id: "jBUklI7YlYQ" },
-      { title: "Tense Rules", id: "NkuzcXPpPSA" },
-      { title: "Tense Examples", id: "tyMuM-2e5NA" }
-    ]
-  },
-  articles: {
-    title: "Articles",
-    description: "The Little Helpers",
-    image: "https://picsum.photos/seed/articles/800/450",
-    body: "Articles are small words that come before nouns. 'The' is used for specific things, while 'A' and 'An' are used for general things. Remember: use 'An' before words that start with a vowel sound!",
-    examples: ["The Sun", "A book", "An apple", "An hour"],
-    videos: [
-      { title: "A, An, The", id: "drTyYqbz6Xk" },
-      { title: "Article Rules", id: "RDkx4J__-QY?" },
-      { title: "Article Quiz", id: "o2WTRLH0dT8" }
-    ]
-  },
-  prepositions: {
-    title: "Prepositions",
-    description: "The Position Words",
-    image: "https://picsum.photos/seed/prepositions/800/450",
-    body: "Prepositions are words that tell us where something is! They show the relationship between a noun and another part of the sentence. Words like 'in', 'on', 'under', and 'behind' are all prepositions.",
-    examples: ["The ball is IN the box.", "Pikachu is ON the table.", "The cat is UNDER the chair."],
-    videos: [
-      { title: "Prepositions for Kids", id: "xyMrLQ4ZI-4" },
-      { title: "Position Words", id: "_VK-kXkXTBc" },
-      { title: "Preposition of words", id: "VSn-7QmnJr8" }
-    ]
-  },
+
   adjectives: {
     title: "Adjectives",
-    description: "The Describing Words",
-    image: "https://picsum.photos/seed/adjectives/800/450",
-    body: "Adjectives are words that describe nouns! They tell us more about people, places, and things. They can describe color, size, shape, and even how something feels or tastes.",
-    examples: ["The RED apple", "A BIG elephant", "The HAPPY boy", "A SWEET candy"],
+    description: "Describing Words",
+
+    story: [
+      "Look at this apple!",
+      "It is RED!",
+      "It is BIG!",
+      "Words that describe are called ADJECTIVES!"
+    ],
+
+    visualExamples: [
+      { word: "Red", emoji: "R", image: "https://cdn-icons-png.flaticon.com/512/415/415733.png" },
+      { word: "Big", emoji: "B", image: "https://cdn-icons-png.flaticon.com/512/565/565547.png" },
+      { word: "Happy", emoji: "H", image: "https://cdn-icons-png.flaticon.com/512/742/742751.png" }
+    ],
+
+    activity: {
+      type: "tap-select",
+      question: "Pick the describing words!",
+      options: ["Happy", "Run", "Blue", "Jump"],
+      answers: ["Happy", "Blue"]
+    },
+
+    body: "An adjective is a word that describes or modifies a noun or pronoun. It tells us more about a person, place, thing, or idea. Adjectives answer questions like: What kind? How many? Which one? How much? For example, in the phrase 'a tall, blue mountain', both 'tall' and 'blue' are adjectives because they describe the mountain. Adjectives make our language vivid and precise — compare 'a dog' with 'a small, fluffy, playful dog'. The second description paints a much clearer picture! Adjectives can also be used in comparisons: 'She is taller than her sister' (comparative) and 'He is the tallest player on the team' (superlative). When multiple adjectives appear together, they usually follow a specific order: opinion, size, age, shape, colour, origin, material, purpose — for example, 'a lovely little old round green French silver whittling knife'.",
+    examples: [
+      "The red apple is sweet.",
+      "She has a big, heavy bag.",
+      "He is a happy and cheerful boy.",
+      "The blue sky is beautiful today.",
+      "It was a cold, stormy winter night.",
+      "She wore a beautiful white dress.",
+      "The clever little fox outsmarted the hunter.",
+      "This is the most difficult question in the test."
+    ],
+
+    types: [
+      { name: "Descriptive Adjective", detail: "Describes the quality of a noun. Example: tall, beautiful, cold, soft, bright." },
+      { name: "Quantitative Adjective", detail: "Shows the quantity of a noun. Example: some, many, few, much, all, several." },
+      { name: "Demonstrative Adjective", detail: "Points to a specific noun. Example: this book, that car, these apples, those chairs." },
+      { name: "Comparative Adjective", detail: "Compares two nouns. Example: taller, smarter, more interesting, better." },
+      { name: "Superlative Adjective", detail: "Shows the highest or lowest degree among three or more. Example: tallest, smartest, most interesting, best." }
+    ],
+
+    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png",
     videos: [
-      { title: "What is an Adjective?", id: "GTymHwSzp7A" },
-      { title: "Adjective Song", id: "9UUgfdUAmEA" },
-      { title: "Describing Words", id: "4f3H12YNlxo" }
+      { title: "What are Adjectives?", id: "6RbFXTUwRok" },
+      { title: "Adjectives for Kids", id: "6RbFXTUwRok" },
+      { title: "Describing Words", id: "6RbFXTUwRok" }
+    ]
+  },
+
+  tenses: {
+    title: "Tenses",
+    description: "Time Words",
+
+    story: [
+      "When did it happen?",
+      "I am EATING now (Present)!",
+      "I ATE before (Past)!",
+      "Tenses tell us the TIME!"
+    ],
+
+    visualExamples: [
+      { word: "Eat", type: "Now", emoji: "N", image: "https://cdn-icons-png.flaticon.com/512/1046/1046784.png" },
+      { word: "Ate", type: "Past", emoji: "P", image: "https://cdn-icons-png.flaticon.com/512/3227/3227829.png" },
+      { word: "Will Eat", type: "Future", emoji: "F", image: "https://cdn-icons-png.flaticon.com/512/1046/1046857.png" }
+    ],
+
+    activity: {
+      type: "tap-select",
+      question: "Which word is about the Past?",
+      options: ["Run", "Ate", "Jump", "Sing"],
+      answers: ["Ate"]
+    },
+
+    body: "Tenses tell us WHEN something happens — in the past, the present, or the future. The English tense system is one of the most important and complex parts of grammar. Present tense means the action is happening right now or happens regularly: 'I eat lunch every day.' Past tense means the action already happened before this moment: 'I ate lunch an hour ago.' Future tense means the action will happen at a later time: 'I will eat lunch at noon.' Each of these three main tenses is further divided into four aspects — Simple, Continuous (Progressive), Perfect, and Perfect Continuous — giving us twelve tenses in total. For example, the Present Continuous ('I am eating') shows an action happening right at this moment. The Past Perfect ('I had eaten') shows an action that was completed before another past action. Learning tenses helps us express exactly when events happen and how they relate to one another in time.",
+    examples: [
+      "I eat lunch now. (Present Simple)",
+      "I ate lunch yesterday. (Past Simple)",
+      "I will eat lunch tomorrow. (Future Simple)",
+      "She runs every day. (Present Simple)",
+      "He was playing football when it rained. (Past Continuous)",
+      "They have already finished their work. (Present Perfect)",
+      "By next year, she will have graduated. (Future Perfect)",
+      "We were singing when the teacher walked in. (Past Continuous)"
+    ],
+
+    types: [
+      { name: "Present Tense", detail: "Describes actions happening now or habitual actions. Example: She reads a book. He is running right now." },
+      { name: "Past Tense", detail: "Describes actions that have already happened. Example: She read a book. He was running yesterday." },
+      { name: "Future Tense", detail: "Describes actions that will happen. Example: She will read a book. He is going to run tomorrow." },
+      { name: "Perfect Tense", detail: "Shows an action completed before a certain time. Example: She has read the book. He had finished before noon." },
+      { name: "Continuous Tense", detail: "Shows an ongoing action at a specific time. Example: She is reading. He was running when I called." }
+    ],
+
+    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png",
+    videos: [
+      { title: "Tenses Explained", id: "6RbFXTUwRok" },
+      { title: "Past Present Future", id: "6RbFXTUwRok" },
+      { title: "Verb Tenses for Kids", id: "6RbFXTUwRok" }
+    ]
+  },
+
+  articles: {
+    title: "Articles",
+    description: "A, An, The",
+
+    story: [
+      "Meet the helpers: A, An, and The!",
+      "A Ball!",
+      "An Apple!",
+      "The Moon!"
+    ],
+
+    visualExamples: [
+      { word: "A Ball", emoji: "A", image: "https://cdn-icons-png.flaticon.com/512/861/861512.png" },
+      { word: "An Egg", emoji: "An", image: "https://cdn-icons-png.flaticon.com/512/2977/2977312.png" },
+      { word: "The Sun", emoji: "T", image: "https://cdn-icons-png.flaticon.com/512/4814/4814268.png" }
+    ],
+
+    activity: {
+      type: "tap-select",
+      question: "Which word uses 'An' before it?",
+      options: ["Cat", "Dog", "Apple", "Boy"],
+      answers: ["Apple"]
+    },
+
+    body: "Articles are small but mighty words that come before nouns. In English, there are three articles: 'a', 'an', and 'the'. They help us identify whether we are talking about something specific or something general. We use the indefinite article 'A' before singular nouns that start with a consonant sound: 'a cat', 'a book', 'a university' (note: 'university' starts with a 'y' sound, which is a consonant sound). We use 'An' before singular nouns that start with a vowel sound: 'an apple', 'an egg', 'an honest man' (note: 'honest' starts with a silent 'h', so the vowel sound 'o' determines the article). We use the definite article 'The' when we are talking about a specific, particular noun that both the speaker and the listener know about: 'Please close the door', 'The sun is bright today', 'Did you feed the cat?' The definite article can be used with singular and plural nouns, and with countable and uncountable nouns. Choosing the right article is an important part of sounding natural in English.",
+    examples: [
+      "I have a cat at home.",
+      "She ate an apple for breakfast.",
+      "The sun is very bright today.",
+      "He rides a bicycle to school.",
+      "An elephant never forgets.",
+      "Please pass me the salt.",
+      "She is an honest girl.",
+      "I saw a film last night — the film was amazing."
+    ],
+
+    types: [
+      { name: "Definite Article (The)", detail: "Used before a specific noun known to both speaker and listener. Example: Please shut the window. The president arrived." },
+      { name: "Indefinite Article (A)", detail: "Used before a singular noun starting with a consonant sound, referring to any one item. Example: I want a sandwich. She adopted a puppy." },
+      { name: "Indefinite Article (An)", detail: "Used before a singular noun starting with a vowel sound. Example: He is an engineer. She gave me an umbrella." },
+      { name: "Zero Article", detail: "No article is used with plural or uncountable nouns in general statements. Example: Dogs are loyal. Water is essential for life." },
+      { name: "Articles with Proper Nouns", detail: "We use 'the' with rivers, oceans, and mountain ranges, but not with most countries or cities. Example: the Nile, the Pacific, but France and Paris." }
+    ],
+
+    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png",
+    videos: [
+      { title: "Articles A An The", id: "6RbFXTUwRok" },
+      { title: "When to use A or An", id: "6RbFXTUwRok" },
+      { title: "Articles for Kids", id: "6RbFXTUwRok" }
+    ]
+  },
+
+  prepositions: {
+    title: "Prepositions",
+    description: "Position Words",
+
+    story: [
+      "Where is Pikachu?",
+      "Is he ON the box?",
+      "Is he IN the box?",
+      "Prepositions show WHERE and WHEN!"
+    ],
+
+    visualExamples: [
+      { word: "In", emoji: "I", image: "https://cdn-icons-png.flaticon.com/512/3395/3395514.png" },
+      { word: "On", emoji: "O", image: "https://cdn-icons-png.flaticon.com/512/3395/3395544.png" },
+      { word: "Under", emoji: "U", image: "https://cdn-icons-png.flaticon.com/512/3395/3395582.png" }
+    ],
+
+    activity: {
+      type: "tap-select",
+      question: "Which word shows position?",
+      options: ["Red", "Under", "Run", "Ball"],
+      answers: ["Under"]
+    },
+
+    body: "Prepositions are words that show the relationship between a noun (or pronoun) and other words in a sentence. They tell us where something is, when something happens, or how things are related. Prepositions of place tell us the position or location of something: 'The cat is under the table', 'The keys are in the drawer', 'The bird sat on the branch'. Prepositions of time tell us when something happens: 'I wake up at seven o'clock', 'She was born in June', 'We have school on Mondays'. Prepositions of movement tell us where something is going: 'He walked through the park', 'She climbed up the ladder', 'The ball rolled across the floor'. Prepositions of manner describe how something is done: 'She sang with great emotion', 'He arrived by bus'. Prepositions are always followed by a noun, pronoun, or noun phrase — this combination is called a prepositional phrase. Learning common prepositions and their correct usage will greatly improve your writing and speaking in English.",
+    examples: [
+      "The cat is under the table.",
+      "Pikachu is in the box.",
+      "The book is on the shelf.",
+      "She walked through the park.",
+      "They arrived at the station.",
+      "I wake up at seven o'clock every morning.",
+      "He has been waiting since morning.",
+      "The bird flew over the rooftop."
+    ],
+
+    types: [
+      { name: "Preposition of Place", detail: "Shows the location of something. Example: in, on, under, above, below, beside, between, behind, in front of." },
+      { name: "Preposition of Time", detail: "Shows when something happens. Example: at (exact time), on (days/dates), in (months/years/seasons), since, for, before, after." },
+      { name: "Preposition of Movement", detail: "Shows movement or direction. Example: to, from, into, out of, through, across, along, up, down, around." },
+      { name: "Preposition of Manner", detail: "Describes how something happens or is done. Example: by bus, with care, in a hurry, without hesitation." },
+      { name: "Preposition of Agent/Instrument", detail: "Shows who or what performs an action. Example: The song was written by Mozart. She cut the cake with a knife." }
+    ],
+
+    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
+    videos: [
+      { title: "What are Prepositions?", id: "6RbFXTUwRok" },
+      { title: "Prepositions of Place", id: "6RbFXTUwRok" },
+      { title: "Prepositions for Kids", id: "6RbFXTUwRok" }
     ]
   }
 };
+const speak = (text: string) => {
+  // Remove all emoji (Unicode ranges for emoticons, symbols, pictographs, etc.)
+  const sanitised = text.replace(
+    /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\u{1F000}-\u{1F02F}\u{1F0A0}-\u{1F0FF}\u{1F100}-\u{1F1FF}\u{1F200}-\u{1F2FF}\u{E0020}-\u{E007F}\u{E0100}-\u{E01EF}]/gu,
+    ''
+  ).trim();
+  const msg = new SpeechSynthesisUtterance(sanitised);
+  speechSynthesis.speak(msg);
+};
+// ============================================================
+// CHANGE 3: Three-Step Lesson Flow
+//
+// Step 1 — ReadyPage        : High-energy landing page
+// Step 2 — InteractivePage  : Story + Types accordion + Tap activity
+// Step 3 — ConceptReviewPage: Body text + examples recap
+//
+// The "Next" button on Step 2 is LOCKED until all correct
+// answers in the tap activity have been selected.
+// ============================================================
+
+/** Step 1: High-energy "Ready?" landing page */
+function ReadyPage({ lessonId, onNext }: { lessonId: string; onNext: () => void }) {
+  const lesson = LESSON_CONTENT[lessonId];
+  if (!lesson) return null;
+
+  // Map lessonId to a fun ready-message
+  const readyMessages: Record<string, string> = {
+    nouns:        "Ready for Pikachu? Let's name the world!",
+    verbs:        "Ready for Charmander? Let's take ACTION!",
+    adjectives:   "Ready for Dragonite? Let's DESCRIBE everything!",
+    tenses:       "Ready for Snorlax? Let's travel through TIME!",
+    articles:     "Ready for Eevee? A, An, The — here we go!",
+    prepositions: "Ready for Squirtle? Let's find WHERE things are!",
+  };
+
+  const characterSprites: Record<string, string> = {
+    nouns:        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
+    verbs:        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
+    adjectives:   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png",
+    tenses:       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png",
+    articles:     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png",
+    prepositions: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
+  };
+
+  const bgColors: Record<string, string> = {
+    nouns:        "from-yellow-50 to-amber-50",
+    verbs:        "from-orange-50 to-red-50",
+    adjectives:   "from-purple-50 to-pink-50",
+    tenses:       "from-blue-50 to-teal-50",
+    articles:     "from-rose-50 to-fuchsia-50",
+    prepositions: "from-cyan-50 to-sky-50",
+  };
+
+  return (
+    <div className={`min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-b ${bgColors[lessonId] ?? 'from-white to-stone-50'} p-8`}>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8, y: 40 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 200, damping: 18 }}
+        className="flex flex-col items-center text-center max-w-xl"
+      >
+        {/* Pokemon sprite */}
+        <motion.img
+          src={characterSprites[lessonId]}
+          alt={lesson.title}
+          className="w-48 h-48 object-contain drop-shadow-2xl mb-6"
+          animate={{ y: [0, -14, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          referrerPolicy="no-referrer"
+        />
+
+        <motion.h1
+          className="text-5xl font-black text-stone-900 mb-4 leading-tight"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          {readyMessages[lessonId] ?? `Ready to learn ${lesson.title}?`}
+        </motion.h1>
+
+        <motion.p
+          className="text-xl text-stone-500 font-medium mb-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          {lesson.description} — tap the button below to start!
+        </motion.p>
+
+        <motion.button
+          onClick={onNext}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.97 }}
+          className="px-12 py-5 bg-stone-900 text-white text-2xl font-black rounded-3xl shadow-2xl flex items-center gap-3 hover:bg-stone-800 transition-colors"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          Let's Go! <ArrowRight size={28} />
+        </motion.button>
+      </motion.div>
+    </div>
+  );
+}
+
+/** Step 2: Interactive lesson — story, types accordion, tap-the-word activity
+ *  The "Next" button is locked until all correct answers are tapped.
+ */
+function InteractiveLessonPage({ lessonId, onNext }: { lessonId: string; onNext: () => void }) {
+  const lesson = LESSON_CONTENT[lessonId];
+  const [selected, setSelected] = useState<string[]>([]);
+  const [feedback, setFeedback] = useState<string>("");
+  const [openType, setOpenType] = useState<number | null>(null);
+
+  if (!lesson) return <div className="p-10 text-center">Loading...</div>;
+
+  const allCorrectFound = lesson.activity.answers.every((ans: string) =>
+    selected.includes(ans)
+  );
+
+  const handleClick = (word: string) => {
+    if (selected.includes(word)) return;
+    const newSelected = [...selected, word];
+    setSelected(newSelected);
+
+    if (lesson.activity.answers.includes(word)) {
+      speak("Correct!");
+      setFeedback("Great job! Keep going!");
+    } else {
+      speak("Try again");
+      setFeedback("Oops! That is not the right answer. Try another word!");
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-white p-6 w-full max-w-4xl mx-auto">
+      <h1 className="text-4xl font-bold text-center mb-6">{lesson.title}</h1>
+
+      {/* STORY SECTION */}
+      <div className="bg-white rounded-3xl shadow-lg p-6 mb-8 text-center">
+        <h2 className="text-lg font-black uppercase tracking-widest text-teal-600 mb-4">The Story</h2>
+        {lesson.story.map((line: string, i: number) => (
+          <p
+            key={i}
+            className="text-xl font-semibold mb-3 cursor-pointer hover:text-teal-700 transition-colors"
+            onClick={() => speak(line)}
+          >
+            {line}
+          </p>
+        ))}
+      </div>
+
+      {/* VISUAL EXAMPLES */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+        {lesson.visualExamples.map((item: any, i: number) => (
+          <div
+            key={i}
+            onClick={() => speak(item.word)}
+            className="bg-white p-4 rounded-2xl shadow-md text-center cursor-pointer hover:scale-105 transition"
+          >
+            <img src={item.image} alt={item.word} className="w-20 h-20 mx-auto mb-2" />
+            <p className="font-bold text-lg">{item.word}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* TYPES — clickable accordion/pop-up buttons */}
+      {lesson.types && (
+        <div className="bg-white rounded-3xl shadow-lg p-6 mb-8">
+          <h2 className="text-lg font-black uppercase tracking-widest text-teal-600 mb-4">
+            Types of {lesson.title}
+          </h2>
+          <div className="flex flex-col gap-3">
+            {lesson.types.map((t: { name: string; detail: string }, idx: number) => (
+              <div key={idx} className="rounded-2xl border border-stone-100 overflow-hidden">
+                <button
+                  onClick={() => setOpenType(openType === idx ? null : idx)}
+                  className="w-full flex items-center justify-between px-5 py-4 bg-stone-50 hover:bg-teal-50 transition-colors font-bold text-left"
+                >
+                  <span className="text-stone-900">{t.name}</span>
+                  <motion.span
+                    animate={{ rotate: openType === idx ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-teal-600 ml-2 flex-shrink-0"
+                  >
+                    <ChevronDown size={18} />
+                  </motion.span>
+                </button>
+                <AnimatePresence>
+                  {openType === idx && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-5 py-4 bg-teal-50 text-stone-700 text-sm font-medium leading-relaxed border-t border-teal-100">
+                        {t.detail}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* TAP THE WORD ACTIVITY */}
+      <div className="bg-blue-50 p-6 rounded-3xl shadow-lg text-center">
+        <h2 className="text-2xl font-bold mb-2">{lesson.activity.question}</h2>
+        <p className="text-sm text-stone-500 font-medium mb-5">
+          Find all correct answers to unlock the Next button!
+        </p>
+        <div className="flex flex-wrap justify-center gap-4">
+          {lesson.activity.options.map((opt: string, i: number) => {
+            const isSelected = selected.includes(opt);
+            const isCorrect  = lesson.activity.answers.includes(opt);
+            return (
+              <button
+                key={i}
+                onClick={() => handleClick(opt)}
+                className={`px-6 py-3 rounded-full text-lg font-bold transition ${
+                  isSelected
+                    ? isCorrect
+                      ? "bg-green-400 text-white"
+                      : "bg-red-400 text-white"
+                    : "bg-white shadow hover:shadow-md"
+                }`}
+              >
+                {opt}
+              </button>
+            );
+          })}
+        </div>
+        {feedback && <p className="mt-4 text-lg font-semibold">{feedback}</p>}
+        {allCorrectFound && (
+          <motion.p
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-2 text-green-600 font-black text-lg"
+          >
+            All correct! You can move on!
+          </motion.p>
+        )}
+
+        {/* LOCKED / UNLOCKED Next button */}
+        {allCorrectFound ? (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            onClick={onNext}
+            className="mt-8 px-10 py-4 bg-stone-900 text-white rounded-2xl font-bold flex items-center gap-2 mx-auto hover:bg-stone-800 transition-colors"
+          >
+            Next Step <ArrowRight size={20} />
+          </motion.button>
+        ) : (
+          <div className="mt-8 px-10 py-4 bg-stone-300 text-stone-500 rounded-2xl font-bold flex items-center gap-2 mx-auto w-fit cursor-not-allowed select-none">
+            <Lock size={18} />
+            Complete the activity to continue
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/** Step 3: Concept Review — body text + examples */
+function ConceptReviewPage({ lessonId, onNext }: { lessonId: string; onNext: () => void }) {
+  const lesson = LESSON_CONTENT[lessonId];
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  if (!lesson) return null;
+
+  const handleTTS = () => {
+    window.speechSynthesis.cancel();
+    if (isSpeaking) { setIsSpeaking(false); return; }
+    // Sanitise before TTS (same regex as speak())
+    const clean = lesson.body.replace(
+      /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\u{1F000}-\u{1F02F}\u{1F0A0}-\u{1F0FF}\u{1F100}-\u{1F1FF}\u{1F200}-\u{1F2FF}\u{E0020}-\u{E007F}\u{E0100}-\u{E01EF}]/gu,
+      ''
+    ).trim();
+    const utterance = new SpeechSynthesisUtterance(clean);
+    utterance.rate = 0.9;
+    utterance.pitch = 1.1;
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend   = () => setIsSpeaking(false);
+    utterance.onerror = () => { setIsSpeaking(false); window.speechSynthesis.cancel(); };
+    window.speechSynthesis.speak(utterance);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-teal-50 to-white p-6 w-full max-w-4xl mx-auto">
+      <h1 className="text-4xl font-bold text-center mb-2">{lesson.title} — Concept Review</h1>
+      <p className="text-center text-stone-500 font-medium mb-8">Read and listen to the full explanation, then continue!</p>
+
+      {/* Body text */}
+      <div className="bg-white rounded-3xl shadow-lg p-8 mb-8 relative">
+        <button
+          onClick={handleTTS}
+          className={`absolute top-6 right-6 p-3 rounded-2xl transition-all ${isSpeaking ? 'bg-teal-600 text-white' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'}`}
+          title="Listen"
+        >
+          <Volume2 size={22} />
+        </button>
+        <h2 className="text-xl font-black uppercase tracking-widest text-teal-600 mb-4">What are {lesson.title}?</h2>
+        <p className="text-lg text-stone-700 leading-relaxed">{lesson.body}</p>
+      </div>
+
+      {/* Examples */}
+      <div className="bg-white rounded-3xl shadow-lg p-8 mb-8">
+        <h2 className="text-xl font-black uppercase tracking-widest text-teal-600 mb-4">Examples</h2>
+        <ul className="space-y-3">
+          {lesson.examples.map((ex: string, i: number) => (
+            <li
+              key={i}
+              onClick={() => speak(ex)}
+              className="flex items-start gap-3 cursor-pointer hover:bg-teal-50 px-4 py-3 rounded-2xl transition-colors"
+            >
+              <span className="w-7 h-7 flex-shrink-0 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-black text-sm">
+                {i + 1}
+              </span>
+              <span className="text-stone-800 font-medium">{ex}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="text-center">
+        <button
+          onClick={onNext}
+          className="px-12 py-4 bg-stone-900 text-white rounded-2xl font-bold text-lg flex items-center gap-2 mx-auto hover:bg-stone-800 transition-colors"
+        >
+          Continue <ArrowRight size={20} />
+        </button>
+      </div>
+    </div>
+  );
+}
+
 const LESSON_ID_MAP: Record<string, string> = {
   nouns: "69c92ff2ce9565b0bc396eb0",
   tenses: "69c92ff2ce9565b0bc396eb1",
@@ -4131,14 +4714,24 @@ export default function App() {
   const logout = useStore((state) => state.logout);
   const currentLesson = useStore((state) => state.currentLesson);
   const setLesson = useStore((state) => state.setLesson);
-  const [view, setView] = useState<'lesson' | 'choose_action' | 'video' | 'quiz' | 'simpler_quiz' | 'practice' | 'profile'>('lesson');
+  const [view, setView] = useState<
+  'lesson_ready' |
+  'lesson_interactive' |
+  'concept_review' |
+  'choose_action' |
+  'video' |
+  'quiz' |
+  'simpler_quiz' |
+  'practice' |
+  'profile'
+>('lesson_ready');
   const [navigationHistory, setNavigationHistory] = useState<{ view: string, lesson: string }[]>([]);
   const { assets, loading, error, generate } = useAssets();
   const [isCourseComplete, setIsCourseComplete] = useState(false); 
   const [message, setMessage] = useState('');
   const handleGoToDashboard = () => {
     setLesson('');
-    setView('lesson');
+    setView('lesson_ready');
   };
   const setScore = useStore((state) => state.setScore);
 
@@ -4158,7 +4751,7 @@ export default function App() {
     setIsHelpModalOpen(false);
     setMessage("");
     setLesson("");
-    setView("lesson");
+    setView('lesson_ready');
     setNavigationHistory([]);
     logout();
   };
@@ -4266,13 +4859,13 @@ export default function App() {
     }
 
     if (view === 'profile') {
-      setView('lesson');
+      setView('lesson_ready');
       return;
     }
 
     if (navigationHistory.length <= 1) {
       setLesson('');
-      setView('lesson');
+      setView('lesson_ready');
       setNavigationHistory([]);
       return;
     }
@@ -4284,29 +4877,29 @@ export default function App() {
 
   const handleBackToDashboard = () => {
     setLesson('');
-    setView('lesson');
+    setView('lesson_ready');
   };
 
   const handleLessonBack = () => {
     setLesson('');
-    setView('lesson');
+    setView('lesson_ready');
   };
 
   const handleChooseActionBack = () => {
-    setView('lesson');
+    setView('lesson_ready');
   };
 
   const handleQuizComplete = (percentage: number, backendResult?: any) => {
     if (!backendResult) {
       setLesson('');
-      setView('lesson');
+      setView('lesson_ready');
       return;
     }
 
     if (backendResult.decision === "NEXT_LESSON") {
       setScore(Math.round(percentage));
       setLesson('');
-      setView('lesson');
+      setView('lesson_ready');
     } else if (backendResult.decision === "GO_SIMPLIFIED_QUIZ") {
       setView('simpler_quiz');
     } else {
@@ -4323,7 +4916,7 @@ export default function App() {
     if (backendResult.decision === "NEXT_LESSON") {
       setScore(Math.round(percentage));
       setLesson('');
-      setView('lesson');
+      setView('lesson_ready');
     } else {
       setView('video');
     }
@@ -4334,14 +4927,14 @@ export default function App() {
     if (currentIndex !== -1 && currentIndex < MODULE_ORDER.length - 1) {
       const nextLesson = MODULE_ORDER[currentIndex + 1];
       setLesson(nextLesson);
-      setView('lesson');
+      setView('lesson_ready');
     } else if (currentIndex === MODULE_ORDER.length - 1) {
       setIsCourseComplete(true);
       setLesson('');
-      setView('lesson');
+      setView('lesson_ready');
     } else {
       setLesson('');
-      setView('lesson');
+      setView('lesson_ready');
     }
   };
 
@@ -4398,7 +4991,7 @@ export default function App() {
     exit={{ opacity: 0 }}
     className="flex flex-col items-center justify-center p-8 w-full pt-28"
   >
-    <LearnerProfilePage onClose={() => setView('lesson')} />
+    <LearnerProfilePage onClose={() => setView('lesson_ready')} />
   </motion.div>
 ) : !currentLesson ? (
   <motion.div key="dashboard" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full">
@@ -4409,7 +5002,7 @@ export default function App() {
       onRetry={generate} 
       onSelectLesson={(id) => {
         setLesson(id);
-        setView('lesson');
+        setView('lesson_ready');
       }}
     />
   </motion.div>
@@ -4421,11 +5014,24 @@ export default function App() {
     exit={{ opacity: 0 }}
     className="flex flex-col items-center justify-center p-8 w-full pt-28"
   >
-    {view === 'lesson' && (
-  <LessonContentPage 
-    lessonId={currentLesson} 
-    onContinue={() => setView('choose_action')} 
-    onBack={handleLessonBack}
+    {view === 'lesson_ready' && (
+  <ReadyPage
+    lessonId={currentLesson}
+    onNext={() => setView('lesson_interactive')}
+  />
+)}
+
+{view === 'lesson_interactive' && (
+  <InteractiveLessonPage
+    lessonId={currentLesson}
+    onNext={() => setView('concept_review')}
+  />
+)}
+
+{view === 'concept_review' && (
+  <ConceptReviewPage
+    lessonId={currentLesson}
+    onNext={() => setView('choose_action')}
   />
 )}
     {view === 'choose_action' && (
@@ -4434,7 +5040,7 @@ export default function App() {
         onWatchVideo={() => setView('video')}
         onStartQuiz={() => setView('quiz')}
         onStartPractice={() => setView('practice')}
-        onBack={handleChooseActionBack}
+        onBack={() => setView('concept_review')}
       />
     )}
     {view === 'practice' && (
