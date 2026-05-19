@@ -143,6 +143,7 @@ const LESSON_CONTENT: Record<string, any> = {
 
     visualExamples: [
       { word: "Walking", emoji: "R", image: "https://www.emojiall.com/images/240/emojitwo/1f6b6.png" },
+       { word: "Sleeping", emoji: "S", image: "https://t3.ftcdn.net/jpg/02/10/43/50/360_F_210435078_YfPkrLMVWvrgdp72AScYCZ3Lyvc6vHYK.jpg" },
       { word: "Singing", emoji: "J", image: "https://media.baamboozle.com/uploads/images/99372/1598832580_95362" },
       { word: "Eating", emoji: "E", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2Z6om19BHs0g-nFMea7YlpODqA7axXQdoiA&s" }
     ],
