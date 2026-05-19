@@ -350,9 +350,12 @@ const LESSON_CONTENT: Record<string, any> = {
     ],
 
     visualExamples: [
-      { word: "In", emoji: "I", image: "https://cdn-icons-png.flaticon.com/512/3395/3395514.png" },
-      { word: "On", emoji: "O", image: "https://cdn-icons-png.flaticon.com/512/3395/3395544.png" },
-      { word: "Under", emoji: "U", image: "https://cdn-icons-png.flaticon.com/512/3395/3395582.png" }
+      
+      { word: "In", emoji: "I", image: "https://png.pngtree.com/png-clipart/20230802/original/pngtree-soccer-ball-in-the-box-art-concept-fun-vector-picture-image_9327794.png" },
+      { word: "On", emoji: "O", image: "https://media.baamboozle.com/uploads/images/328151/1653587815_35202.png" },
+      { word: "Behind", emoji: "B", image: "https://media.baamboozle.com/uploads/images/1543826/d45642dc-dc6f-4260-9d83-fb23f2982ac5.png" },
+
+      { word: "Under", emoji: "U", image: "https://media.baamboozle.com/uploads/images/67499/1597564750_59876" }
     ],
 
     activity: {
@@ -548,9 +551,13 @@ function InteractiveLessonPage({ lessonId, onNext }: { lessonId: string; onNext:
           <div
             key={i}
             onClick={() => speak(item.word)}
-            className="bg-white p-4 rounded-2xl shadow-md text-center cursor-pointer hover:scale-105 transition"
+            className="bg-white p-6 min-h-[230px] rounded-2xl shadow-md text-center cursor-pointer hover:scale-105 transition"
           >
-            <img src={item.image} alt={item.word} className="w-20 h-20 mx-auto mb-2" />
+            <img
+  src={item.image}
+  alt={item.word}
+  className="w-32 h-32 object-contain mx-auto mb-3"
+/>
             <p className="font-bold text-lg">{item.word}</p>
           </div>
         ))}
