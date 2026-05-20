@@ -248,9 +248,9 @@ const LESSON_CONTENT: Record<string, any> = {
     ],
 
     visualExamples: [
-      { word: "Eat", type: "Now", emoji: "N", image: "https://cdn-icons-png.flaticon.com/512/1046/1046784.png" },
-      { word: "Ate", type: "Past", emoji: "P", image: "https://cdn-icons-png.flaticon.com/512/3227/3227829.png" },
-      { word: "Will Eat", type: "Future", emoji: "F", image: "https://cdn-icons-png.flaticon.com/512/1046/1046857.png" }
+      { word: "The boy is eating", type: "Now", emoji: "N", image: "https://t3.ftcdn.net/jpg/01/83/11/82/360_F_183118254_TaLvrkCE8ZeYhG9wTXFiBpnkEWfarIbA.jpg" },
+      { word: "The boy ate the food", type: "Past", emoji: "P", image: "https://www.shutterstock.com/image-vector/illustration-boy-handing-over-his-600nw-171851003.jpg" },
+      { word: "The boy will eat the  Food", type: "Future", emoji: "F", image: "https://img.freepik.com/premium-vector/cartoon-boy-with-fork-plate-food-with-fork-it_1016520-59983.jpg?w=360" }
     ],
 
     activity: {
