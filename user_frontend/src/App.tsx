@@ -195,9 +195,10 @@ const LESSON_CONTENT: Record<string, any> = {
     ],
 
     visualExamples: [
-      { word: "Red", emoji: "R", image: "https://cdn-icons-png.flaticon.com/512/415/415733.png" },
-      { word: "Big", emoji: "B", image: "https://cdn-icons-png.flaticon.com/512/565/565547.png" },
-      { word: "Happy", emoji: "H", image: "https://cdn-icons-png.flaticon.com/512/742/742751.png" }
+      { word: "Red Car", emoji: "R", image: "https://img.magnific.com/free-vector/vintage-red-car-white-background_1308-102188.jpg" },
+      { word: "Big Elephant", emoji: "B", image: "https://thumbs.dreamstime.com/b/cartoon-large-elephant-illustration-53892551.jpg" },
+           { word: "Hot Cofee", emoji: "C", image: "https://static.vecteezy.com/system/resources/thumbnails/078/476/664/small/ceramic-mug-filled-with-dark-hot-coffee-and-detailed-steam-clouds-vector.jpg" },
+      { word: "Old House", emoji: "H", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROWyYYv7T4D67Jf_5eeihhQpRMCPUWpPC0ag&s" }
     ],
 
     activity: {
@@ -299,8 +300,8 @@ const LESSON_CONTENT: Record<string, any> = {
     ],
 
     visualExamples: [
-      { word: "A Ball", emoji: "A", image: "https://cdn-icons-png.flaticon.com/512/861/861512.png" },
-      { word: "An Egg", emoji: "An", image: "https://cdn-icons-png.flaticon.com/512/2977/2977312.png" },
+      { word: "A Ball", emoji: "A", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Soccer_ball_animated.svg/3840px-Soccer_ball_animated.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail" },
+      { word: "An Orange", emoji: "An", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZbB_doR9LVg_xVbDXOOZc3TNbgNCEIzLLKw&s" },
       { word: "The Sun", emoji: "T", image: "https://cdn-icons-png.flaticon.com/512/4814/4814268.png" }
     ],
 
