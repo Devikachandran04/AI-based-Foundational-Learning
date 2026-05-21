@@ -646,7 +646,7 @@ function HelpRequestsDetails() {
                       }}
                       className="help-secondary-btn"
                     >
-                      Close Chat
+                      Refresh
                     </button>
                   </div>
 
